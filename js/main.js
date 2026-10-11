@@ -1,35 +1,91 @@
 /*
-   FASTSATTA.ONLINE - Dynamic Spotlight strictly showing "Wait..." until Admin Result Upload
+   FASTSATTA.ONLINE - Dynamic Spotlight Pin Engine with Declared Number Display
 */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Helper: Get Asia/Kolkata Current Date String (e.g. "11 October 2026")
-    function getKolkataDateString() {
-        const options = { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Kolkata' };
-        return new Intl.DateTimeFormat('en-GB', options).format(new Date());
+    // HARD PURGE stale LocalStorage keys on load
+    try {
+        localStorage.removeItem('fastsatta_live_results');
+    } catch(e) {}
+
+    // Helper: Compute Date & Time strictly in Asia/Kolkata (IST - UTC+05:30)
+    function getKolkataDateInfo() {
+        const now = new Date();
+        const formatter = new Intl.DateTimeFormat('en-GB', {
+            timeZone: 'Asia/Kolkata',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+
+        const parts = formatter.formatToParts(now);
+        const dateMap = {};
+        parts.forEach(p => dateMap[p.type] = p.value);
+
+        const d = dateMap.day;
+        const m = dateMap.month;
+        const y = dateMap.year;
+
+        const formattedDash = `${d}-${m}-${y}`; // e.g. "12-10-2026"
+        const isoDash = `${y}-${m}-${d}`;       // e.g. "2026-10-12"
+
+        const yesterdayDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+        const yParts = formatter.formatToParts(yesterdayDate);
+        const yMap = {};
+        yParts.forEach(p => yMap[p.type] = p.value);
+        const yesterdayFormattedDash = `${yMap.day}-${yMap.month}-${yMap.year}`;
+        const yesterdayIsoDash = `${yMap.year}-${yMap.month}-${yMap.day}`;
+
+        const fullFormatter = new Intl.DateTimeFormat('en-GB', {
+            timeZone: 'Asia/Kolkata',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+        const fullDateStr = fullFormatter.format(now);
+
+        const hours = parseInt(dateMap.hour, 10);
+        const minutes = parseInt(dateMap.minute, 10);
+        const totalMinutes = hours * 60 + minutes;
+
+        return {
+            todayDay: d,
+            formattedDash: formattedDash,
+            isoDash: isoDash,
+            yesterdayFormattedDash: yesterdayFormattedDash,
+            yesterdayIsoDash: yesterdayIsoDash,
+            fullDateStr: fullDateStr,
+            hours: hours,
+            minutes: minutes,
+            totalMinutes: totalMinutes
+        };
     }
 
     // 1. Dynamic SEO Title & Meta Description Sync
-    const currentDateStr = getKolkataDateString();
+    const dateInfo = getKolkataDateInfo();
 
     if (document.title.includes('[Current Date]')) {
-        document.title = document.title.replace('[Current Date]', currentDateStr);
+        document.title = document.title.replace('[Current Date]', dateInfo.fullDateStr);
     }
 
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc && metaDesc.content.includes('[Current Date]')) {
-        metaDesc.content = metaDesc.content.replace(/\[Current Date\]/g, currentDateStr);
+        metaDesc.content = metaDesc.content.replace(/\[Current Date\]/g, dateInfo.fullDateStr);
     }
 
     const ogTitle = document.querySelector('meta[property="og:title"]');
     if (ogTitle && ogTitle.content.includes('[Current Date]')) {
-        ogTitle.content = ogTitle.content.replace('[Current Date]', currentDateStr);
+        ogTitle.content = ogTitle.content.replace('[Current Date]', dateInfo.fullDateStr);
     }
 
     const ogDesc = document.querySelector('meta[property="og:description"]');
     if (ogDesc && ogDesc.content.includes('[Current Date]')) {
-        ogDesc.content = ogDesc.content.replace(/\[Current Date\]/g, currentDateStr);
+        ogDesc.content = ogDesc.content.replace(/\[Current Date\]/g, dateInfo.fullDateStr);
     }
 
     // 2. Mobile Navigation Toggle
@@ -71,18 +127,18 @@ document.addEventListener('DOMContentLoaded', () => {
         checkTimeBasedResults();
     }
 
-    // 4. Markets Master Data
+    // 4. Markets Master Config
     const defaultMarketsData = [
-        { id: "DS", name: "DISAWAR", timeStr: "05:00 AM", hour: 5, minute: 0, oldNum: "22", newNum: "27", tableIdx: 1, colIdx: 5 },
-        { id: "HK", name: "HARYANA KING", timeStr: "01:30 PM", hour: 13, minute: 30, oldNum: "02", newNum: "84", tableIdx: 0, colIdx: 1 },
-        { id: "RB", name: "RAM BAZAR", timeStr: "02:30 PM", hour: 14, minute: 30, oldNum: "83", newNum: "45", tableIdx: 0, colIdx: 2 },
-        { id: "DB", name: "DELHI BAZAR", timeStr: "03:10 PM", hour: 15, minute: 10, oldNum: "71", newNum: "71", tableIdx: 0, colIdx: 3 },
-        { id: "SG", name: "SHREE GANESH", timeStr: "04:40 PM", hour: 16, minute: 40, oldNum: "06", newNum: "39", tableIdx: 0, colIdx: 4 },
-        { id: "FB", name: "FARIDABAD", timeStr: "06:10 PM", hour: 18, minute: 10, oldNum: "08", newNum: "99", tableIdx: 0, colIdx: 5 },
-        { id: "AK", name: "AMBALA KING", timeStr: "07:30 PM", hour: 19, minute: 30, oldNum: "15", newNum: "62", tableIdx: 1, colIdx: 1 },
-        { id: "GZ", name: "GAZIYABAD", timeStr: "10:00 PM", hour: 22, minute: 0, oldNum: "71", newNum: "89", tableIdx: 1, colIdx: 2 },
-        { id: "HN", name: "HIMACHAL NIGHT", timeStr: "10:40 PM", hour: 22, minute: 40, oldNum: "92", newNum: "08", tableIdx: 1, colIdx: 3 },
-        { id: "GL", name: "GALI", timeStr: "12:00 AM", hour: 24, minute: 0, oldNum: "12", newNum: "83", tableIdx: 1, colIdx: 4 }
+        { id: "DS", name: "DISAWAR", timeStr: "05:00 AM", hour: 5, minute: 0, oldNum: "27", tableIdx: 1, colIdx: 5 },
+        { id: "HK", name: "HARYANA KING", timeStr: "01:30 PM", hour: 13, minute: 30, oldNum: "19", tableIdx: 0, colIdx: 1 },
+        { id: "RB", name: "RAM BAZAR", timeStr: "02:30 PM", hour: 14, minute: 30, oldNum: "73", tableIdx: 0, colIdx: 2 },
+        { id: "DB", name: "DELHI BAZAR", timeStr: "03:10 PM", hour: 15, minute: 10, oldNum: "50", tableIdx: 0, colIdx: 3 },
+        { id: "SG", name: "SHREE GANESH", timeStr: "04:40 PM", hour: 16, minute: 40, oldNum: "58", tableIdx: 0, colIdx: 4 },
+        { id: "FB", name: "FARIDABAD", timeStr: "06:10 PM", hour: 18, minute: 10, oldNum: "96", tableIdx: 0, colIdx: 5 },
+        { id: "AK", name: "AMBALA KING", timeStr: "07:30 PM", hour: 19, minute: 30, oldNum: "21", tableIdx: 1, colIdx: 1 },
+        { id: "GZ", name: "GAZIYABAD", timeStr: "10:00 PM", hour: 22, minute: 0, oldNum: "46", tableIdx: 1, colIdx: 2 },
+        { id: "HN", name: "HIMACHAL NIGHT", timeStr: "10:40 PM", hour: 22, minute: 40, oldNum: "19", tableIdx: 1, colIdx: 3 },
+        { id: "GL", name: "GALI", timeStr: "12:00 AM", hour: 0, minute: 0, oldNum: "40", tableIdx: 1, colIdx: 4 }
     ];
 
     function getStoredResults() {
@@ -112,10 +168,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function checkTimeBasedResults() {
-        const now = new Date();
-        const currentHours = now.getHours();
-        const currentMinutes = now.getMinutes();
-        const currentTotalMins = currentHours * 60 + currentMinutes;
+        const info = getKolkataDateInfo();
+        const currentMins = info.totalMinutes;
 
         const storedResults = getStoredResults();
         const resultCards = document.querySelectorAll('.live-cards-container .card-result-row');
@@ -128,38 +182,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (newSpan && market) {
                 const targetMins = market.hour * 60 + market.minute;
-                const waitStartMins = targetMins - 60; // 1 Hour Before Result Time
+                const waitStartMins = targetMins === 0 ? 1380 : targetMins - 60; // 11:00 PM for Gali
+
+                let yesterdayNumToShow = market.oldNum;
+                let isTodayDeclared = false;
+                let todayNumValue = "--";
 
                 const adminData = storedResults[market.name];
-                let isExplicitDeclared = false;
-                let numValue = "--";
 
                 if (adminData) {
-                    if (adminData.oldNum && oldSpan) {
-                        oldSpan.textContent = `{ ${adminData.oldNum} }`;
+                    const pubDate = adminData.date || "";
+
+                    if (pubDate === info.formattedDash || pubDate === info.isoDash) {
+                        if (adminData.oldNum && adminData.oldNum !== "--") {
+                            yesterdayNumToShow = adminData.oldNum;
+                        }
+                        if (adminData.newNum && adminData.newNum !== "--" && adminData.newNum.trim() !== "" && adminData.status !== "RESET") {
+                            isTodayDeclared = true;
+                            todayNumValue = adminData.newNum;
+                        }
+                    } else if (pubDate === info.yesterdayFormattedDash || pubDate === info.yesterdayIsoDash) {
+                        if (adminData.newNum && adminData.newNum !== "--" && adminData.status !== "RESET") {
+                            yesterdayNumToShow = adminData.newNum;
+                            updateSpecificDateTableCell(market.tableIdx, market.colIdx, info.yesterdayFormattedDash, adminData.newNum);
+                        }
                     }
-                    if (adminData.newNum && adminData.newNum !== "--" && adminData.newNum.trim() !== "" && adminData.status !== "RESET") {
-                        isExplicitDeclared = true;
-                        numValue = adminData.newNum;
-                    } else if (adminData.status === "RESET") {
-                        isExplicitDeclared = false;
-                        numValue = "--";
-                    }
+                }
+
+                if (oldSpan) {
+                    oldSpan.textContent = `{ ${yesterdayNumToShow} }`;
                 }
 
                 let state = "PENDING";
                 let displayVal = "";
 
-                if (isExplicitDeclared) {
+                const isGaliWaitingWindow = (targetMins === 0 && currentMins >= 1380);
+                const isOtherWaitingWindow = (targetMins > 0 && currentMins >= waitStartMins && currentMins < targetMins);
+
+                if (isTodayDeclared) {
                     state = "DECLARED";
-                    displayVal = numValue;
-                    newSpan.textContent = `[ ${numValue} ]`;
+                    displayVal = todayNumValue;
+                    newSpan.textContent = `[ ${todayNumValue} ]`;
                     newSpan.classList.remove('blink-wait');
                     newSpan.style.color = "#16A34A";
                     newSpan.style.fontWeight = "900";
 
-                    updateTodayTableCell(market.tableIdx, market.colIdx, numValue);
-                } else if (currentTotalMins >= waitStartMins) {
+                    updateTodayTableCell(market.tableIdx, market.colIdx, todayNumValue);
+                } else if (isGaliWaitingWindow || isOtherWaitingWindow) {
                     state = "WAITING";
                     displayVal = "Wait...";
                     newSpan.textContent = "Wait...";
@@ -182,12 +251,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     timeStr: market.timeStr,
                     state: state,
                     num: displayVal,
+                    lastDeclaredNum: yesterdayNumToShow,
+                    oldNum: market.oldNum,
                     targetMins: targetMins
                 });
             }
         });
 
-        updateDynamicSpotHighlights(activeMarketList, currentTotalMins);
+        updateDynamicSpotHighlights(activeMarketList, currentMins);
     }
 
     function updateTodayTableCell(tableIdx, colIndex, value) {
@@ -207,10 +278,43 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // STRICT RULE: Spotlight shows "Wait..." for any active market until Admin Uploads Result!
+    function updateSpecificDateTableCell(tableIdx, colIndex, dateStr, value) {
+        const dayPart = dateStr.split('-')[0];
+        const historyTables = document.querySelectorAll('.history-table');
+        if (historyTables && historyTables[tableIdx]) {
+            const rows = historyTables[tableIdx].querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const dateCell = row.cells[0];
+                if (dateCell && dateCell.textContent.startsWith(dayPart)) {
+                    if (row.cells[colIndex]) {
+                        row.cells[colIndex].textContent = value;
+                        row.cells[colIndex].style.color = "#16A34A";
+                        row.cells[colIndex].style.fontWeight = "900";
+                    }
+                }
+            });
+        }
+    }
+
+    // Dynamic Sequential Spotlight Engine (Support for Pinned Declared Number Display)
     function updateDynamicSpotHighlights(marketList, currentTotalMins) {
         const spotContainer = document.querySelector('.spot-results-container');
         if (!spotContainer) return;
+
+        let spotPin = null;
+        try {
+            const savedPin = localStorage.getItem('fastsatta_spotlight_pin');
+            if (savedPin) {
+                const parsedPin = JSON.parse(savedPin);
+                if (parsedPin.active) {
+                    if (parsedPin.expireTime > 0 && Date.now() > parsedPin.expireTime) {
+                        localStorage.removeItem('fastsatta_spotlight_pin');
+                    } else {
+                        spotPin = parsedPin;
+                    }
+                }
+            }
+        } catch(e) {}
 
         let sortedByProximity = [...marketList].sort((a, b) => {
             if (a.state === "WAITING" && b.state !== "WAITING") return -1;
@@ -219,38 +323,72 @@ document.addEventListener('DOMContentLoaded', () => {
             if (a.state === "DECLARED" && b.state === "PENDING") return -1;
             if (b.state === "DECLARED" && a.state === "PENDING") return 1;
 
-            const diffA = Math.abs(a.targetMins - currentTotalMins);
-            const diffB = Math.abs(b.targetMins - currentTotalMins);
+            let diffA = Math.abs(a.targetMins - currentTotalMins);
+            let diffB = Math.abs(b.targetMins - currentTotalMins);
+
+            if (a.targetMins === 0 && currentTotalMins < 300) diffA = currentTotalMins;
+            if (b.targetMins === 0 && currentTotalMins < 300) diffB = currentTotalMins;
+
             return diffA - diffB;
         });
 
-        const m1 = sortedByProximity[0];
-        const m2 = sortedByProximity[1];
+        let m1 = sortedByProximity[0];
+        let m2 = sortedByProximity[1];
+
+        if (spotPin) {
+            if (spotPin.m1 && spotPin.m1 !== "AUTO") {
+                const found1 = marketList.find(m => m.name === spotPin.m1);
+                if (found1) {
+                    m1 = { ...found1 };
+                    if (spotPin.s1 === "WAITING") m1.state = "WAITING";
+                    else if (spotPin.s1 === "DECLARED") m1.state = "DECLARED";
+                    else if (spotPin.s1 === "PENDING") m1.state = "PENDING";
+                }
+            }
+
+            if (spotPin.m2 && spotPin.m2 !== "AUTO") {
+                const found2 = marketList.find(m => m.name === spotPin.m2);
+                if (found2) {
+                    m2 = { ...found2 };
+                    if (spotPin.s2 === "WAITING") m2.state = "WAITING";
+                    else if (spotPin.s2 === "DECLARED") m2.state = "DECLARED";
+                    else if (spotPin.s2 === "PENDING") m2.state = "PENDING";
+                }
+            }
+        }
 
         if (m1 && m2) {
-            const val1Display = m1.state === "DECLARED" ? m1.num : "Wait...";
-            const val1Class = m1.state === "DECLARED" ? "green-result-number" : "blink-wait";
+            // Number Resolution for Declared State
+            let val1Num = m1.num;
+            if (val1Num === "--" || val1Num === "Wait...") {
+                val1Num = (m1.lastDeclaredNum && m1.lastDeclaredNum !== "--") ? m1.lastDeclaredNum : m1.oldNum;
+            }
 
-            const val2Display = m2.state === "DECLARED" ? m2.num : "Wait...";
-            const val2Class = m2.state === "DECLARED" ? "green-result-number" : "blink-wait";
+            let val2Num = m2.num;
+            if (val2Num === "--" || val2Num === "Wait...") {
+                val2Num = (m2.lastDeclaredNum && m2.lastDeclaredNum !== "--") ? m2.lastDeclaredNum : m2.oldNum;
+            }
+
+            const val1Display = m1.state === "DECLARED" ? `[ ${val1Num} ]` : (m1.state === "WAITING" ? "Wait..." : "--");
+            const val1Class = m1.state === "WAITING" ? "blink-wait" : (m1.state === "DECLARED" ? "green-result-number" : "green-result-number");
+            const val1Style = m1.state === "PENDING" ? 'style="color: #000000; font-weight: bold;"' : '';
+
+            const val2Display = m2.state === "DECLARED" ? `[ ${val2Num} ]` : (m2.state === "WAITING" ? "Wait..." : "--");
+            const val2Class = m2.state === "WAITING" ? "blink-wait" : (m2.state === "DECLARED" ? "green-result-number" : "green-result-number");
+            const val2Style = m2.state === "PENDING" ? 'style="color: #000000; font-weight: bold;"' : '';
 
             spotContainer.innerHTML = `
                 <div class="pink-market-name">${m1.name}</div>
-                <div class="${val1Class}">${val1Display}</div>
+                <div class="${val1Class}" ${val1Style}>${val1Display}</div>
 
                 <div class="pink-market-name">${m2.name}</div>
-                <div class="${val2Class}">${val2Display}</div>
+                <div class="${val2Class}" ${val2Style}>${val2Display}</div>
             `;
         }
     }
 
-    // 5. Automated Daily Row Creation Generator
     function ensureTodayRowExists() {
-        const now = new Date();
-        const todayDay = String(now.getDate()).padStart(2, '0');
-        const monthNum = String(now.getMonth() + 1).padStart(2, '0');
-        const yearNum = now.getFullYear();
-        const todayDateStr = `${todayDay}-${monthNum}-${yearNum}`;
+        const info = getKolkataDateInfo();
 
         const tables = document.querySelectorAll('.history-table tbody');
         tables.forEach(tbody => {
@@ -259,7 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             rows.forEach(row => {
                 const dateCell = row.cells[0];
-                if (dateCell && dateCell.textContent.startsWith(todayDay)) {
+                if (dateCell && dateCell.textContent.startsWith(info.todayDay)) {
                     rowFound = true;
                     row.classList.add('today-row');
                 } else {
@@ -271,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const newTr = document.createElement('tr');
                 newTr.classList.add('today-row');
 
-                let tdHTML = `<td class="date-cell">${todayDateStr}</td>`;
+                let tdHTML = `<td class="date-cell">${info.formattedDash}</td>`;
                 for (let i = 0; i < 5; i++) {
                     tdHTML += `<td>--</td>`;
                 }
