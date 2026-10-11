@@ -1,5 +1,5 @@
 /*
-   FASTSATTA.ONLINE - Instant Admin Upload Recognition & Spot Highlights Sync
+   FASTSATTA.ONLINE - Dynamic Spot Highlights, Automated Daily Row Generator & Asia-Southeast1 Firebase Sync
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function syncFirebaseResults() {
-        const firebaseUrl = "https://fastsatta-online-default-rtdb.firebaseio.com/results.json";
+        const firebaseUrl = "https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app/results.json";
         try {
             const response = await fetch(firebaseUrl);
             if (response.ok) {
@@ -134,7 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 let isExplicitDeclared = false;
                 let numValue = "--";
 
-                // INSTANT ADMIN UPLOAD CHECK: If admin uploaded a valid number, mark DECLARED immediately!
                 if (adminData) {
                     if (adminData.oldNum && oldSpan) {
                         oldSpan.textContent = `{ ${adminData.oldNum} }`;
@@ -208,21 +207,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Dynamic Time-Proximity & Admin-Upload Spotlight Selection
     function updateDynamicSpotHighlights(marketList, currentTotalMins) {
         const spotContainer = document.querySelector('.spot-results-container');
         if (!spotContainer) return;
 
         let sortedByProximity = [...marketList].sort((a, b) => {
-            // Priority 1: WAITING markets get top priority
             if (a.state === "WAITING" && b.state !== "WAITING") return -1;
             if (b.state === "WAITING" && a.state !== "WAITING") return 1;
 
-            // Priority 2: Admin DECLARED markets get next priority over PENDING
             if (a.state === "DECLARED" && b.state === "PENDING") return -1;
             if (b.state === "DECLARED" && a.state === "PENDING") return 1;
 
-            // Priority 3: Closeness to current time
             const diffA = Math.abs(a.targetMins - currentTotalMins);
             const diffB = Math.abs(b.targetMins - currentTotalMins);
             return diffA - diffB;
@@ -245,7 +240,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 5. Automated Daily Row Creation Generator
     function ensureTodayRowExists() {
         const now = new Date();
         const todayDay = String(now.getDate()).padStart(2, '0');
