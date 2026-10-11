@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satta Login | FastSatta.online Admin Publisher Panel</title>
+    <meta name="description" content="Admin and Result Publisher Login Portal for FastSatta.online.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- 1. Top Keywords Banner -->
+    <div class="top-keywords-bar">
+        Satta King Fast | Satta Login | FastSatta.online Result Publisher Login
+    </div>
+
+    <!-- 2. Navigation Bar -->
+    <nav class="main-nav">
+        <div class="container">
+            <div class="nav-grid">
+                <a href="index.html" class="nav-btn">HOME</a>
+                <a href="chart.html" class="nav-btn">CHART</a>
+                <a href="satta-king.html" class="nav-btn">SATTA</a>
+                <a href="satta-login.html" class="nav-btn active">LOGIN</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 3. Yellow Title Bar -->
+    <div class="yellow-title-bar">
+        PUBLISHER LOGIN PANEL
+    </div>
+
+    <div class="container" style="max-width: 520px;">
+        <header class="domain-header-banner">
+            <div class="sub-header-label">BEST SITE SATTA RESULT</div>
+            <div class="main-domain-title">WWW.FASTSATTA.ONLINE</div>
+        </header>
+
+        <!-- LOGIN FORM SECTION (Credentials Completely Hidden) -->
+        <div id="loginFormSection" style="background: #ffffff; border: 2px solid #000; border-radius: 8px; padding: 20px; text-align: center; margin: 15px 0;">
+            <h2 style="color: #1877F2; font-size: 18px; font-weight: 900; margin-bottom: 15px;">
+                <i class="fa-solid fa-user-lock"></i> SATTA RESULT PUBLISHER LOGIN
+            </h2>
+
+            <form id="loginForm">
+                <div style="margin-bottom: 12px; text-align: left;">
+                    <label for="usernameInput" style="font-weight: 900; font-size: 12px; display: block; margin-bottom: 4px;">Username / Email ID</label>
+                    <input type="text" id="usernameInput" placeholder="Enter username / email" required style="width: 100%; padding: 8px; border: 1.5px solid #000; border-radius: 4px; font-size: 13px;">
+                </div>
+
+                <div style="margin-bottom: 15px; text-align: left;">
+                    <label for="passwordInput" style="font-weight: 900; font-size: 12px; display: block; margin-bottom: 4px;">Password</label>
+                    <input type="password" id="passwordInput" placeholder="Enter password" required style="width: 100%; padding: 8px; border: 1.5px solid #000; border-radius: 4px; font-size: 13px;">
+                </div>
+
+                <button type="submit" style="width: 100%; background: #1877F2; color: #ffffff; font-weight: 900; font-size: 14px; padding: 10px; border-radius: 6px; border: 1.5px solid #16A34A; cursor: pointer;">
+                    <i class="fa-solid fa-right-to-bracket"></i> LOGIN TO ADMIN PANEL
+                </button>
+            </form>
+
+            <div style="margin-top: 15px; font-size: 11.5px; color: #333;">
+                Need a new publisher account or want to list your game? <br>
+                <a href="add-game.html" style="color: #1877F2; font-weight: 900; text-decoration: underline;">Contact Admin Here</a>
+            </div>
+        </div>
+
+        <!-- DASHBOARD PANEL SECTION (Shown upon Login) -->
+        <div id="dashboardSection" style="display: none; background: #ffffff; border: 2px solid #000; border-radius: 8px; padding: 16px; margin: 15px 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1877F2; padding-bottom: 8px; margin-bottom: 15px;">
+                <h2 style="color: #1877F2; font-size: 16px; font-weight: 900; margin: 0;">
+                    <i class="fa-solid fa-gauge"></i> FASTSATTA PUBLISHER PANEL
+                </h2>
+                <button id="logoutBtn" style="background: #FF0000; color: #fff; border: none; font-size: 11px; font-weight: 900; padding: 4px 10px; border-radius: 4px; cursor: pointer;">
+                    <i class="fa-solid fa-power-off"></i> LOGOUT
+                </button>
+            </div>
+
+            <!-- 1. Live Result Updater Form with Yesterday & Today Labels -->
+            <div style="background: #f8fafc; border: 1.5px solid #1877F2; border-radius: 6px; padding: 12px; margin-bottom: 15px;">
+                <h3 style="color: #16A34A; font-size: 14px; font-weight: 900; margin-bottom: 10px;">
+                    <i class="fa-solid fa-bolt"></i> Publish Live Result Number
+                </h3>
+                <form id="publishResultForm">
+                    <!-- Date Selection Picker -->
+                    <div style="margin-bottom: 8px;">
+                        <label for="resultDateInput" style="font-size: 11px; font-weight: 900; display: block; color: #000;">Select Result Date (तारिख चुनें):</label>
+                        <input type="date" id="resultDateInput" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; font-weight: 900; font-size: 13px;">
+                    </div>
+
+                    <!-- Market Selection Dropdown -->
+                    <div style="margin-bottom: 8px;">
+                        <label for="marketSelect" style="font-size: 11px; font-weight: 900; display: block;">Select Market (मार्केट चुनें):</label>
+                        <select id="marketSelect" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; font-weight: 900; font-size: 12px;">
+                            <option value="DISAWAR">DISAWAR (05:00 AM)</option>
+                            <option value="HARYANA KING">HARYANA KING (01:30 PM)</option>
+                            <option value="RAM BAZAR">RAM BAZAR (02:30 PM)</option>
+                            <option value="DELHI BAZAR">DELHI BAZAR (03:10 PM)</option>
+                            <option value="SHREE GANESH">SHREE GANESH (04:40 PM)</option>
+                            <option value="FARIDABAD">FARIDABAD (06:10 PM)</option>
+                            <option value="AMBALA KING">AMBALA KING (07:30 PM)</option>
+                            <option value="GAZIYABAD">GAZIYABAD (10:00 PM)</option>
+                            <option value="HIMACHAL NIGHT">HIMACHAL NIGHT (10:40 PM)</option>
+                            <option value="GALI">GALI (12:00 AM)</option>
+                        </select>
+                    </div>
+
+                    <!-- Yesterday & Today Result Input Boxes -->
+                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                        <div style="flex: 1;">
+                            <label for="yesterdayNumInput" style="font-size: 10.5px; font-weight: 900; display: block; color: #000;">Yesterday Result (कल क्या आया था - { XX })</label>
+                            <input type="text" id="yesterdayNumInput" placeholder="Auto-filled" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; text-align: center; font-weight: 900; background: #fffde7;">
+                        </div>
+                        <div style="flex: 1;">
+                            <label for="todayNumInput" style="font-size: 10.5px; font-weight: 900; display: block; color: #16A34A;">Today Result (आज का रिजल्ट - [ YY ])</label>
+                            <input type="text" id="todayNumInput" placeholder="Enter Today Number" required style="width: 100%; padding: 6px; border: 1.5px solid #16A34A; border-radius: 4px; text-align: center; font-weight: 900; color: #16A34A; background: #f0fdf4;">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 10px;">
+                        <label for="statusSelect" style="font-size: 11px; font-weight: 900; display: block;">Publish Status:</label>
+                        <select id="statusSelect" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; font-weight: 900;">
+                            <option value="DECLARED">LIVE DECLARED (डिक्लेयर)</option>
+                            <option value="WAITING">WAITING (इंतजार)</option>
+                            <option value="REVISED">REVISED (संशोधित)</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; gap: 8px;">
+                        <button type="submit" style="flex: 2; background: #16A34A; color: #fff; font-weight: 900; font-size: 12px; padding: 8px; border-radius: 4px; border: none; cursor: pointer;">
+                            <i class="fa-solid fa-paper-plane"></i> PUBLISH RESULT NOW
+                        </button>
+                        <button type="button" id="deleteResultBtn" style="flex: 1; background: #FF0000; color: #fff; font-weight: 900; font-size: 12px; padding: 8px; border-radius: 4px; border: none; cursor: pointer;">
+                            <i class="fa-solid fa-trash"></i> DELETE / CLEAR
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 2. Telegram / WhatsApp Broadcast Post Generator -->
+            <div style="background: #e0f2fe; border: 1.5px solid #0288d1; border-radius: 6px; padding: 12px; margin-bottom: 15px;">
+                <h3 style="color: #0288d1; font-size: 14px; font-weight: 900; margin-bottom: 8px;">
+                    <i class="fa-brands fa-telegram"></i> Telegram Broadcast Generator
+                </h3>
+                <label for="broadcastText" style="font-size: 10px; font-weight: bold; display: block; margin-bottom: 2px;">Copy text for Telegram / WhatsApp sharing:</label>
+                <textarea id="broadcastText" rows="3" readonly style="width: 100%; padding: 6px; border: 1px solid #000; border-radius: 4px; font-size: 11px; font-weight: bold; background: #fff;">
+🔥 FASTSATTA.ONLINE LIVE RESULT 🔥
+Market: DISAWAR
+Result: [ 27 ]
+Date: 11-10-2026
+Fastest Satta Results on: https://fastsatta.online
+                </textarea>
+                <button onclick="navigator.clipboard.writeText(document.getElementById('broadcastText').value); alert('Broadcast message copied to clipboard!');" style="width: 100%; background: #0288d1; color: #fff; font-weight: 900; font-size: 11px; padding: 6px; border-radius: 4px; border: none; margin-top: 6px; cursor: pointer;">
+                    📋 COPY BROADCAST MSG FOR TELEGRAM
+                </button>
+            </div>
+
+            <!-- 3. Khaiwal Rates & Admin Contact Settings -->
+            <div style="background: #f8fafc; border: 1.5px solid #000; border-radius: 6px; padding: 12px; margin-bottom: 15px;">
+                <h3 style="color: #1877F2; font-size: 14px; font-weight: 900; margin-bottom: 10px;">
+                    <i class="fa-solid fa-sliders"></i> Khaiwal Rates & Admin Settings
+                </h3>
+                <div style="margin-bottom: 8px;">
+                    <label for="rateInput" style="font-size: 11px; font-weight: 900; display: block;">Payout Rate Text:</label>
+                    <input type="text" id="rateInput" value="Jodi Rate: 10 KA 960 | Haruf Rate: 100 KA 960" style="width: 100%; padding: 6px; border: 1px solid #000; border-radius: 4px; font-weight: bold;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label for="whatsappInput" style="font-size: 11px; font-weight: 900; display: block;">WhatsApp Admin Number:</label>
+                    <input type="text" id="whatsappInput" value="+91 99999 99999" style="width: 100%; padding: 6px; border: 1px solid #000; border-radius: 4px; font-weight: bold;">
+                </div>
+                <button onclick="alert('Khaiwal Settings saved successfully!');" style="width: 100%; background: #1877F2; color: #fff; font-weight: 900; font-size: 12px; padding: 6px; border-radius: 4px; border: none; cursor: pointer;">
+                    SAVE SETTINGS
+                </button>
+            </div>
+
+            <!-- 4. WhatsApp & Telegram Links Manager -->
+            <div style="background: #fff3cd; border: 1.5px solid #fb8c00; border-radius: 6px; padding: 12px; margin-bottom: 15px;">
+                <h3 style="color: #856404; font-size: 14px; font-weight: 900; margin-bottom: 10px;">
+                    <i class="fa-solid fa-link"></i> WhatsApp & Telegram Buttons Control (Site & Add Game)
+                </h3>
+
+                <div style="margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed #fb8c00;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                        <label for="whatsappUrlInput" style="font-size: 11px; font-weight: 900; color: #000;">WhatsApp Contact URL:</label>
+                        <label style="font-size: 11px; font-weight: 900; color: #16A34A;">
+                            <input type="checkbox" id="enableWhatsappToggle" checked> Enable WhatsApp
+                        </label>
+                    </div>
+                    <input type="text" id="whatsappUrlInput" value="https://wa.me/919999999999" style="width: 100%; padding: 6px; border: 1px solid #000; border-radius: 4px; font-size: 11px; font-weight: bold;">
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                        <label for="telegramUrlInput" style="font-size: 11px; font-weight: 900; color: #000;">Telegram Channel URL:</label>
+                        <label style="font-size: 11px; font-weight: 900; color: #16A34A;">
+                            <input type="checkbox" id="enableTelegramToggle" checked> Enable Telegram
+                        </label>
+                    </div>
+                    <input type="text" id="telegramUrlInput" value="https://t.me/fastsattalive" style="width: 100%; padding: 6px; border: 1px solid #000; border-radius: 4px; font-size: 11px; font-weight: bold;">
+                </div>
+
+                <button id="saveLinksBtn" style="width: 100%; background: #fb8c00; color: #000; font-weight: 900; font-size: 12px; padding: 6px; border-radius: 4px; border: none; cursor: pointer;">
+                    <i class="fa-solid fa-floppy-disk"></i> SAVE & UPDATE BUTTON CONTROLS
+                </button>
+            </div>
+
+            <!-- 5. Recent Publishing Log -->
+            <div style="background: #FFF000; border: 1.5px solid #FF0000; border-radius: 6px; padding: 10px; font-size: 11px; font-weight: bold;">
+                <div style="color: #000; font-weight: 900; margin-bottom: 4px;">📌 Recent Activity Log:</div>
+                <ul id="activityLog" style="margin-left: 15px; color: #000;">
+                    <li>11 Oct 2026 - DISAWAR published [ 27 ] (DECLARED)</li>
+                    <li>10 Oct 2026 - GALI published [ 12 ] (DECLARED)</li>
+                    <li>10 Oct 2026 - GAZIYABAD published [ 71 ] (DECLARED)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-nav">
+                <a href="privacy-policy.html">PRIVACY POLICY</a> |
+                <a href="disclaimer.html">DISCLAIMER</a> |
+                <a href="sitemap.html">SITEMAP</a> |
+                <a href="about.html">About Us</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 FASTSATTA.ONLINE - All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Controls -->
+    <a href="https://wa.me/919999999999" target="_blank" class="floating-left-whatsapp">
+        <span class="floating-badge-count">1</span>
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <button class="floating-right-refresh" id="refreshBtn">
+        Refresh
+    </button>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Interactive Admin Login with Auto-Logout Security & New Credentials
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('loginForm');
+            const loginSection = document.getElementById('loginFormSection');
+            const dashboardSection = document.getElementById('dashboardSection');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const publishResultForm = document.getElementById('publishResultForm');
+            const deleteResultBtn = document.getElementById('deleteResultBtn');
+            const saveLinksBtn = document.getElementById('saveLinksBtn');
+            const enableWhatsappToggle = document.getElementById('enableWhatsappToggle');
+            const enableTelegramToggle = document.getElementById('enableTelegramToggle');
+            const whatsappUrlInput = document.getElementById('whatsappUrlInput');
+            const telegramUrlInput = document.getElementById('telegramUrlInput');
+            const activityLog = document.getElementById('activityLog');
+            const resultDateInput = document.getElementById('resultDateInput');
+            const marketSelect = document.getElementById('marketSelect');
+            const yesterdayNumInput = document.getElementById('yesterdayNumInput');
+            const todayNumInput = document.getElementById('todayNumInput');
+            const broadcastText = document.getElementById('broadcastText');
+
+            // Default Master Yesterday Mapping Table for Instant Auto-Fill
+            const masterYesterdayMap = {
+                'DISAWAR': '22',
+                'HARYANA KING': '02',
+                'RAM BAZAR': '83',
+                'DELHI BAZAR': '71',
+                'SHREE GANESH': '06',
+                'FARIDABAD': '08',
+                'AMBALA KING': '15',
+                'GAZIYABAD': '71',
+                'HIMACHAL NIGHT': '92',
+                'GALI': '12'
+            };
+
+            if (resultDateInput) {
+                const todayStr = new Date().toISOString().split('T')[0];
+                resultDateInput.value = todayStr;
+            }
+
+            // AUTO-LOGOUT SECURITY: Clear login session when window unloads or loads fresh
+            function checkSessionSecurity() {
+                const sessionActive = sessionStorage.getItem('fastsatta_publisher_session');
+                if (sessionActive === 'ACTIVE') {
+                    loginSection.style.display = 'none';
+                    dashboardSection.style.display = 'block';
+                    loadSettingsForm();
+                    autoFillYesterdayNumber();
+                } else {
+                    loginSection.style.display = 'block';
+                    dashboardSection.style.display = 'none';
+                }
+            }
+
+            function loadSettingsForm() {
+                try {
+                    const saved = localStorage.getItem('fastsatta_site_settings');
+                    if (saved) {
+                        const parsed = JSON.parse(saved);
+                        if (enableWhatsappToggle && parsed.enableWhatsapp !== undefined) {
+                            enableWhatsappToggle.checked = parsed.enableWhatsapp;
+                        }
+                        if (enableTelegramToggle && parsed.enableTelegram !== undefined) {
+                            enableTelegramToggle.checked = parsed.enableTelegram;
+                        }
+                        if (whatsappUrlInput && parsed.whatsappUrl) {
+                            whatsappUrlInput.value = parsed.whatsappUrl;
+                        }
+                        if (telegramUrlInput && parsed.telegramUrl) {
+                            telegramUrlInput.value = parsed.telegramUrl;
+                        }
+                    }
+                } catch(e) {}
+            }
+
+            function autoFillYesterdayNumber() {
+                if (todayNumInput) {
+                    todayNumInput.value = ""; // Always clear Today box
+                }
+
+                if (marketSelect && yesterdayNumInput) {
+                    const selectedMarket = marketSelect.value;
+                    let foundNum = masterYesterdayMap[selectedMarket] || '--';
+
+                    try {
+                        const saved = localStorage.getItem('fastsatta_live_results');
+                        if (saved) {
+                            const parsed = JSON.parse(saved);
+                            if (parsed[selectedMarket] && parsed[selectedMarket].oldNum) {
+                                foundNum = parsed[selectedMarket].oldNum;
+                            }
+                        }
+                    } catch(e) {}
+
+                    yesterdayNumInput.value = foundNum;
+                }
+            }
+
+            if (marketSelect) marketSelect.addEventListener('change', autoFillYesterdayNumber);
+            if (resultDateInput) resultDateInput.addEventListener('change', autoFillYesterdayNumber);
+
+            // Secret Admin Credentials Check
+            if (loginForm) {
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const user = document.getElementById('usernameInput').value.trim();
+                    const pass = document.getElementById('passwordInput').value.trim();
+
+                    if (user === 'admin@fastsatta.online' && pass === 'Online@admin8090') {
+                        sessionStorage.setItem('fastsatta_publisher_session', 'ACTIVE');
+                        loginSection.style.display = 'none';
+                        dashboardSection.style.display = 'block';
+                        loadSettingsForm();
+                        autoFillYesterdayNumber();
+                        document.getElementById('usernameInput').value = '';
+                        document.getElementById('passwordInput').value = '';
+                    } else {
+                        alert('Invalid Credentials! Access Denied.');
+                    }
+                });
+            }
+
+            // Logout Action
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    sessionStorage.removeItem('fastsatta_publisher_session');
+                    dashboardSection.style.display = 'none';
+                    loginSection.style.display = 'block';
+                });
+            }
+
+            async function saveResultToStorage(marketName, resultObj) {
+                let current = {};
+                try {
+                    const saved = localStorage.getItem('fastsatta_live_results');
+                    if (saved) current = JSON.parse(saved);
+                } catch(e) {}
+
+                current[marketName] = resultObj;
+                localStorage.setItem('fastsatta_live_results', JSON.stringify(current));
+
+                const firebaseUrl = `https://fastsatta-online-default-rtdb.firebaseio.com/results/${encodeURIComponent(marketName)}.json`;
+                try {
+                    await fetch(firebaseUrl, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(resultObj)
+                    });
+                } catch(e) {
+                    console.log('Firebase write fallback:', e);
+                }
+            }
+
+            if (publishResultForm) {
+                publishResultForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const resultDate = document.getElementById('resultDateInput').value;
+                    const market = document.getElementById('marketSelect').value;
+                    const yesterdayNum = document.getElementById('yesterdayNumInput').value || '--';
+                    const todayNum = document.getElementById('todayNumInput').value;
+                    const status = document.getElementById('statusSelect').value;
+
+                    const resultData = {
+                        date: resultDate,
+                        market: market,
+                        oldNum: yesterdayNum,
+                        newNum: todayNum,
+                        status: status,
+                        timestamp: Date.now()
+                    };
+
+                    await saveResultToStorage(market, resultData);
+
+                    if (broadcastText) {
+                        broadcastText.value = `🔥 FASTSATTA.ONLINE LIVE RESULT 🔥\nMarket: ${market}\nResult: [ ${todayNum} ]\nDate: ${resultDate}\nFastest Satta Results on: https://fastsatta.online`;
+                    }
+
+                    const logItem = document.createElement('li');
+                    logItem.textContent = `${resultDate} - ${market} published [ ${todayNum} ] (${status})`;
+                    activityLog.insertBefore(logItem, activityLog.firstChild);
+
+                    alert(`Result Published & Live Updated!\nMarket: ${market}\nYesterday: { ${yesterdayNum} } | Today: [ ${todayNum} ]\nStatus: ${status}`);
+                    document.getElementById('todayNumInput').value = '';
+                });
+            }
+
+            if (deleteResultBtn) {
+                deleteResultBtn.addEventListener('click', async () => {
+                    const market = document.getElementById('marketSelect').value;
+                    const resultDate = document.getElementById('resultDateInput').value;
+
+                    if (confirm(`Delete / Clear result for ${market}?`)) {
+                        const resultData = {
+                            date: resultDate,
+                            market: market,
+                            oldNum: '--',
+                            newNum: '--',
+                            status: 'RESET',
+                            timestamp: Date.now()
+                        };
+
+                        await saveResultToStorage(market, resultData);
+
+                        const logItem = document.createElement('li');
+                        logItem.style.color = '#FF0000';
+                        logItem.textContent = `${resultDate} - ${market} DELETED / RESET`;
+                        activityLog.insertBefore(logItem, activityLog.firstChild);
+
+                        alert(`Result for ${market} cleared! Updated on live site.`);
+                        document.getElementById('todayNumInput').value = '';
+                    }
+                });
+            }
+
+            if (saveLinksBtn) {
+                saveLinksBtn.addEventListener('click', () => {
+                    const waEnabled = enableWhatsappToggle ? enableWhatsappToggle.checked : true;
+                    const tgEnabled = enableTelegramToggle ? enableTelegramToggle.checked : true;
+                    const waUrl = whatsappUrlInput ? whatsappUrlInput.value : "https://wa.me/919999999999";
+                    const tgUrl = telegramUrlInput ? telegramUrlInput.value : "https://t.me/fastsattalive";
+
+                    const settingsObj = {
+                        enableWhatsapp: waEnabled,
+                        enableTelegram: tgEnabled,
+                        whatsappUrl: waUrl,
+                        telegramUrl: tgUrl,
+                        timestamp: Date.now()
+                    };
+
+                    localStorage.setItem('fastsatta_site_settings', JSON.stringify(settingsObj));
+
+                    alert(`Site & Add Game Controls Updated!\nWhatsApp: ${waEnabled ? 'Enabled ✅' : 'Disabled ❌'}\nTelegram: ${tgEnabled ? 'Enabled ✅' : 'Disabled ❌'}`);
+                });
+            }
+
+            checkSessionSecurity();
+        });
+    </script>
+</body>
+</html>

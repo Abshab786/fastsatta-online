@@ -1,0 +1,745 @@
+/*
+   FASTSATTA.ONLINE - Emerald Green (#16A34A) Color Theme & Network Promo Card
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif, 'Noto Sans Devanagari';
+}
+
+body {
+    background-color: #ffffff;
+    color: #000000;
+    line-height: 1.3;
+    padding-bottom: 50px;
+    font-size: 13px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 0 4px;
+}
+
+/* --- 1. Top Keywords Bar --- */
+.top-keywords-bar {
+    background-color: #000000;
+    color: #FFF000;
+    font-size: 11px;
+    padding: 5px 8px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 2px solid #16A34A; /* Emerald Green */
+}
+
+/* --- 2. Navigation Bar --- */
+.main-nav {
+    background-color: #000000;
+    padding: 5px 4px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+}
+
+.nav-btn {
+    background-color: #1877F2;
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 11px;
+    padding: 5px 2px;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid #16A34A; /* Emerald Green */
+    text-transform: uppercase;
+}
+
+.nav-btn.active {
+    background-color: #16A34A; /* Emerald Green */
+    color: #ffffff;
+    font-weight: 900;
+}
+
+/* --- 3. Yellow SATTA KING Heading --- */
+.yellow-title-bar {
+    background-color: #FFF000;
+    color: #000000;
+    font-size: 24px;
+    font-weight: 900;
+    text-align: center;
+    padding: 5px 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-top: 2px solid #FF0000;
+    border-bottom: 2px solid #FF0000;
+    margin-bottom: 5px;
+}
+
+/* --- 4. Top Notice Box --- */
+.top-notice-box {
+    background-color: #FFF000;
+    color: #000000;
+    font-size: 10.5px;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px 6px;
+    border: 2px solid #FF0000;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+/* --- 5. Disclaimer Panel --- */
+.disclaimer-container {
+    background-color: #FFF000;
+    border: 2px solid #FF0000;
+    border-radius: 4px;
+    padding: 6px 8px;
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+.disclaimer-title {
+    font-size: 12px;
+    font-weight: 900;
+    color: #000000;
+    margin-bottom: 2px;
+}
+
+.disclaimer-text {
+    font-size: 10px;
+    color: #000000;
+    font-weight: bold;
+    line-height: 1.3;
+}
+
+.disclaimer-text a {
+    color: #1877F2;
+    text-decoration: underline;
+    font-weight: 900;
+}
+
+/* --- 6. Main Domain Header Banner --- */
+.domain-header-banner {
+    background-color: #1877F2;
+    color: #ffffff;
+    text-align: center;
+    padding: 8px 4px;
+    border: 2px solid #16A34A; /* Emerald Green */
+    border-radius: 6px;
+    margin-bottom: 6px;
+}
+
+.sub-header-label {
+    font-size: 10px;
+    font-weight: bold;
+    color: #ffffff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.main-domain-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: 1px;
+    margin: 2px 0;
+    text-transform: uppercase;
+}
+
+/* --- 7. Date Stamp & Live Header --- */
+.date-timestamp-text {
+    color: #1877F2;
+    font-weight: 900;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 4px;
+}
+
+.live-section-heading {
+    font-size: 16px;
+    font-weight: 900;
+    color: #000000;
+    text-align: center;
+    margin: 3px 0 6px 0;
+}
+
+/* --- 8. Spot Results Highlight --- */
+.spot-results-container {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.pink-market-name {
+    color: #E60073;
+    font-size: 20px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.green-result-number {
+    color: #16A34A; /* Emerald Green */
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 4px;
+}
+
+/* --- 9. SATTA KING RECORD CHART Banner --- */
+.orange-banner-btn {
+    background-color: #1877F2;
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 13px;
+    text-align: center;
+    padding: 8px 4px;
+    border-radius: 6px;
+    border: 2px solid #16A34A; /* Emerald Green */
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.dmca-badge {
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 9px;
+    font-weight: bold;
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin: 0 auto 8px auto;
+    border: 1px solid #16A34A; /* Emerald Green */
+}
+
+/* --- 10. Telegram Section --- */
+.telegram-maroon-card {
+    background-color: #000000;
+    border: 2px solid #16A34A; /* Emerald Green */
+    border-radius: 8px;
+    padding: 8px;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.telegram-title {
+    color: #FFF000;
+    font-size: 16px;
+    font-weight: 900;
+    margin-bottom: 2px;
+}
+
+.telegram-subtext {
+    font-size: 10.5px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.telegram-badge-btn {
+    background-color: #1877F2;
+    color: #ffffff;
+    font-size: 10.5px;
+    font-weight: bold;
+    padding: 3px 12px;
+    border-radius: 12px;
+    display: inline-block;
+    border: 1px solid #16A34A; /* Emerald Green */
+}
+
+/* --- Compact Partner Network Promo Card --- */
+.partner-portal-card {
+    background-color: #f8fafc;
+    border: 1.5px solid #1877F2;
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.partner-portal-text {
+    font-size: 11px;
+    font-weight: 900;
+    color: #000000;
+}
+
+.partner-portal-btn {
+    background-color: #1877F2;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 900;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid #16A34A;
+    white-space: nowrap;
+}
+
+/* --- 11. Live Results Grid --- */
+.live-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.card-navy {
+    background-color: #ffffff;
+    border: 2px solid #1877F2;
+    border-radius: 6px;
+    padding: 6px 4px;
+    text-align: center;
+    color: #000000;
+}
+
+.two-col-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+}
+
+.card-maroon {
+    background-color: #ffffff;
+    border: 2px solid #1877F2;
+    border-radius: 6px;
+    padding: 6px 4px;
+    text-align: center;
+    color: #000000;
+}
+
+.card-market-title {
+    font-size: 12px;
+    font-weight: 900;
+    color: #E60073;
+    text-transform: uppercase;
+}
+
+.card-market-time {
+    font-size: 10px;
+    font-weight: bold;
+    color: #1877F2;
+    margin-bottom: 3px;
+}
+
+.card-result-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.old-val {
+    color: #000000;
+}
+
+.green-arrow {
+    color: #ffffff;
+    background-color: #16A34A; /* Emerald Green */
+    padding: 1px 3px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.new-val {
+    color: #16A34A; /* Emerald Green */
+}
+
+/* --- BLINKING WAIT ANIMATION --- */
+.blink-wait {
+    color: #FF0000 !important;
+    font-weight: 900 !important;
+    animation: blinker 0.9s linear infinite;
+}
+
+@keyframes blinker {
+    50% { opacity: 0.1; }
+}
+
+/* --- 12. Compact Online Khaiwal Box --- */
+.khaiwal-maroon-box {
+    background-color: #000000;
+    border: 2px solid #16A34A; /* Emerald Green */
+    border-radius: 6px;
+    padding: 6px 8px;
+    color: #ffffff;
+    margin-bottom: 10px;
+    max-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.khaiwal-box-header {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 900;
+    color: #FFF000;
+    margin-bottom: 4px;
+}
+
+.khaiwal-timings-list {
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin-bottom: 4px;
+}
+
+.timing-row {
+    display: flex;
+    justify-content: space-between;
+    color: #ffffff;
+    padding: 1px 0;
+}
+
+.khaiwal-rate-text {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 900;
+    color: #FFF000;
+    margin-bottom: 4px;
+}
+
+.whatsapp-green-text {
+    text-align: center;
+    color: #16A34A; /* Emerald Green */
+    font-size: 11.5px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.floating-green-app-card {
+    background-color: #1877F2;
+    border: 1.5px solid #16A34A; /* Emerald Green */
+    border-radius: 6px;
+    padding: 6px 8px;
+    color: #ffffff;
+    text-align: center;
+    margin-top: 6px;
+}
+
+.app-card-title {
+    font-size: 13px;
+    font-weight: 900;
+    color: #FFF000;
+    margin-bottom: 2px;
+}
+
+.app-card-desc {
+    font-size: 9px;
+    font-weight: bold;
+    line-height: 1.25;
+    margin-bottom: 5px;
+}
+
+.app-download-red-btn {
+    background-color: #FF0000;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 900;
+    padding: 3px 10px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+/* --- 13. Historical Results Table --- */
+.history-table-container {
+    margin-bottom: 12px;
+    overflow-x: auto;
+}
+
+.table-header-title {
+    text-align: center;
+    font-weight: 900;
+    font-size: 12px;
+    background-color: #1877F2;
+    color: #ffffff;
+    padding: 5px;
+    border: 2px solid #000000;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    text-transform: uppercase;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 10.5px;
+    border: 2px solid #000000;
+}
+
+.history-table th {
+    background-color: #1877F2;
+    color: #ffffff;
+    font-weight: 900;
+    padding: 5px 2px;
+    border: 1px solid #000000;
+    font-size: 9.5px;
+    text-transform: uppercase;
+}
+
+.history-table td {
+    padding: 5px 2px;
+    border: 1px solid #000000;
+    font-weight: bold;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 11px;
+}
+
+.history-table td.date-cell {
+    background-color: #FFF000;
+    color: #000000;
+    font-weight: 900;
+    font-size: 9.5px;
+}
+
+.history-table tr.today-row td {
+    color: #16A34A; /* Emerald Green */
+    font-weight: 900;
+}
+
+/* --- 14. Yearly Archive Chart Links Grid --- */
+.archive-container {
+    background: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.year-grid-title {
+    font-size: 14px;
+    font-weight: 900;
+    color: #1877F2;
+    border-bottom: 2px solid #1877F2;
+    margin-bottom: 6px;
+    padding-bottom: 3px;
+}
+
+.chart-btn-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.chart-grid-btn {
+    background: #ffffff;
+    border: 1px solid #1877F2;
+    color: #1877F2;
+    font-size: 10.5px;
+    font-weight: 900;
+    padding: 5px;
+    text-align: center;
+    border-radius: 3px;
+    display: block;
+}
+
+.chart-grid-btn:hover {
+    background: #1877F2;
+    color: #ffffff;
+}
+
+.special-btn-blue {
+    flex: 1;
+    min-width: 170px;
+    background: #1877F2;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 8px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid #16A34A; /* Emerald Green */
+}
+
+.special-btn-pink {
+    flex: 1;
+    min-width: 220px;
+    background: #E60073;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 8px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid #000000;
+}
+
+/* --- 15. About Section --- */
+.about-card {
+    background: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 15px;
+}
+
+.about-card h2, .about-card h3 {
+    color: #1877F2;
+    font-size: 15px;
+    font-weight: 900;
+    margin-bottom: 5px;
+}
+
+.about-card p {
+    font-size: 11px;
+    line-height: 1.45;
+    margin-bottom: 8px;
+    color: #000000;
+}
+
+/* --- 16. App Banner --- */
+.app-promo-banner {
+    background: #000000;
+    border: 2px solid #16A34A; /* Emerald Green */
+    border-radius: 6px;
+    padding: 12px;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.app-promo-banner h3 {
+    font-size: 16px;
+    font-weight: 900;
+    color: #FFF000;
+    margin-bottom: 4px;
+}
+
+.app-promo-download-btn {
+    display: inline-block;
+    background-color: #FFF000;
+    color: #000000;
+    font-size: 13px;
+    font-weight: 900;
+    padding: 6px 18px;
+    border-radius: 18px;
+    border: 1px solid #FF0000;
+    margin-top: 4px;
+}
+
+/* --- 17. Footer --- */
+.site-footer {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 16px 0 10px 0;
+    border-top: 4px solid #1877F2;
+    font-size: 11px;
+    text-align: center;
+}
+
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.footer-nav a {
+    color: #FFF000;
+    font-weight: bold;
+}
+
+.footer-keywords {
+    margin-bottom: 8px;
+}
+
+.tag-badge {
+    display: inline-block;
+    background-color: #1877F2;
+    color: #ffffff;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin: 1px;
+    font-size: 9.5px;
+    font-weight: bold;
+}
+
+.footer-bottom {
+    border-top: 1px solid #333333;
+    padding-top: 6px;
+    color: #aaaaaa;
+}
+
+.last-updated {
+    color: #FFF000;
+    font-weight: bold;
+}
+
+/* --- 18. Floating Action Controls --- */
+.floating-left-whatsapp {
+    position: fixed;
+    bottom: 15px;
+    left: 10px;
+    z-index: 2000;
+    background-color: #25D366; /* WhatsApp Icon Green */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.floating-badge-count {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-color: #FF0000;
+    color: #ffffff;
+    font-size: 9px;
+    font-weight: bold;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.floating-right-refresh {
+    position: fixed;
+    bottom: 15px;
+    right: 10px;
+    z-index: 2000;
+    background-color: #1877F2;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 900;
+    padding: 6px 14px;
+    border-radius: 16px;
+    border: 1.5px solid #16A34A; /* Emerald Green */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    cursor: pointer;
+}
+
+/* --- Desktop Responsive --- */
+@media (min-width: 769px) {
+    .container {
+        max-width: 850px;
+    }
+}

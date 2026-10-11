@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Your Game | FastSatta.online Admin Contact</title>
+    <meta name="description" content="List your game or contact admin on FastSatta.online.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="top-keywords-bar">
+        Satta King Fast | Add Game | FastSatta.online Admin Contact
+    </div>
+
+    <nav class="main-nav">
+        <div class="container">
+            <div class="nav-grid">
+                <a href="index.html" class="nav-btn">HOME</a>
+                <a href="chart.html" class="nav-btn">CHART</a>
+                <a href="satta-king.html" class="nav-btn">SATTA</a>
+                <a href="satta-login.html" class="nav-btn">LOGIN</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="yellow-title-bar">
+        ADD YOUR GAME & KHAIWAL SERVICE
+    </div>
+
+    <div class="container" style="max-width: 520px;">
+        <header class="domain-header-banner">
+            <div class="sub-header-label">BEST SITE SATTA RESULT</div>
+            <div class="main-domain-title">WWW.FASTSATTA.ONLINE</div>
+        </header>
+
+        <div class="about-card" style="text-align: center; padding: 20px;">
+            <h1 style="color: #1877F2; font-size: 18px; font-weight: 900; margin-bottom: 10px;">
+                <i class="fa-solid fa-plus-circle"></i> Apni Game Add Karwane ke Liye Sampark Karein
+            </h1>
+            <p style="font-size: 12px; font-weight: bold; margin-bottom: 15px;">
+                अपनी गेम, खाईवाल सर्विस या विज्ञापन FASTSATTA.ONLINE पर ऐड करवाने के लिए एडमिन से सीधे व्हाट्सप्प या टेलीग्राम पर सम्पर्क करें।
+            </p>
+
+            <div id="addGameWhatsappBlock" style="margin-bottom: 12px;">
+                <a id="addGameWhatsappBtn" href="https://wa.me/919999999999?text=Hello%20FastSatta%20Admin" target="_blank" style="background-color: #16A34A; color: #ffffff; font-size: 14px; font-weight: 900; padding: 10px 20px; border-radius: 25px; display: block; border: 1.5px solid #000;">
+                    <i class="fa-brands fa-whatsapp"></i> Contact Admin on WhatsApp
+                </a>
+            </div>
+
+            <div id="addGameTelegramBlock" style="margin-bottom: 15px;">
+                <a id="addGameTelegramBtn" href="https://t.me/fastsattalive" target="_blank" style="background-color: #1877F2; color: #ffffff; font-size: 14px; font-weight: 900; padding: 10px 20px; border-radius: 25px; display: block; border: 1.5px solid #000;">
+                    <i class="fa-brands fa-telegram"></i> Contact Admin on Telegram
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-nav">
+                <a href="privacy-policy.html">PRIVACY POLICY</a> |
+                <a href="disclaimer.html">DISCLAIMER</a> |
+                <a href="sitemap.html">SITEMAP</a> |
+                <a href="about.html">About Us</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 FASTSATTA.ONLINE - All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Controls -->
+    <a href="https://wa.me/919999999999" target="_blank" class="floating-left-whatsapp">
+        <span class="floating-badge-count">1</span>
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <button class="floating-right-refresh" id="refreshBtn">
+        Refresh
+    </button>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Apply Admin Enable/Disable Settings on add-game.html
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const savedSettings = localStorage.getItem('fastsatta_site_settings');
+                if (savedSettings) {
+                    const settings = JSON.parse(savedSettings);
+
+                    const waBlock = document.getElementById('addGameWhatsappBlock');
+                    const waBtn = document.getElementById('addGameWhatsappBtn');
+                    if (waBlock && waBtn) {
+                        if (settings.enableWhatsapp === false) {
+                            waBlock.style.display = 'none';
+                        } else {
+                            waBlock.style.display = 'block';
+                            if (settings.whatsappUrl) waBtn.href = settings.whatsappUrl;
+                        }
+                    }
+
+                    const tgBlock = document.getElementById('addGameTelegramBlock');
+                    const tgBtn = document.getElementById('addGameTelegramBtn');
+                    if (tgBlock && tgBtn) {
+                        if (settings.enableTelegram === false) {
+                            tgBlock.style.display = 'none';
+                        } else {
+                            tgBlock.style.display = 'block';
+                            if (settings.telegramUrl) tgBtn.href = settings.telegramUrl;
+                        }
+                    }
+                }
+            } catch(e) {}
+        });
+    </script>
+</body>
+</html>
