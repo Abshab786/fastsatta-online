@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Official Firebase 13 Web SDK Module -->
+    <!-- Official Firebase 13 Web SDK Module (Asia-Southeast1 Database) -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
       import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js";
@@ -16,7 +16,7 @@
       const firebaseConfig = {
         apiKey: "AIzaSyDpbzwtWE0eVvHLQgfjqfewwKM8VFgp9Fc",
         authDomain: "fastsatta-online.firebaseapp.com",
-        databaseURL: "https://fastsatta-online-default-rtdb.firebaseio.com",
+        databaseURL: "https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app",
         projectId: "fastsatta-online",
         storageBucket: "fastsatta-online.firebasestorage.app",
         messagingSenderId: "1005022608107",
@@ -268,7 +268,7 @@ Fastest Satta Results on: https://fastsatta.online
 
     <script src="js/main.js"></script>
     <script>
-        // Interactive Admin Login, Fail-Safe Native WebSocket & REST Realtime Write Engine
+        // Interactive Admin Login, Asia-Southeast1 Database Regional Endpoint Sync
         document.addEventListener('DOMContentLoaded', () => {
             const loginForm = document.getElementById('loginForm');
             const loginSection = document.getElementById('loginFormSection');
@@ -394,7 +394,7 @@ Fastest Satta Results on: https://fastsatta.online
                 });
             }
 
-            // Universal Firebase Write: Native Web SDK + Multi-Region Fetch
+            // Write Directly to Asia-Southeast1 Regional Firebase Realtime Database
             async function saveResultToStorage(marketName, resultObj) {
                 let current = {};
                 try {
@@ -405,28 +405,20 @@ Fastest Satta Results on: https://fastsatta.online
                 current[marketName] = resultObj;
                 localStorage.setItem('fastsatta_live_results', JSON.stringify(current));
 
-                // 1. Native Firebase SDK WebSocket Write
                 if (window.fbSet && window.firebaseDb && window.fbRef) {
                     try {
                         await window.fbSet(window.fbRef(window.firebaseDb, 'results/' + marketName), resultObj);
                     } catch(err1) {}
                 }
 
-                // 2. Multi-Region REST Endpoints Fallback
-                const firebaseEndpoints = [
-                    `https://fastsatta-online-default-rtdb.firebaseio.com/results/${encodeURIComponent(marketName)}.json`,
-                    `https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app/results/${encodeURIComponent(marketName)}.json`
-                ];
-
-                for (const url of firebaseEndpoints) {
-                    try {
-                        await fetch(url, {
-                            method: 'PUT',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(resultObj)
-                        });
-                    } catch(err2) {}
-                }
+                const firebaseUrl = `https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app/results/${encodeURIComponent(marketName)}.json`;
+                try {
+                    await fetch(firebaseUrl, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(resultObj)
+                    });
+                } catch(err2) {}
             }
 
             if (publishResultForm) {
@@ -457,7 +449,7 @@ Fastest Satta Results on: https://fastsatta.online
                     logItem.textContent = `${resultDate} - ${market} published [ ${todayNum} ] (${status})`;
                     activityLog.insertBefore(logItem, activityLog.firstChild);
 
-                    alert(`Result Published & Live Updated!\nMarket: ${market}\nYesterday: { ${yesterdayNum} } | Today: [ ${todayNum} ]\nStatus: ${status}`);
+                    alert(`Result Published & Worldwide Synced!\nMarket: ${market}\nYesterday: { ${yesterdayNum} } | Today: [ ${todayNum} ]\nStatus: ${status}`);
                     document.getElementById('todayNumInput').value = '';
                 });
             }

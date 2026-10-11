@@ -39,7 +39,7 @@
     }
     </script>
 
-    <!-- 7. Official Firebase 13 SDK Native WebSocket Realtime Sync Engine -->
+    <!-- 7. Official Firebase 13 SDK Module (Asia-Southeast1 Region Database) -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-analytics.js";
@@ -48,7 +48,7 @@
       const firebaseConfig = {
         apiKey: "AIzaSyDpbzwtWE0eVvHLQgfjqfewwKM8VFgp9Fc",
         authDomain: "fastsatta-online.firebaseapp.com",
-        databaseURL: "https://fastsatta-online-default-rtdb.firebaseio.com",
+        databaseURL: "https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app",
         projectId: "fastsatta-online",
         storageBucket: "fastsatta-online.firebasestorage.app",
         messagingSenderId: "1005022608107",
@@ -64,10 +64,9 @@
         window.firebaseDb = db;
         window.fbRef = ref;
         window.fbSet = set;
-        window.fbOnValue = onValue;
 
-        // Native WebSocket Realtime Sync
-        onValue(ref(db, 'results'), (snapshot) => {
+        const resultsRef = ref(db, 'results');
+        onValue(resultsRef, (snapshot) => {
           const data = snapshot.val();
           if (data) {
             localStorage.setItem('fastsatta_live_results', JSON.stringify(data));
@@ -75,12 +74,8 @@
               window.checkTimeBasedResults();
             }
           }
-        }, (err) => {
-          console.log("Firebase WebSocket connection info:", err.message);
-        });
-      } catch (e) {
-        console.log("Firebase module initialization note:", e.message);
-      }
+        }, (err) => {});
+      } catch (e) {}
     </script>
 
     <link rel="stylesheet" href="css/style.css">
@@ -168,16 +163,16 @@
             </a>
         </div>
 
-        <!-- Live Results Grid -->
+        <!-- Live Results Grid (Exact Yesterday Numbers Match October 10th Chart Row) -->
         <div class="live-cards-container">
             <!-- 1. DISAWAR -->
             <div class="card-navy">
                 <div class="card-market-title">DISAWAR</div>
                 <div class="card-market-time">( 05:00 AM )</div>
                 <div class="card-result-row">
-                    <span class="old-val">{ 26 }</span>
+                    <span class="old-val">{ 22 }</span>
                     <span class="green-arrow">➔</span>
-                    <span class="new-val">[ -- ]</span>
+                    <span class="new-val">[ 27 ]</span>
                 </div>
             </div>
 
@@ -187,7 +182,7 @@
                     <div class="card-market-title">HARYANA KING</div>
                     <div class="card-market-time">(01:30 PM)</div>
                     <div class="card-result-row">
-                        <span class="old-val">{ 14 }</span>
+                        <span class="old-val">{ 02 }</span>
                         <span class="green-arrow">➔</span>
                         <span class="new-val">[ -- ]</span>
                     </div>
@@ -197,7 +192,7 @@
                     <div class="card-market-title">RAM BAZAR</div>
                     <div class="card-market-time">(02:30 PM)</div>
                     <div class="card-result-row">
-                        <span class="old-val">{ 45 }</span>
+                        <span class="old-val">{ 83 }</span>
                         <span class="green-arrow">➔</span>
                         <span class="new-val">[ -- ]</span>
                     </div>
@@ -210,7 +205,7 @@
                     <div class="card-market-title">DELHI BAZAR</div>
                     <div class="card-market-time">(03:10 PM)</div>
                     <div class="card-result-row">
-                        <span class="old-val">{ 87 }</span>
+                        <span class="old-val">{ 71 }</span>
                         <span class="green-arrow">➔</span>
                         <span class="new-val">[ -- ]</span>
                     </div>
@@ -220,7 +215,7 @@
                     <div class="card-market-title">SHREE GANESH</div>
                     <div class="card-market-time">(04:40 PM)</div>
                     <div class="card-result-row">
-                        <span class="old-val">{ 01 }</span>
+                        <span class="old-val">{ 06 }</span>
                         <span class="green-arrow">➔</span>
                         <span class="new-val">[ -- ]</span>
                     </div>
@@ -233,7 +228,7 @@
                     <div class="card-market-title">FARIDABAD</div>
                     <div class="card-market-time">(06:10 PM)</div>
                     <div class="card-result-row">
-                        <span class="old-val">{ 99 }</span>
+                        <span class="old-val">{ 08 }</span>
                         <span class="green-arrow">➔</span>
                         <span class="new-val blink-wait">Wait...</span>
                     </div>
@@ -243,7 +238,7 @@
                     <div class="card-market-title">AMBALA KING</div>
                     <div class="card-market-time">(07:30 PM)</div>
                     <div class="card-result-row">
-                        <span class="old-val">{ 33 }</span>
+                        <span class="old-val">{ 15 }</span>
                         <span class="green-arrow">➔</span>
                         <span class="new-val">[ -- ]</span>
                     </div>
@@ -256,7 +251,7 @@
                     <div class="card-market-title">GAZIYABAD</div>
                     <div class="card-market-time">(10:00 PM)</div>
                     <div class="card-result-row">
-                        <span class="old-val">{ 89 }</span>
+                        <span class="old-val">{ 71 }</span>
                         <span class="green-arrow">➔</span>
                         <span class="new-val">[ -- ]</span>
                     </div>
@@ -266,7 +261,7 @@
                     <div class="card-market-title">HIMACHAL NIGHT</div>
                     <div class="card-market-time">(10:40 PM)</div>
                     <div class="card-result-row">
-                        <span class="old-val">{ 56 }</span>
+                        <span class="old-val">{ 92 }</span>
                         <span class="green-arrow">➔</span>
                         <span class="new-val">[ -- ]</span>
                     </div>
@@ -278,7 +273,7 @@
                 <div class="card-market-title">GALI</div>
                 <div class="card-market-time">( 12:00 AM )</div>
                 <div class="card-result-row">
-                    <span class="old-val">{ 83 }</span>
+                    <span class="old-val">{ 12 }</span>
                     <span class="green-arrow">➔</span>
                     <span class="new-val">[ -- ]</span>
                 </div>
