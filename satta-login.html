@@ -7,6 +7,33 @@
     <meta name="description" content="Admin and Result Publisher Login Portal for FastSatta.online.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Official Firebase 13 Web SDK Module -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+      import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDpbzwtWE0eVvHLQgfjqfewwKM8VFgp9Fc",
+        authDomain: "fastsatta-online.firebaseapp.com",
+        databaseURL: "https://fastsatta-online-default-rtdb.firebaseio.com",
+        projectId: "fastsatta-online",
+        storageBucket: "fastsatta-online.firebasestorage.app",
+        messagingSenderId: "1005022608107",
+        appId: "1:1005022608107:web:30943555ceff104a321cae",
+        measurementId: "G-FQ3FPC2SXW"
+      };
+
+      try {
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        window.firebaseDb = db;
+        window.fbRef = ref;
+        window.fbSet = set;
+        window.fbOnValue = onValue;
+      } catch(e) {}
+    </script>
 </head>
 <body>
 
@@ -174,7 +201,7 @@ Fastest Satta Results on: https://fastsatta.online
             <!-- 4. WhatsApp & Telegram Links Manager -->
             <div style="background: #fff3cd; border: 1.5px solid #fb8c00; border-radius: 6px; padding: 12px; margin-bottom: 15px;">
                 <h3 style="color: #856404; font-size: 14px; font-weight: 900; margin-bottom: 10px;">
-                    <i class="fa-solid fa-link"></i> WhatsApp & Telegram Buttons Control (Site & Add Game)
+                    <i class="fa-solid fa-link"></i> WhatsApp & Telegram Buttons Control
                 </h3>
 
                 <div style="margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed #fb8c00;">
@@ -241,7 +268,7 @@ Fastest Satta Results on: https://fastsatta.online
 
     <script src="js/main.js"></script>
     <script>
-        // Interactive Admin Login, Dual-Endpoint Worldwide Firebase Write
+        // Interactive Admin Login, Fail-Safe Native WebSocket & REST Realtime Write Engine
         document.addEventListener('DOMContentLoaded', () => {
             const loginForm = document.getElementById('loginForm');
             const loginSection = document.getElementById('loginFormSection');
@@ -367,7 +394,7 @@ Fastest Satta Results on: https://fastsatta.online
                 });
             }
 
-            // Fail-Safe Dual Regional Endpoint Write to Firebase Realtime Database
+            // Universal Firebase Write: Native Web SDK + Multi-Region Fetch
             async function saveResultToStorage(marketName, resultObj) {
                 let current = {};
                 try {
@@ -378,6 +405,14 @@ Fastest Satta Results on: https://fastsatta.online
                 current[marketName] = resultObj;
                 localStorage.setItem('fastsatta_live_results', JSON.stringify(current));
 
+                // 1. Native Firebase SDK WebSocket Write
+                if (window.fbSet && window.firebaseDb && window.fbRef) {
+                    try {
+                        await window.fbSet(window.fbRef(window.firebaseDb, 'results/' + marketName), resultObj);
+                    } catch(err1) {}
+                }
+
+                // 2. Multi-Region REST Endpoints Fallback
                 const firebaseEndpoints = [
                     `https://fastsatta-online-default-rtdb.firebaseio.com/results/${encodeURIComponent(marketName)}.json`,
                     `https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app/results/${encodeURIComponent(marketName)}.json`
@@ -390,7 +425,7 @@ Fastest Satta Results on: https://fastsatta.online
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(resultObj)
                         });
-                    } catch(e) {}
+                    } catch(err2) {}
                 }
             }
 
@@ -422,7 +457,7 @@ Fastest Satta Results on: https://fastsatta.online
                     logItem.textContent = `${resultDate} - ${market} published [ ${todayNum} ] (${status})`;
                     activityLog.insertBefore(logItem, activityLog.firstChild);
 
-                    alert(`Result Published & Worldwide Synced!\nMarket: ${market}\nYesterday: { ${yesterdayNum} } | Today: [ ${todayNum} ]\nStatus: ${status}`);
+                    alert(`Result Published & Live Updated!\nMarket: ${market}\nYesterday: { ${yesterdayNum} } | Today: [ ${todayNum} ]\nStatus: ${status}`);
                     document.getElementById('todayNumInput').value = '';
                 });
             }
