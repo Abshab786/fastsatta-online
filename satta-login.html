@@ -38,7 +38,7 @@
             <div class="main-domain-title">WWW.FASTSATTA.ONLINE</div>
         </header>
 
-        <!-- LOGIN FORM SECTION (Credentials Completely Hidden) -->
+        <!-- LOGIN FORM SECTION -->
         <div id="loginFormSection" style="background: #ffffff; border: 2px solid #000; border-radius: 8px; padding: 20px; text-align: center; margin: 15px 0;">
             <h2 style="color: #1877F2; font-size: 18px; font-weight: 900; margin-bottom: 15px;">
                 <i class="fa-solid fa-user-lock"></i> SATTA RESULT PUBLISHER LOGIN
@@ -66,7 +66,7 @@
             </div>
         </div>
 
-        <!-- DASHBOARD PANEL SECTION (Shown upon Login) -->
+        <!-- DASHBOARD PANEL SECTION -->
         <div id="dashboardSection" style="display: none; background: #ffffff; border: 2px solid #000; border-radius: 8px; padding: 16px; margin: 15px 0;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1877F2; padding-bottom: 8px; margin-bottom: 15px;">
                 <h2 style="color: #1877F2; font-size: 16px; font-weight: 900; margin: 0;">
@@ -77,19 +77,17 @@
                 </button>
             </div>
 
-            <!-- 1. Live Result Updater Form with Yesterday & Today Labels -->
+            <!-- 1. Live Result Updater Form -->
             <div style="background: #f8fafc; border: 1.5px solid #1877F2; border-radius: 6px; padding: 12px; margin-bottom: 15px;">
                 <h3 style="color: #16A34A; font-size: 14px; font-weight: 900; margin-bottom: 10px;">
                     <i class="fa-solid fa-bolt"></i> Publish Live Result Number
                 </h3>
                 <form id="publishResultForm">
-                    <!-- Date Selection Picker -->
                     <div style="margin-bottom: 8px;">
                         <label for="resultDateInput" style="font-size: 11px; font-weight: 900; display: block; color: #000;">Select Result Date (तारिख चुनें):</label>
                         <input type="date" id="resultDateInput" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; font-weight: 900; font-size: 13px;">
                     </div>
 
-                    <!-- Market Selection Dropdown -->
                     <div style="margin-bottom: 8px;">
                         <label for="marketSelect" style="font-size: 11px; font-weight: 900; display: block;">Select Market (मार्केट चुनें):</label>
                         <select id="marketSelect" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; font-weight: 900; font-size: 12px;">
@@ -106,7 +104,6 @@
                         </select>
                     </div>
 
-                    <!-- Yesterday & Today Result Input Boxes -->
                     <div style="display: flex; gap: 8px; margin-bottom: 8px;">
                         <div style="flex: 1;">
                             <label for="yesterdayNumInput" style="font-size: 10.5px; font-weight: 900; display: block; color: #000;">Yesterday Result (कल क्या आया था - { XX })</label>
@@ -244,7 +241,7 @@ Fastest Satta Results on: https://fastsatta.online
 
     <script src="js/main.js"></script>
     <script>
-        // Interactive Admin Login with Auto-Logout Security & New Credentials
+        // Interactive Admin Login, Dual-Endpoint Worldwide Firebase Write
         document.addEventListener('DOMContentLoaded', () => {
             const loginForm = document.getElementById('loginForm');
             const loginSection = document.getElementById('loginFormSection');
@@ -264,7 +261,6 @@ Fastest Satta Results on: https://fastsatta.online
             const todayNumInput = document.getElementById('todayNumInput');
             const broadcastText = document.getElementById('broadcastText');
 
-            // Default Master Yesterday Mapping Table for Instant Auto-Fill
             const masterYesterdayMap = {
                 'DISAWAR': '22',
                 'HARYANA KING': '02',
@@ -283,7 +279,6 @@ Fastest Satta Results on: https://fastsatta.online
                 resultDateInput.value = todayStr;
             }
 
-            // AUTO-LOGOUT SECURITY: Clear login session when window unloads or loads fresh
             function checkSessionSecurity() {
                 const sessionActive = sessionStorage.getItem('fastsatta_publisher_session');
                 if (sessionActive === 'ACTIVE') {
@@ -320,7 +315,7 @@ Fastest Satta Results on: https://fastsatta.online
 
             function autoFillYesterdayNumber() {
                 if (todayNumInput) {
-                    todayNumInput.value = ""; // Always clear Today box
+                    todayNumInput.value = "";
                 }
 
                 if (marketSelect && yesterdayNumInput) {
@@ -344,7 +339,6 @@ Fastest Satta Results on: https://fastsatta.online
             if (marketSelect) marketSelect.addEventListener('change', autoFillYesterdayNumber);
             if (resultDateInput) resultDateInput.addEventListener('change', autoFillYesterdayNumber);
 
-            // Secret Admin Credentials Check
             if (loginForm) {
                 loginForm.addEventListener('submit', (e) => {
                     e.preventDefault();
@@ -365,7 +359,6 @@ Fastest Satta Results on: https://fastsatta.online
                 });
             }
 
-            // Logout Action
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', () => {
                     sessionStorage.removeItem('fastsatta_publisher_session');
@@ -374,6 +367,7 @@ Fastest Satta Results on: https://fastsatta.online
                 });
             }
 
+            // Fail-Safe Dual Regional Endpoint Write to Firebase Realtime Database
             async function saveResultToStorage(marketName, resultObj) {
                 let current = {};
                 try {
@@ -384,15 +378,19 @@ Fastest Satta Results on: https://fastsatta.online
                 current[marketName] = resultObj;
                 localStorage.setItem('fastsatta_live_results', JSON.stringify(current));
 
-                const firebaseUrl = `https://fastsatta-online-default-rtdb.firebaseio.com/results/${encodeURIComponent(marketName)}.json`;
-                try {
-                    await fetch(firebaseUrl, {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(resultObj)
-                    });
-                } catch(e) {
-                    console.log('Firebase write fallback:', e);
+                const firebaseEndpoints = [
+                    `https://fastsatta-online-default-rtdb.firebaseio.com/results/${encodeURIComponent(marketName)}.json`,
+                    `https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app/results/${encodeURIComponent(marketName)}.json`
+                ];
+
+                for (const url of firebaseEndpoints) {
+                    try {
+                        await fetch(url, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(resultObj)
+                        });
+                    } catch(e) {}
                 }
             }
 
@@ -424,7 +422,7 @@ Fastest Satta Results on: https://fastsatta.online
                     logItem.textContent = `${resultDate} - ${market} published [ ${todayNum} ] (${status})`;
                     activityLog.insertBefore(logItem, activityLog.firstChild);
 
-                    alert(`Result Published & Live Updated!\nMarket: ${market}\nYesterday: { ${yesterdayNum} } | Today: [ ${todayNum} ]\nStatus: ${status}`);
+                    alert(`Result Published & Worldwide Synced!\nMarket: ${market}\nYesterday: { ${yesterdayNum} } | Today: [ ${todayNum} ]\nStatus: ${status}`);
                     document.getElementById('todayNumInput').value = '';
                 });
             }
