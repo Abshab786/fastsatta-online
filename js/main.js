@@ -1,5 +1,5 @@
 /*
-   FASTSATTA.ONLINE - Realtime Spot Highlights, Toggle Button Controls & Local/Firebase Sync
+   FASTSATTA.ONLINE - Admin-Only Live Result Control & Precise Spotlight Hierarchy
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -69,58 +69,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         checkTimeBasedResults();
-        applySiteSettings();
-    }
-
-    // Apply Admin Link Settings (Enable/Disable WhatsApp & Telegram)
-    function applySiteSettings() {
-        try {
-            const savedSettings = localStorage.getItem('fastsatta_site_settings');
-            if (savedSettings) {
-                const settings = JSON.parse(savedSettings);
-
-                // WhatsApp Floating Button Toggle & URL
-                const waFloat = document.querySelector('.floating-left-whatsapp');
-                if (waFloat) {
-                    if (settings.enableWhatsapp === false) {
-                        waFloat.style.display = 'none';
-                    } else {
-                        waFloat.style.display = 'flex';
-                        if (settings.whatsappUrl) {
-                            waFloat.href = settings.whatsappUrl;
-                        }
-                    }
-                }
-
-                // Telegram Card Toggle & URL
-                const tgCard = document.querySelector('.telegram-maroon-card');
-                if (tgCard) {
-                    if (settings.enableTelegram === false) {
-                        tgCard.style.display = 'none';
-                    } else {
-                        tgCard.style.display = 'block';
-                        const tgBtn = tgCard.querySelector('a');
-                        if (tgBtn && settings.telegramUrl) {
-                            tgBtn.href = settings.telegramUrl;
-                        }
-                    }
-                }
-            }
-        } catch (e) {}
     }
 
     // 4. Markets Master Data
     const defaultMarketsData = [
-        { id: "DS", name: "DISAWAR", timeStr: "05:00 AM", hour: 5, minute: 0, declared: true, oldNum: "22", newNum: "27", tableIdx: 1, colIdx: 5 },
-        { id: "HK", name: "HARYANA KING", timeStr: "01:30 PM", hour: 13, minute: 30, declared: false, oldNum: "02", newNum: "84", tableIdx: 0, colIdx: 1 },
-        { id: "RB", name: "RAM BAZAR", timeStr: "02:30 PM", hour: 14, minute: 30, declared: false, oldNum: "83", newNum: "45", tableIdx: 0, colIdx: 2 },
-        { id: "DB", name: "DELHI BAZAR", timeStr: "03:10 PM", hour: 15, minute: 10, declared: false, oldNum: "71", newNum: "71", tableIdx: 0, colIdx: 3 },
-        { id: "SG", name: "SHREE GANESH", timeStr: "04:40 PM", hour: 16, minute: 40, declared: false, oldNum: "06", newNum: "39", tableIdx: 0, colIdx: 4 },
-        { id: "FB", name: "FARIDABAD", timeStr: "06:10 PM", hour: 18, minute: 10, declared: false, oldNum: "08", newNum: "99", tableIdx: 0, colIdx: 5 },
-        { id: "AK", name: "AMBALA KING", timeStr: "07:30 PM", hour: 19, minute: 30, declared: false, oldNum: "15", newNum: "62", tableIdx: 1, colIdx: 1 },
-        { id: "GZ", name: "GAZIYABAD", timeStr: "10:00 PM", hour: 22, minute: 0, declared: false, oldNum: "71", newNum: "89", tableIdx: 1, colIdx: 2 },
-        { id: "HN", name: "HIMACHAL NIGHT", timeStr: "10:40 PM", hour: 22, minute: 40, declared: false, oldNum: "92", newNum: "08", tableIdx: 1, colIdx: 3 },
-        { id: "GL", name: "GALI", timeStr: "12:00 AM", hour: 24, minute: 0, declared: false, oldNum: "12", newNum: "83", tableIdx: 1, colIdx: 4 }
+        { id: "DS", name: "DISAWAR", timeStr: "05:00 AM", hour: 5, minute: 0, oldNum: "22", newNum: "27", tableIdx: 1, colIdx: 5 },
+        { id: "HK", name: "HARYANA KING", timeStr: "01:30 PM", hour: 13, minute: 30, oldNum: "02", newNum: "84", tableIdx: 0, colIdx: 1 },
+        { id: "RB", name: "RAM BAZAR", timeStr: "02:30 PM", hour: 14, minute: 30, oldNum: "83", newNum: "45", tableIdx: 0, colIdx: 2 },
+        { id: "DB", name: "DELHI BAZAR", timeStr: "03:10 PM", hour: 15, minute: 10, oldNum: "71", newNum: "71", tableIdx: 0, colIdx: 3 },
+        { id: "SG", name: "SHREE GANESH", timeStr: "04:40 PM", hour: 16, minute: 40, oldNum: "06", newNum: "39", tableIdx: 0, colIdx: 4 },
+        { id: "FB", name: "FARIDABAD", timeStr: "06:10 PM", hour: 18, minute: 10, oldNum: "08", newNum: "99", tableIdx: 0, colIdx: 5 },
+        { id: "AK", name: "AMBALA KING", timeStr: "07:30 PM", hour: 19, minute: 30, oldNum: "15", newNum: "62", tableIdx: 1, colIdx: 1 },
+        { id: "GZ", name: "GAZIYABAD", timeStr: "10:00 PM", hour: 22, minute: 0, oldNum: "71", newNum: "89", tableIdx: 1, colIdx: 2 },
+        { id: "HN", name: "HIMACHAL NIGHT", timeStr: "10:40 PM", hour: 22, minute: 40, oldNum: "92", newNum: "08", tableIdx: 1, colIdx: 3 },
+        { id: "GL", name: "GALI", timeStr: "12:00 AM", hour: 24, minute: 0, oldNum: "12", newNum: "83", tableIdx: 1, colIdx: 4 }
     ];
 
     function getStoredResults() {
@@ -133,6 +95,20 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('LocalStorage read error:', e);
         }
         return {};
+    }
+
+    async function syncFirebaseResults() {
+        const firebaseUrl = "https://fastsatta-online-default-rtdb.firebaseio.com/results.json";
+        try {
+            const response = await fetch(firebaseUrl);
+            if (response.ok) {
+                const fbData = await response.json();
+                if (fbData) {
+                    localStorage.setItem('fastsatta_live_results', JSON.stringify(fbData));
+                    checkTimeBasedResults();
+                }
+            }
+        } catch (e) {}
     }
 
     function checkTimeBasedResults() {
@@ -155,9 +131,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const waitStartMins = targetMins - 60; // 1 Hour Before Result Time
 
                 const adminData = storedResults[market.name];
-                let isExplicitDeclared = market.declared;
-                let numValue = market.newNum;
-                let lastUpdatedTime = adminData ? adminData.timestamp || Date.now() : Date.now();
+                let isExplicitDeclared = false;
+                let numValue = "--";
+                let updateTime = 0;
 
                 if (adminData) {
                     if (adminData.oldNum && oldSpan) {
@@ -166,6 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (adminData.status === "DECLARED") {
                         isExplicitDeclared = true;
                         numValue = adminData.newNum;
+                        updateTime = adminData.timestamp || targetMins;
                     } else if (adminData.status === "RESET") {
                         isExplicitDeclared = false;
                         numValue = "--";
@@ -175,14 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 let state = "PENDING";
                 let displayVal = "";
 
-                if (currentTotalMins >= waitStartMins && currentTotalMins < targetMins && !isExplicitDeclared) {
-                    state = "WAITING";
-                    displayVal = "Wait...";
-                    newSpan.textContent = "Wait...";
-                    newSpan.classList.add('blink-wait');
-                    newSpan.style.color = "#FF0000";
-                    updateTodayTableCell(market.tableIdx, market.colIdx, "Wait...");
-                } else if (currentTotalMins >= targetMins || isExplicitDeclared) {
+                // ADMIN-ONLY CONTROL: Only show declared number if admin explicitly published it!
+                if (isExplicitDeclared) {
                     state = "DECLARED";
                     displayVal = numValue;
                     newSpan.textContent = `[ ${numValue} ]`;
@@ -191,7 +162,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     newSpan.style.fontWeight = "900";
 
                     updateTodayTableCell(market.tableIdx, market.colIdx, numValue);
+                } else if (currentTotalMins >= waitStartMins) {
+                    // Past time or within 1 hour countdown without admin publish -> Show "Wait..."
+                    state = "WAITING";
+                    displayVal = "Wait...";
+                    newSpan.textContent = "Wait...";
+                    newSpan.classList.add('blink-wait');
+                    newSpan.style.color = "#FF0000";
+
+                    updateTodayTableCell(market.tableIdx, market.colIdx, "Wait...");
                 } else {
+                    // Future time before 1 hour countdown -> Show "--"
                     state = "PENDING";
                     displayVal = "--";
                     newSpan.textContent = "[ -- ]";
@@ -207,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     state: state,
                     num: displayVal,
                     targetMins: targetMins,
-                    updatedTime: lastUpdatedTime
+                    updateTime: updateTime
                 });
             }
         });
@@ -236,24 +217,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const spotContainer = document.querySelector('.spot-results-container');
         if (!spotContainer) return;
 
+        // 1. Waiting Markets (currently in 1-hour window or past time awaiting admin publish)
         const waitingMarkets = marketList.filter(m => m.state === "WAITING").sort((a, b) => a.targetMins - b.targetMins);
 
-        // Sort declared markets by latest publisher update timestamp / target time
-        const declaredMarkets = marketList.filter(m => m.state === "DECLARED").sort((a, b) => b.updatedTime - a.updatedTime || b.targetMins - a.targetMins);
+        // 2. Admin-Declared Markets sorted strictly by publish timestamp / declaration time descending (latest published first)
+        const declaredMarkets = marketList.filter(m => m.state === "DECLARED").sort((a, b) => b.updateTime - a.updateTime || b.targetMins - a.targetMins);
+
+        // 3. Upcoming Pending Markets
         const pendingMarkets = marketList.filter(m => m.state === "PENDING").sort((a, b) => a.targetMins - b.targetMins);
 
         let selectedTop2 = [];
 
+        // STRICT SPOTLIGHT HIERARCHY:
         if (waitingMarkets.length > 0) {
+            // Waiting market gets Slot #1
             selectedTop2.push(waitingMarkets[0]);
+
             if (waitingMarkets.length > 1) {
                 selectedTop2.push(waitingMarkets[1]);
             } else if (declaredMarkets.length > 0) {
+                // Latest published market gets Slot #2
                 selectedTop2.push(declaredMarkets[0]);
             } else if (pendingMarkets.length > 0) {
                 selectedTop2.push(pendingMarkets[0]);
             }
         } else if (declaredMarkets.length >= 2) {
+            // Show 2 most recently published markets
             selectedTop2.push(declaredMarkets[0]);
             selectedTop2.push(declaredMarkets[1]);
         } else if (declaredMarkets.length === 1) {
@@ -266,6 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedTop2.push(pendingMarkets[1]);
         }
 
+        // Render Spotlight HTML
         if (selectedTop2.length >= 2) {
             const m1 = selectedTop2[0];
             const m2 = selectedTop2[1];
@@ -329,7 +319,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     ensureTodayRowExists();
-    applySiteSettings();
+
+    syncFirebaseResults();
+    setInterval(syncFirebaseResults, 3000);
 
     setInterval(updateLiveClock, 1000);
     updateLiveClock();
@@ -339,8 +331,8 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Refreshing...';
             setTimeout(() => {
+                syncFirebaseResults();
                 checkTimeBasedResults();
-                applySiteSettings();
                 window.location.reload();
             }, 300);
         });
