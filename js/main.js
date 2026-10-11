@@ -1,5 +1,5 @@
 /*
-   FASTSATTA.ONLINE - Time-Proximity Dynamic Spotlight & Admin-Only Live Control
+   FASTSATTA.ONLINE - Instant Admin Upload Recognition & Spot Highlights Sync
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -134,11 +134,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 let isExplicitDeclared = false;
                 let numValue = "--";
 
+                // INSTANT ADMIN UPLOAD CHECK: If admin uploaded a valid number, mark DECLARED immediately!
                 if (adminData) {
                     if (adminData.oldNum && oldSpan) {
                         oldSpan.textContent = `{ ${adminData.oldNum} }`;
                     }
-                    if (adminData.status === "DECLARED") {
+                    if (adminData.newNum && adminData.newNum !== "--" && adminData.newNum.trim() !== "" && adminData.status !== "RESET") {
                         isExplicitDeclared = true;
                         numValue = adminData.newNum;
                     } else if (adminData.status === "RESET") {
@@ -159,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     newSpan.style.fontWeight = "900";
 
                     updateTodayTableCell(market.tableIdx, market.colIdx, numValue);
-                } else if (currentTotalMins >= waitStartMins) {
+                } else if (currentTotalMins >= waitStartMins && currentTotalMins < targetMins) {
                     state = "WAITING";
                     displayVal = "Wait...";
                     newSpan.textContent = "Wait...";
@@ -207,18 +208,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Dynamic Time-Proximity Spotlight Selection
+    // Dynamic Time-Proximity & Admin-Upload Spotlight Selection
     function updateDynamicSpotHighlights(marketList, currentTotalMins) {
         const spotContainer = document.querySelector('.spot-results-container');
         if (!spotContainer) return;
 
-        // Sort markets by closeness to current time (time proximity)
         let sortedByProximity = [...marketList].sort((a, b) => {
-            // Priority 1: WAITING state gets highest priority
+            // Priority 1: WAITING markets get top priority
             if (a.state === "WAITING" && b.state !== "WAITING") return -1;
             if (b.state === "WAITING" && a.state !== "WAITING") return 1;
 
-            // Priority 2: Closeness to current time (distance from now)
+            // Priority 2: Admin DECLARED markets get next priority over PENDING
+            if (a.state === "DECLARED" && b.state === "PENDING") return -1;
+            if (b.state === "DECLARED" && a.state === "PENDING") return 1;
+
+            // Priority 3: Closeness to current time
             const diffA = Math.abs(a.targetMins - currentTotalMins);
             const diffB = Math.abs(b.targetMins - currentTotalMins);
             return diffA - diffB;
