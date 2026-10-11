@@ -1,5 +1,5 @@
 /*
-   FASTSATTA.ONLINE - Admin-Only Live Result Control & Precise Spotlight Hierarchy
+   FASTSATTA.ONLINE - Time-Proximity Dynamic Spotlight & Admin-Only Live Control
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -133,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const adminData = storedResults[market.name];
                 let isExplicitDeclared = false;
                 let numValue = "--";
-                let updateTime = 0;
 
                 if (adminData) {
                     if (adminData.oldNum && oldSpan) {
@@ -142,7 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (adminData.status === "DECLARED") {
                         isExplicitDeclared = true;
                         numValue = adminData.newNum;
-                        updateTime = adminData.timestamp || targetMins;
                     } else if (adminData.status === "RESET") {
                         isExplicitDeclared = false;
                         numValue = "--";
@@ -152,7 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 let state = "PENDING";
                 let displayVal = "";
 
-                // ADMIN-ONLY CONTROL: Only show declared number if admin explicitly published it!
                 if (isExplicitDeclared) {
                     state = "DECLARED";
                     displayVal = numValue;
@@ -163,7 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     updateTodayTableCell(market.tableIdx, market.colIdx, numValue);
                 } else if (currentTotalMins >= waitStartMins) {
-                    // Past time or within 1 hour countdown without admin publish -> Show "Wait..."
                     state = "WAITING";
                     displayVal = "Wait...";
                     newSpan.textContent = "Wait...";
@@ -172,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     updateTodayTableCell(market.tableIdx, market.colIdx, "Wait...");
                 } else {
-                    // Future time before 1 hour countdown -> Show "--"
                     state = "PENDING";
                     displayVal = "--";
                     newSpan.textContent = "[ -- ]";
@@ -187,8 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     timeStr: market.timeStr,
                     state: state,
                     num: displayVal,
-                    targetMins: targetMins,
-                    updateTime: updateTime
+                    targetMins: targetMins
                 });
             }
         });
@@ -213,53 +207,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Dynamic Time-Proximity Spotlight Selection
     function updateDynamicSpotHighlights(marketList, currentTotalMins) {
         const spotContainer = document.querySelector('.spot-results-container');
         if (!spotContainer) return;
 
-        // 1. Waiting Markets (currently in 1-hour window or past time awaiting admin publish)
-        const waitingMarkets = marketList.filter(m => m.state === "WAITING").sort((a, b) => a.targetMins - b.targetMins);
+        // Sort markets by closeness to current time (time proximity)
+        let sortedByProximity = [...marketList].sort((a, b) => {
+            // Priority 1: WAITING state gets highest priority
+            if (a.state === "WAITING" && b.state !== "WAITING") return -1;
+            if (b.state === "WAITING" && a.state !== "WAITING") return 1;
 
-        // 2. Admin-Declared Markets sorted strictly by publish timestamp / declaration time descending (latest published first)
-        const declaredMarkets = marketList.filter(m => m.state === "DECLARED").sort((a, b) => b.updateTime - a.updateTime || b.targetMins - a.targetMins);
+            // Priority 2: Closeness to current time (distance from now)
+            const diffA = Math.abs(a.targetMins - currentTotalMins);
+            const diffB = Math.abs(b.targetMins - currentTotalMins);
+            return diffA - diffB;
+        });
 
-        // 3. Upcoming Pending Markets
-        const pendingMarkets = marketList.filter(m => m.state === "PENDING").sort((a, b) => a.targetMins - b.targetMins);
+        const m1 = sortedByProximity[0];
+        const m2 = sortedByProximity[1];
 
-        let selectedTop2 = [];
-
-        // STRICT SPOTLIGHT HIERARCHY:
-        if (waitingMarkets.length > 0) {
-            // Waiting market gets Slot #1
-            selectedTop2.push(waitingMarkets[0]);
-
-            if (waitingMarkets.length > 1) {
-                selectedTop2.push(waitingMarkets[1]);
-            } else if (declaredMarkets.length > 0) {
-                // Latest published market gets Slot #2
-                selectedTop2.push(declaredMarkets[0]);
-            } else if (pendingMarkets.length > 0) {
-                selectedTop2.push(pendingMarkets[0]);
-            }
-        } else if (declaredMarkets.length >= 2) {
-            // Show 2 most recently published markets
-            selectedTop2.push(declaredMarkets[0]);
-            selectedTop2.push(declaredMarkets[1]);
-        } else if (declaredMarkets.length === 1) {
-            selectedTop2.push(declaredMarkets[0]);
-            if (pendingMarkets.length > 0) {
-                selectedTop2.push(pendingMarkets[0]);
-            }
-        } else if (pendingMarkets.length >= 2) {
-            selectedTop2.push(pendingMarkets[0]);
-            selectedTop2.push(pendingMarkets[1]);
-        }
-
-        // Render Spotlight HTML
-        if (selectedTop2.length >= 2) {
-            const m1 = selectedTop2[0];
-            const m2 = selectedTop2[1];
-
+        if (m1 && m2) {
             const val1Class = m1.state === "WAITING" ? "blink-wait" : "green-result-number";
             const val2Class = m2.state === "WAITING" ? "blink-wait" : "green-result-number";
 
@@ -269,14 +237,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <div class="pink-market-name">${m2.name}</div>
                 <div class="${val2Class}">${m2.num}</div>
-            `;
-        } else if (selectedTop2.length === 1) {
-            const m1 = selectedTop2[0];
-            const val1Class = m1.state === "WAITING" ? "blink-wait" : "green-result-number";
-
-            spotContainer.innerHTML = `
-                <div class="pink-market-name">${m1.name}</div>
-                <div class="${val1Class}">${m1.num}</div>
             `;
         }
     }
