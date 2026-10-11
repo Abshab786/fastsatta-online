@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Official Firebase 13 Web SDK Module (Asia-Southeast1 Database) -->
+    <!-- Official Firebase 13 Web SDK Module -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
       import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js";
@@ -162,6 +162,86 @@
                 </form>
             </div>
 
+            <!-- Spotlight Manual Pin & Control Manager -->
+            <div style="background: #fce4ec; border: 1.5px solid #e60073; border-radius: 6px; padding: 12px; margin-bottom: 15px;">
+                <h3 style="color: #e60073; font-size: 14px; font-weight: 900; margin-bottom: 10px;">
+                    <i class="fa-solid fa-thumbtack"></i> Spotlight Pin & Override Control
+                </h3>
+
+                <form id="spotlightControlForm">
+                    <div style="margin-bottom: 8px;">
+                        <label for="spotSlot1Market" style="font-size: 11px; font-weight: 900; display: block; color: #000;">Spotlight Slot #1 Market:</label>
+                        <select id="spotSlot1Market" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; font-weight: 900; font-size: 12px;">
+                            <option value="AUTO">AUTO ROTATION (Default Schedule)</option>
+                            <option value="DISAWAR">DISAWAR</option>
+                            <option value="HARYANA KING">HARYANA KING</option>
+                            <option value="RAM BAZAR">RAM BAZAR</option>
+                            <option value="DELHI BAZAR">DELHI BAZAR</option>
+                            <option value="SHREE GANESH">SHREE GANESH</option>
+                            <option value="FARIDABAD">FARIDABAD</option>
+                            <option value="AMBALA KING">AMBALA KING</option>
+                            <option value="GAZIYABAD">GAZIYABAD</option>
+                            <option value="HIMACHAL NIGHT">HIMACHAL NIGHT</option>
+                            <option value="GALI">GALI</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 8px;">
+                        <label for="spotSlot1Status" style="font-size: 11px; font-weight: 900; display: block; color: #000;">Slot #1 Display Status:</label>
+                        <select id="spotSlot1Status" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; font-weight: 900; font-size: 12px;">
+                            <option value="WAITING">SHOW BLINKING "Wait..."</option>
+                            <option value="DECLARED">SHOW DECLARED RESULT NUMBER</option>
+                            <option value="PENDING">SHOW "--"</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 8px;">
+                        <label for="spotSlot2Market" style="font-size: 11px; font-weight: 900; display: block; color: #000;">Spotlight Slot #2 Market:</label>
+                        <select id="spotSlot2Market" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; font-weight: 900; font-size: 12px;">
+                            <option value="AUTO">AUTO ROTATION (Default Schedule)</option>
+                            <option value="DISAWAR">DISAWAR</option>
+                            <option value="HARYANA KING">HARYANA KING</option>
+                            <option value="RAM BAZAR">RAM BAZAR</option>
+                            <option value="DELHI BAZAR">DELHI BAZAR</option>
+                            <option value="SHREE GANESH">SHREE GANESH</option>
+                            <option value="FARIDABAD">FARIDABAD</option>
+                            <option value="AMBALA KING">AMBALA KING</option>
+                            <option value="GAZIYABAD">GAZIYABAD</option>
+                            <option value="HIMACHAL NIGHT">HIMACHAL NIGHT</option>
+                            <option value="GALI">GALI</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 8px;">
+                        <label for="spotSlot2Status" style="font-size: 11px; font-weight: 900; display: block; color: #000;">Slot #2 Display Status:</label>
+                        <select id="spotSlot2Status" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; font-weight: 900; font-size: 12px;">
+                            <option value="WAITING">SHOW BLINKING "Wait..."</option>
+                            <option value="DECLARED">SHOW DECLARED RESULT NUMBER</option>
+                            <option value="PENDING">SHOW "--"</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 10px;">
+                        <label for="spotlightPinTimer" style="font-size: 11px; font-weight: 900; display: block; color: #000;">Pin Duration Timer (समय अवधि):</label>
+                        <select id="spotlightPinTimer" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; font-weight: 900; font-size: 12px;">
+                            <option value="0">INDEFINITE / ALWAYS PINNED</option>
+                            <option value="60">1 HOUR (1 घंटा)</option>
+                            <option value="120">2 HOURS (2 घंटे)</option>
+                            <option value="180">3 HOURS (3 घंटे)</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; gap: 8px;">
+                        <button type="submit" style="flex: 2; background: #e60073; color: #fff; font-weight: 900; font-size: 12px; padding: 8px; border-radius: 4px; border: none; cursor: pointer;">
+                            <i class="fa-solid fa-thumbtack"></i> PIN SPOTLIGHT NOW
+                        </button>
+                        <button type="button" id="clearSpotlightPinBtn" style="flex: 1; background: #333; color: #fff; font-weight: 900; font-size: 12px; padding: 8px; border-radius: 4px; border: none; cursor: pointer;">
+                            <i class="fa-solid fa-trash"></i> UNPIN / AUTO
+                        </button>
+                    </div>
+                </form>
+            </div>
+
             <!-- 2. Telegram / WhatsApp Broadcast Post Generator -->
             <div style="background: #e0f2fe; border: 1.5px solid #0288d1; border-radius: 6px; padding: 12px; margin-bottom: 15px;">
                 <h3 style="color: #0288d1; font-size: 14px; font-weight: 900; margin-bottom: 8px;">
@@ -172,7 +252,7 @@
 🔥 FASTSATTA.ONLINE LIVE RESULT 🔥
 Market: DISAWAR
 Result: [ 27 ]
-Date: 11-10-2026
+Date: 12-10-2026
 Fastest Satta Results on: https://fastsatta.online
                 </textarea>
                 <button onclick="navigator.clipboard.writeText(document.getElementById('broadcastText').value); alert('Broadcast message copied to clipboard!');" style="width: 100%; background: #0288d1; color: #fff; font-weight: 900; font-size: 11px; padding: 6px; border-radius: 4px; border: none; margin-top: 6px; cursor: pointer;">
@@ -233,9 +313,9 @@ Fastest Satta Results on: https://fastsatta.online
             <div style="background: #FFF000; border: 1.5px solid #FF0000; border-radius: 6px; padding: 10px; font-size: 11px; font-weight: bold;">
                 <div style="color: #000; font-weight: 900; margin-bottom: 4px;">📌 Recent Activity Log:</div>
                 <ul id="activityLog" style="margin-left: 15px; color: #000;">
-                    <li>11 Oct 2026 - DISAWAR published [ 27 ] (DECLARED)</li>
-                    <li>10 Oct 2026 - GALI published [ 12 ] (DECLARED)</li>
-                    <li>10 Oct 2026 - GAZIYABAD published [ 71 ] (DECLARED)</li>
+                    <li>12 Oct 2026 - DISAWAR published [ 27 ] (DECLARED)</li>
+                    <li>11 Oct 2026 - GALI published [ 40 ] (DECLARED)</li>
+                    <li>11 Oct 2026 - GAZIYABAD published [ 46 ] (DECLARED)</li>
                 </ul>
             </div>
         </div>
@@ -268,7 +348,7 @@ Fastest Satta Results on: https://fastsatta.online
 
     <script src="js/main.js"></script>
     <script>
-        // Interactive Admin Login, Asia-Southeast1 Database Regional Endpoint Sync
+        // Interactive Admin Login, Spotlight Pin & Sync Engine
         document.addEventListener('DOMContentLoaded', () => {
             const loginForm = document.getElementById('loginForm');
             const loginSection = document.getElementById('loginFormSection');
@@ -288,17 +368,26 @@ Fastest Satta Results on: https://fastsatta.online
             const todayNumInput = document.getElementById('todayNumInput');
             const broadcastText = document.getElementById('broadcastText');
 
+            // Spotlight Pin Form Elements
+            const spotlightControlForm = document.getElementById('spotlightControlForm');
+            const spotSlot1Market = document.getElementById('spotSlot1Market');
+            const spotSlot1Status = document.getElementById('spotSlot1Status');
+            const spotSlot2Market = document.getElementById('spotSlot2Market');
+            const spotSlot2Status = document.getElementById('spotSlot2Status');
+            const spotlightPinTimer = document.getElementById('spotlightPinTimer');
+            const clearSpotlightPinBtn = document.getElementById('clearSpotlightPinBtn');
+
             const masterYesterdayMap = {
-                'DISAWAR': '22',
-                'HARYANA KING': '02',
-                'RAM BAZAR': '83',
-                'DELHI BAZAR': '71',
-                'SHREE GANESH': '06',
-                'FARIDABAD': '08',
-                'AMBALA KING': '15',
-                'GAZIYABAD': '71',
-                'HIMACHAL NIGHT': '92',
-                'GALI': '12'
+                'DISAWAR': '27',
+                'HARYANA KING': '19',
+                'RAM BAZAR': '73',
+                'DELHI BAZAR': '50',
+                'SHREE GANESH': '58',
+                'FARIDABAD': '96',
+                'AMBALA KING': '21',
+                'GAZIYABAD': '46',
+                'HIMACHAL NIGHT': '19',
+                'GALI': '40'
             };
 
             if (resultDateInput) {
@@ -336,6 +425,15 @@ Fastest Satta Results on: https://fastsatta.online
                         if (telegramUrlInput && parsed.telegramUrl) {
                             telegramUrlInput.value = parsed.telegramUrl;
                         }
+                    }
+
+                    const pinnedSpot = localStorage.getItem('fastsatta_spotlight_pin');
+                    if (pinnedSpot) {
+                        const spotData = JSON.parse(pinnedSpot);
+                        if (spotSlot1Market && spotData.m1) spotSlot1Market.value = spotData.m1;
+                        if (spotSlot1Status && spotData.s1) spotSlot1Status.value = spotData.s1;
+                        if (spotSlot2Market && spotData.m2) spotSlot2Market.value = spotData.m2;
+                        if (spotSlot2Status && spotData.s2) spotSlot2Status.value = spotData.s2;
                     }
                 } catch(e) {}
             }
@@ -394,7 +492,6 @@ Fastest Satta Results on: https://fastsatta.online
                 });
             }
 
-            // Write Directly to Asia-Southeast1 Regional Firebase Realtime Database
             async function saveResultToStorage(marketName, resultObj) {
                 let current = {};
                 try {
@@ -449,7 +546,7 @@ Fastest Satta Results on: https://fastsatta.online
                     logItem.textContent = `${resultDate} - ${market} published [ ${todayNum} ] (${status})`;
                     activityLog.insertBefore(logItem, activityLog.firstChild);
 
-                    alert(`Result Published & Worldwide Synced!\nMarket: ${market}\nYesterday: { ${yesterdayNum} } | Today: [ ${todayNum} ]\nStatus: ${status}`);
+                    alert(`Result Published & Live Updated!\nMarket: ${market}\nYesterday: { ${yesterdayNum} } | Today: [ ${todayNum} ]\nStatus: ${status}`);
                     document.getElementById('todayNumInput').value = '';
                 });
             }
@@ -479,6 +576,59 @@ Fastest Satta Results on: https://fastsatta.online
                         alert(`Result for ${market} cleared! Updated on live site.`);
                         document.getElementById('todayNumInput').value = '';
                     }
+                });
+            }
+
+            // Spotlight Pin Submit Handler
+            if (spotlightControlForm) {
+                spotlightControlForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const m1 = spotSlot1Market.value;
+                    const s1 = spotSlot1Status.value;
+                    const m2 = spotSlot2Market.value;
+                    const s2 = spotSlot2Status.value;
+                    const durationMins = parseInt(spotlightPinTimer.value, 10);
+
+                    const expireTime = durationMins > 0 ? Date.now() + durationMins * 60 * 1000 : 0;
+
+                    const pinConfig = {
+                        active: true,
+                        m1: m1,
+                        s1: s1,
+                        m2: m2,
+                        s2: s2,
+                        durationMins: durationMins,
+                        expireTime: expireTime,
+                        timestamp: Date.now()
+                    };
+
+                    localStorage.setItem('fastsatta_spotlight_pin', JSON.stringify(pinConfig));
+
+                    // Write Pin Config to Firebase Realtime Database for worldwide sync
+                    if (window.fbSet && window.firebaseDb && window.fbRef) {
+                        try {
+                            await window.fbSet(window.fbRef(window.firebaseDb, 'spotlight_pin'), pinConfig);
+                        } catch(e1) {}
+                    }
+
+                    alert(`Spotlight Pinned Successfully!\nSlot #1: ${m1} (${s1})\nSlot #2: ${m2} (${s2})\nTimer: ${durationMins > 0 ? durationMins + ' Mins' : 'Indefinite'}`);
+                });
+            }
+
+            if (clearSpotlightPinBtn) {
+                clearSpotlightPinBtn.addEventListener('click', async () => {
+                    localStorage.removeItem('fastsatta_spotlight_pin');
+                    if (spotSlot1Market) spotSlot1Market.value = "AUTO";
+                    if (spotSlot2Market) spotSlot2Market.value = "AUTO";
+
+                    const resetPin = { active: false, timestamp: Date.now() };
+                    if (window.fbSet && window.firebaseDb && window.fbRef) {
+                        try {
+                            await window.fbSet(window.fbRef(window.firebaseDb, 'spotlight_pin'), resetPin);
+                        } catch(e1) {}
+                    }
+
+                    alert('Spotlight Pin Cleared! Resumed Auto Schedule Rotation.');
                 });
             }
 
