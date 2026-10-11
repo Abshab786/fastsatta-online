@@ -1,5 +1,5 @@
 /*
-   FASTSATTA.ONLINE - Dynamic Spot Highlights, Automated Daily Row Generator & Asia-Southeast1 Firebase Sync
+   FASTSATTA.ONLINE - Dynamic Spotlight strictly showing "Wait..." until Admin Result Upload
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     newSpan.style.fontWeight = "900";
 
                     updateTodayTableCell(market.tableIdx, market.colIdx, numValue);
-                } else if (currentTotalMins >= waitStartMins && currentTotalMins < targetMins) {
+                } else if (currentTotalMins >= waitStartMins) {
                     state = "WAITING";
                     displayVal = "Wait...";
                     newSpan.textContent = "Wait...";
@@ -207,6 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // STRICT RULE: Spotlight shows "Wait..." for any active market until Admin Uploads Result!
     function updateDynamicSpotHighlights(marketList, currentTotalMins) {
         const spotContainer = document.querySelector('.spot-results-container');
         if (!spotContainer) return;
@@ -227,19 +228,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const m2 = sortedByProximity[1];
 
         if (m1 && m2) {
-            const val1Class = m1.state === "WAITING" ? "blink-wait" : "green-result-number";
-            const val2Class = m2.state === "WAITING" ? "blink-wait" : "green-result-number";
+            const val1Display = m1.state === "DECLARED" ? m1.num : "Wait...";
+            const val1Class = m1.state === "DECLARED" ? "green-result-number" : "blink-wait";
+
+            const val2Display = m2.state === "DECLARED" ? m2.num : "Wait...";
+            const val2Class = m2.state === "DECLARED" ? "green-result-number" : "blink-wait";
 
             spotContainer.innerHTML = `
                 <div class="pink-market-name">${m1.name}</div>
-                <div class="${val1Class}">${m1.num}</div>
+                <div class="${val1Class}">${val1Display}</div>
 
                 <div class="pink-market-name">${m2.name}</div>
-                <div class="${val2Class}">${m2.num}</div>
+                <div class="${val2Class}">${val2Display}</div>
             `;
         }
     }
 
+    // 5. Automated Daily Row Creation Generator
     function ensureTodayRowExists() {
         const now = new Date();
         const todayDay = String(now.getDate()).padStart(2, '0');
