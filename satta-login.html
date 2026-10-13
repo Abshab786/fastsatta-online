@@ -162,6 +162,44 @@
                 </form>
             </div>
 
+            <!-- Monthly Record Chart Custom Editor -->
+            <div style="background: #e8f5e9; border: 1.5px solid #2e7d32; border-radius: 6px; padding: 12px; margin-bottom: 15px;">
+                <h3 style="color: #2e7d32; font-size: 14px; font-weight: 900; margin-bottom: 10px;">
+                    <i class="fa-solid fa-pen-to-square"></i> Monthly Record Chart Custom Editor
+                </h3>
+                <form id="chartCustomEditorForm">
+                    <div style="margin-bottom: 8px;">
+                        <label for="chartEditDateInput" style="font-size: 11px; font-weight: 900; display: block; color: #000;">Select Target Date (तारीख चुनें):</label>
+                        <input type="date" id="chartEditDateInput" required style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; font-weight: 900; font-size: 13px;">
+                    </div>
+
+                    <div style="margin-bottom: 8px;">
+                        <label for="chartEditMarketSelect" style="font-size: 11px; font-weight: 900; display: block; color: #000;">Select Market (मार्केट चुनें):</label>
+                        <select id="chartEditMarketSelect" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; font-weight: 900; font-size: 12px;">
+                            <option value="DISAWAR">DISAWAR</option>
+                            <option value="HARYANA KING">HARYANA KING</option>
+                            <option value="RAM BAZAR">RAM BAZAR</option>
+                            <option value="DELHI BAZAR">DELHI BAZAR</option>
+                            <option value="SHREE GANESH">SHREE GANESH</option>
+                            <option value="FARIDABAD">FARIDABAD</option>
+                            <option value="AMBALA KING">AMBALA KING</option>
+                            <option value="GAZIYABAD">GAZIYABAD</option>
+                            <option value="HIMACHAL NIGHT">HIMACHAL NIGHT</option>
+                            <option value="GALI">GALI</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 10px;">
+                        <label for="chartEditNumInput" style="font-size: 11px; font-weight: 900; display: block; color: #2e7d32;">Chart Number (चार्ट का नंबर):</label>
+                        <input type="text" id="chartEditNumInput" placeholder="e.g. 40" required style="width: 100%; padding: 6px; border: 1.5px solid #2e7d32; border-radius: 4px; text-align: center; font-weight: 900; font-size: 14px;">
+                    </div>
+
+                    <button type="submit" style="width: 100%; background: #2e7d32; color: #fff; font-weight: 900; font-size: 12px; padding: 8px; border-radius: 4px; border: none; cursor: pointer;">
+                        <i class="fa-solid fa-floppy-disk"></i> SAVE / FIX CHART RECORD
+                    </button>
+                </form>
+            </div>
+
             <!-- Spotlight Manual Pin & Control Manager -->
             <div style="background: #fce4ec; border: 1.5px solid #e60073; border-radius: 6px; padding: 12px; margin-bottom: 15px;">
                 <h3 style="color: #e60073; font-size: 14px; font-weight: 900; margin-bottom: 10px;">
@@ -252,7 +290,7 @@
 🔥 FASTSATTA.ONLINE LIVE RESULT 🔥
 Market: DISAWAR
 Result: [ 27 ]
-Date: 12-10-2026
+Date: 13-10-2026
 Fastest Satta Results on: https://fastsatta.online
                 </textarea>
                 <button onclick="navigator.clipboard.writeText(document.getElementById('broadcastText').value); alert('Broadcast message copied to clipboard!');" style="width: 100%; background: #0288d1; color: #fff; font-weight: 900; font-size: 11px; padding: 6px; border-radius: 4px; border: none; margin-top: 6px; cursor: pointer;">
@@ -348,7 +386,7 @@ Fastest Satta Results on: https://fastsatta.online
 
     <script src="js/main.js"></script>
     <script>
-        // Interactive Admin Login, Spotlight Pin & Sync Engine
+        // Interactive Admin Login, Dynamic Relative Yesterday Auto-Fill
         document.addEventListener('DOMContentLoaded', () => {
             const loginForm = document.getElementById('loginForm');
             const loginSection = document.getElementById('loginFormSection');
@@ -368,6 +406,12 @@ Fastest Satta Results on: https://fastsatta.online
             const todayNumInput = document.getElementById('todayNumInput');
             const broadcastText = document.getElementById('broadcastText');
 
+            // Chart Custom Editor Form Elements
+            const chartCustomEditorForm = document.getElementById('chartCustomEditorForm');
+            const chartEditDateInput = document.getElementById('chartEditDateInput');
+            const chartEditMarketSelect = document.getElementById('chartEditMarketSelect');
+            const chartEditNumInput = document.getElementById('chartEditNumInput');
+
             // Spotlight Pin Form Elements
             const spotlightControlForm = document.getElementById('spotlightControlForm');
             const spotSlot1Market = document.getElementById('spotSlot1Market');
@@ -377,22 +421,28 @@ Fastest Satta Results on: https://fastsatta.online
             const spotlightPinTimer = document.getElementById('spotlightPinTimer');
             const clearSpotlightPinBtn = document.getElementById('clearSpotlightPinBtn');
 
-            const masterYesterdayMap = {
-                'DISAWAR': '27',
-                'HARYANA KING': '19',
-                'RAM BAZAR': '73',
-                'DELHI BAZAR': '50',
-                'SHREE GANESH': '58',
-                'FARIDABAD': '96',
-                'AMBALA KING': '21',
-                'GAZIYABAD': '46',
-                'HIMACHAL NIGHT': '19',
-                'GALI': '40'
+            // Master Historical Dataset Map
+            const masterHistoryMap = {
+                'DISAWAR': { '11': '27', '10': '22', '09': '26' },
+                'HARYANA KING': { '11': '19', '10': '02', '09': '96' },
+                'RAM BAZAR': { '11': '73', '10': '83', '09': '54' },
+                'DELHI BAZAR': { '11': '50', '10': '71', '09': '87' },
+                'SHREE GANESH': { '11': '58', '10': '06', '09': '01' },
+                'FARIDABAD': { '11': '96', '10': '08', '09': '99' },
+                'AMBALA KING': { '11': '21', '10': '15', '09': '77' },
+                'GAZIYABAD': { '11': '46', '10': '71', '09': '89' },
+                'HIMACHAL NIGHT': { '11': '19', '10': '92', '09': '35' },
+                'GALI': { '11': '40', '10': '12', '09': '83' }
             };
 
+            const todayStr = new Date().toISOString().split('T')[0];
+
             if (resultDateInput) {
-                const todayStr = new Date().toISOString().split('T')[0];
                 resultDateInput.value = todayStr;
+            }
+
+            if (chartEditDateInput) {
+                chartEditDateInput.value = todayStr;
             }
 
             function checkSessionSecurity() {
@@ -438,21 +488,51 @@ Fastest Satta Results on: https://fastsatta.online
                 } catch(e) {}
             }
 
+            // Accurate Yesterday Auto-Fill Relative to Selected Date
             function autoFillYesterdayNumber() {
                 if (todayNumInput) {
-                    todayNumInput.value = "";
+                    todayNumInput.value = ""; // Always clear Today box
                 }
 
                 if (marketSelect && yesterdayNumInput) {
                     const selectedMarket = marketSelect.value;
-                    let foundNum = masterYesterdayMap[selectedMarket] || '--';
+                    let selectedDateStr = resultDateInput ? resultDateInput.value : todayStr;
 
+                    // Calculate Yesterday relative to selected date
+                    const selDateObj = new Date(selectedDateStr);
+                    const yestDateObj = new Date(selDateObj.getTime() - 24 * 60 * 60 * 1000);
+                    const yestDayNum = String(yestDateObj.getDate()).padStart(2, '0');
+
+                    let foundNum = "--";
+
+                    // 1. Check Master Dataset Map
+                    if (masterHistoryMap[selectedMarket] && masterHistoryMap[selectedMarket][yestDayNum]) {
+                        foundNum = masterHistoryMap[selectedMarket][yestDayNum];
+                    }
+
+                    // 2. Check Stored Live Results
                     try {
                         const saved = localStorage.getItem('fastsatta_live_results');
                         if (saved) {
                             const parsed = JSON.parse(saved);
-                            if (parsed[selectedMarket] && parsed[selectedMarket].oldNum) {
-                                foundNum = parsed[selectedMarket].oldNum;
+                            if (parsed[selectedMarket]) {
+                                if (parsed[selectedMarket].newNum && parsed[selectedMarket].newNum !== "--") {
+                                    foundNum = parsed[selectedMarket].newNum;
+                                } else if (parsed[selectedMarket].oldNum && parsed[selectedMarket].oldNum !== "--") {
+                                    foundNum = parsed[selectedMarket].oldNum;
+                                }
+                            }
+                        }
+                    } catch(e) {}
+
+                    // 3. Check Custom Chart Overrides
+                    try {
+                        const overrides = localStorage.getItem('fastsatta_chart_overrides');
+                        if (overrides) {
+                            const parsedOvr = JSON.parse(overrides);
+                            const yKey = `${yestDayNum}_${selectedMarket}`;
+                            if (parsedOvr[yKey]) {
+                                foundNum = parsedOvr[yKey];
                             }
                         }
                     } catch(e) {}
@@ -551,6 +631,51 @@ Fastest Satta Results on: https://fastsatta.online
                 });
             }
 
+            // Monthly Record Chart Custom Editor Submit Handler
+            if (chartCustomEditorForm) {
+                chartCustomEditorForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const targetDateVal = chartEditDateInput.value;
+                    const targetMarket = chartEditMarketSelect.value;
+                    const targetNum = chartEditNumInput.value.trim();
+
+                    const dayPart = targetDateVal.split('-')[2] || targetDateVal.split('-')[0];
+                    const key = `${dayPart}_${targetMarket}`;
+
+                    let currentOverrides = {};
+                    try {
+                        const savedOvr = localStorage.getItem('fastsatta_chart_overrides');
+                        if (savedOvr) currentOverrides = JSON.parse(savedOvr);
+                    } catch(err) {}
+
+                    currentOverrides[key] = targetNum;
+                    localStorage.setItem('fastsatta_chart_overrides', JSON.stringify(currentOverrides));
+
+                    if (window.fbSet && window.firebaseDb && window.fbRef) {
+                        try {
+                            await window.fbSet(window.fbRef(window.firebaseDb, 'chart_overrides/' + key), {
+                                date: targetDateVal,
+                                market: targetMarket,
+                                num: targetNum,
+                                timestamp: Date.now()
+                            });
+                        } catch(err1) {}
+                    }
+
+                    const firebaseUrl = `https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app/chart_overrides/${key}.json`;
+                    try {
+                        await fetch(firebaseUrl, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ date: targetDateVal, market: targetMarket, num: targetNum, timestamp: Date.now() })
+                        });
+                    } catch(err2) {}
+
+                    alert(`Chart Record Saved & Updated!\nDate: ${targetDateVal}\nMarket: ${targetMarket}\nNumber: ${targetNum}`);
+                    chartEditNumInput.value = '';
+                });
+            }
+
             if (deleteResultBtn) {
                 deleteResultBtn.addEventListener('click', async () => {
                     const market = document.getElementById('marketSelect').value;
@@ -604,7 +729,6 @@ Fastest Satta Results on: https://fastsatta.online
 
                     localStorage.setItem('fastsatta_spotlight_pin', JSON.stringify(pinConfig));
 
-                    // Write Pin Config to Firebase Realtime Database for worldwide sync
                     if (window.fbSet && window.firebaseDb && window.fbRef) {
                         try {
                             await window.fbSet(window.fbRef(window.firebaseDb, 'spotlight_pin'), pinConfig);
