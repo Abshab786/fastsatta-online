@@ -1,5 +1,5 @@
 /*
-   FASTSATTA.ONLINE - Dynamic Spotlight Pin Engine with Declared Number Display
+   FASTSATTA.ONLINE - Dynamic Spot Highlights, Chart Overrides & Local/Firebase Sync
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const m = dateMap.month;
         const y = dateMap.year;
 
-        const formattedDash = `${d}-${m}-${y}`; // e.g. "12-10-2026"
-        const isoDash = `${y}-${m}-${d}`;       // e.g. "2026-10-12"
+        const formattedDash = `${d}-${m}-${y}`; // e.g. "13-10-2026"
+        const isoDash = `${y}-${m}-${d}`;       // e.g. "2026-10-13"
 
         const yesterdayDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
         const yParts = formatter.formatToParts(yesterdayDate);
@@ -125,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         checkTimeBasedResults();
+        applyChartCustomOverrides();
     }
 
     // 4. Markets Master Config
@@ -162,6 +163,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (fbData) {
                     localStorage.setItem('fastsatta_live_results', JSON.stringify(fbData));
                     checkTimeBasedResults();
+                }
+            }
+        } catch (e) {}
+
+        // Sync Custom Chart Overrides from Firebase
+        const chartFirebaseUrl = "https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app/chart_overrides.json";
+        try {
+            const response2 = await fetch(chartFirebaseUrl);
+            if (response2.ok) {
+                const chartData = await response2.json();
+                if (chartData) {
+                    let mapData = {};
+                    for (const k in chartData) {
+                        if (chartData[k] && chartData[k].num) {
+                            mapData[k] = chartData[k].num;
+                        }
+                    }
+                    localStorage.setItem('fastsatta_chart_overrides', JSON.stringify(mapData));
+                    applyChartCustomOverrides();
                 }
             }
         } catch (e) {}
@@ -296,7 +316,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Dynamic Sequential Spotlight Engine (Support for Pinned Declared Number Display)
+    // Apply Admin Custom Chart Record Overrides
+    function applyChartCustomOverrides() {
+        try {
+            const savedOverrides = localStorage.getItem('fastsatta_chart_overrides');
+            if (savedOverrides) {
+                const overrides = JSON.parse(savedOverrides);
+                for (const key in overrides) {
+                    const parts = key.split('_'); // e.g. ["11", "GALI"]
+                    const dayPart = parts[0];
+                    const marketName = parts[1];
+                    const customNum = overrides[key];
+
+                    const foundMarket = defaultMarketsData.find(m => m.name === marketName);
+                    if (foundMarket) {
+                        updateSpecificDateTableCell(foundMarket.tableIdx, foundMarket.colIdx, dayPart, customNum);
+                    }
+                }
+            }
+        } catch(e) {}
+    }
+
+    // Dynamic Sequential Spotlight Engine
     function updateDynamicSpotHighlights(marketList, currentTotalMins) {
         const spotContainer = document.querySelector('.spot-results-container');
         if (!spotContainer) return;
@@ -358,7 +399,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (m1 && m2) {
-            // Number Resolution for Declared State
             let val1Num = m1.num;
             if (val1Num === "--" || val1Num === "Wait...") {
                 val1Num = (m1.lastDeclaredNum && m1.lastDeclaredNum !== "--") ? m1.lastDeclaredNum : m1.oldNum;
@@ -420,6 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     ensureTodayRowExists();
+    applyChartCustomOverrides();
 
     syncFirebaseResults();
     setInterval(syncFirebaseResults, 3000);
@@ -434,6 +475,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 syncFirebaseResults();
                 checkTimeBasedResults();
+                applyChartCustomOverrides();
                 window.location.reload();
             }, 300);
         });
