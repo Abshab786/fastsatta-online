@@ -1,5 +1,5 @@
 /*
-   FASTSATTA.ONLINE - Dynamic Spot Highlights, Chart Overrides & Local/Firebase Sync
+   FASTSATTA.ONLINE - Production Engine: Universal Day Extraction & Historical Chart Protection
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,6 +8,22 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
         localStorage.removeItem('fastsatta_live_results');
     } catch(e) {}
+
+    // Helper: Extract 2-digit day number from any date format (YYYY-MM-DD or DD-MM-YYYY)
+    function extractDayNumber(dateStr) {
+        if (!dateStr) return "";
+        const parts = dateStr.split('-');
+        if (parts.length === 3) {
+            if (parts[0].length === 4) {
+                // ISO: YYYY-MM-DD -> day is parts[2]
+                return parts[2];
+            } else {
+                // Dash: DD-MM-YYYY -> day is parts[0]
+                return parts[0];
+            }
+        }
+        return dateStr;
+    }
 
     // Helper: Compute Date & Time strictly in Asia/Kolkata (IST - UTC+05:30)
     function getKolkataDateInfo() {
@@ -167,7 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (e) {}
 
-        // Sync Custom Chart Overrides from Firebase
         const chartFirebaseUrl = "https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app/chart_overrides.json";
         try {
             const response2 = await fetch(chartFirebaseUrl);
@@ -298,8 +313,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Universal Day Matching Cell Updater (Handles YYYY-MM-DD and DD-MM-YYYY)
     function updateSpecificDateTableCell(tableIdx, colIndex, dateStr, value) {
-        const dayPart = dateStr.split('-')[0];
+        const dayPart = extractDayNumber(dateStr);
+        if (!dayPart) return;
+
         const historyTables = document.querySelectorAll('.history-table');
         if (historyTables && historyTables[tableIdx]) {
             const rows = historyTables[tableIdx].querySelectorAll('tbody tr');
