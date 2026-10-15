@@ -1,5 +1,5 @@
 /*
-   FASTSATTA.ONLINE - Production Engine: Universal Day Extraction & Historical Chart Protection
+   FASTSATTA.ONLINE - Production Engine: Black Color Chart Digits & Universal Non-Colliding Historical Engine
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,20 +9,34 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem('fastsatta_live_results');
     } catch(e) {}
 
-    // Helper: Extract 2-digit day number from any date format (YYYY-MM-DD or DD-MM-YYYY)
-    function extractDayNumber(dateStr) {
-        if (!dateStr) return "";
-        const parts = dateStr.split('-');
-        if (parts.length === 3) {
-            if (parts[0].length === 4) {
-                // ISO: YYYY-MM-DD -> day is parts[2]
-                return parts[2];
-            } else {
-                // Dash: DD-MM-YYYY -> day is parts[0]
-                return parts[0];
-            }
+    // Universal Date String Parser
+    function parseDateStringToComponents(dateStr) {
+        if (!dateStr) return null;
+        const clean = dateStr.trim().replace(/\//g, '-');
+        const parts = clean.split('-');
+        if (parts.length !== 3) return null;
+
+        let y, m, d;
+        if (parts[0].length === 4) {
+            y = parts[0];
+            m = parts[1].padStart(2, '0');
+            d = parts[2].padStart(2, '0');
+        } else if (parts[2].length === 4) {
+            d = parts[0].padStart(2, '0');
+            m = parts[1].padStart(2, '0');
+            y = parts[2];
+        } else {
+            return null;
         }
-        return dateStr;
+
+        return {
+            day: d,
+            month: m,
+            year: y,
+            dashFormatted: `${d}-${m}-${y}`,
+            isoFormatted: `${y}-${m}-${d}`,
+            storageKey: `${y}_${m}_${d}`
+        };
     }
 
     // Helper: Compute Date & Time strictly in Asia/Kolkata (IST - UTC+05:30)
@@ -47,8 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const m = dateMap.month;
         const y = dateMap.year;
 
-        const formattedDash = `${d}-${m}-${y}`; // e.g. "13-10-2026"
-        const isoDash = `${y}-${m}-${d}`;       // e.g. "2026-10-13"
+        const formattedDash = `${d}-${m}-${y}`; // e.g. "15-10-2026"
+        const isoDash = `${y}-${m}-${d}`;       // e.g. "2026-10-15"
 
         const yesterdayDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
         const yParts = formatter.formatToParts(yesterdayDate);
@@ -296,27 +310,23 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDynamicSpotHighlights(activeMarketList, currentMins);
     }
 
+    // Update today-row (All digits in table strictly BLACK color)
     function updateTodayTableCell(tableIdx, colIndex, value) {
         const historyTables = document.querySelectorAll('.history-table');
         if (historyTables && historyTables[tableIdx]) {
             const todayRow = historyTables[tableIdx].querySelector('tbody tr.today-row');
             if (todayRow && todayRow.cells[colIndex]) {
                 todayRow.cells[colIndex].textContent = value;
-                if (value !== "--" && value !== "Wait...") {
-                    todayRow.cells[colIndex].style.color = "#16A34A";
-                    todayRow.cells[colIndex].style.fontWeight = "900";
-                } else {
-                    todayRow.cells[colIndex].style.color = "#000000";
-                    todayRow.cells[colIndex].style.fontWeight = "normal";
-                }
+                todayRow.cells[colIndex].style.color = "#000000";
+                todayRow.cells[colIndex].style.fontWeight = "bold";
             }
         }
     }
 
-    // Universal Day Matching Cell Updater (Handles YYYY-MM-DD and DD-MM-YYYY)
+    // Update specific date row in table (All digits in table strictly BLACK color)
     function updateSpecificDateTableCell(tableIdx, colIndex, dateStr, value) {
-        const dayPart = extractDayNumber(dateStr);
-        if (!dayPart) return;
+        const dateComp = parseDateStringToComponents(dateStr);
+        const dayPart = dateComp ? dateComp.day : dateStr;
 
         const historyTables = document.querySelectorAll('.history-table');
         if (historyTables && historyTables[tableIdx]) {
@@ -326,28 +336,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (dateCell && dateCell.textContent.startsWith(dayPart)) {
                     if (row.cells[colIndex]) {
                         row.cells[colIndex].textContent = value;
-                        row.cells[colIndex].style.color = "#16A34A";
-                        row.cells[colIndex].style.fontWeight = "900";
+                        row.cells[colIndex].style.color = "#000000";
+                        row.cells[colIndex].style.fontWeight = "bold";
                     }
                 }
             });
         }
     }
 
-    // Apply Admin Custom Chart Record Overrides
+    // Apply Admin Custom Chart Record Overrides (Strictly Black Color Digits)
     function applyChartCustomOverrides() {
         try {
             const savedOverrides = localStorage.getItem('fastsatta_chart_overrides');
             if (savedOverrides) {
                 const overrides = JSON.parse(savedOverrides);
                 for (const key in overrides) {
-                    const parts = key.split('_'); // e.g. ["11", "GALI"]
-                    const dayPart = parts[0];
-                    const marketName = parts[1];
-                    const customNum = overrides[key];
+                    const parts = key.split('_');
+                    let dayPart = "";
+                    let marketName = "";
 
+                    if (parts.length === 4) {
+                        dayPart = parts[2];
+                        marketName = parts[3];
+                    } else if (parts.length === 2) {
+                        dayPart = parts[0];
+                        marketName = parts[1];
+                    }
+
+                    const customNum = overrides[key];
                     const foundMarket = defaultMarketsData.find(m => m.name === marketName);
-                    if (foundMarket) {
+                    if (foundMarket && dayPart) {
                         updateSpecificDateTableCell(foundMarket.tableIdx, foundMarket.colIdx, dayPart, customNum);
                     }
                 }
