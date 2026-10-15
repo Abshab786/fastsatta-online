@@ -290,7 +290,7 @@
 🔥 FASTSATTA.ONLINE LIVE RESULT 🔥
 Market: DISAWAR
 Result: [ 27 ]
-Date: 13-10-2026
+Date: 15-10-2026
 Fastest Satta Results on: https://fastsatta.online
                 </textarea>
                 <button onclick="navigator.clipboard.writeText(document.getElementById('broadcastText').value); alert('Broadcast message copied to clipboard!');" style="width: 100%; background: #0288d1; color: #fff; font-weight: 900; font-size: 11px; padding: 6px; border-radius: 4px; border: none; margin-top: 6px; cursor: pointer;">
@@ -351,9 +351,9 @@ Fastest Satta Results on: https://fastsatta.online
             <div style="background: #FFF000; border: 1.5px solid #FF0000; border-radius: 6px; padding: 10px; font-size: 11px; font-weight: bold;">
                 <div style="color: #000; font-weight: 900; margin-bottom: 4px;">📌 Recent Activity Log:</div>
                 <ul id="activityLog" style="margin-left: 15px; color: #000;">
-                    <li>12 Oct 2026 - DISAWAR published [ 27 ] (DECLARED)</li>
-                    <li>11 Oct 2026 - GALI published [ 40 ] (DECLARED)</li>
-                    <li>11 Oct 2026 - GAZIYABAD published [ 46 ] (DECLARED)</li>
+                    <li>15 Oct 2026 - DISAWAR published [ 27 ] (DECLARED)</li>
+                    <li>14 Oct 2026 - GALI published [ 40 ] (DECLARED)</li>
+                    <li>14 Oct 2026 - GAZIYABAD published [ 46 ] (DECLARED)</li>
                 </ul>
             </div>
         </div>
@@ -386,7 +386,39 @@ Fastest Satta Results on: https://fastsatta.online
 
     <script src="js/main.js"></script>
     <script>
-        // Interactive Admin Login, Permanent Historical Preservation & Direct Firebase Archive
+        // Universal Non-Colliding Date Component Extractor
+        function parseDateStringToComponents(dateStr) {
+            if (!dateStr) return null;
+            const clean = dateStr.trim().replace(/\//g, '-');
+            const parts = clean.split('-');
+            if (parts.length !== 3) return null;
+
+            let y, m, d;
+            if (parts[0].length === 4) {
+                // ISO Format: YYYY-MM-DD
+                y = parts[0];
+                m = parts[1].padStart(2, '0');
+                d = parts[2].padStart(2, '0');
+            } else if (parts[2].length === 4) {
+                // Dash Format: DD-MM-YYYY
+                d = parts[0].padStart(2, '0');
+                m = parts[1].padStart(2, '0');
+                y = parts[2];
+            } else {
+                return null;
+            }
+
+            return {
+                day: d,
+                month: m,
+                year: y,
+                dashFormatted: `${d}-${m}-${y}`,
+                isoFormatted: `${y}-${m}-${d}`,
+                storageKey: `${y}_${m}_${d}`
+            };
+        }
+
+        // Interactive Admin Login, Permanent Unique Key Archive Engine
         document.addEventListener('DOMContentLoaded', () => {
             const loginForm = document.getElementById('loginForm');
             const loginSection = document.getElementById('loginFormSection');
@@ -423,16 +455,16 @@ Fastest Satta Results on: https://fastsatta.online
 
             // Master Historical Dataset Map
             const masterHistoryMap = {
-                'DISAWAR': { '12': '27', '11': '27', '10': '22', '09': '26' },
-                'HARYANA KING': { '12': '19', '11': '19', '10': '02', '09': '96' },
-                'RAM BAZAR': { '12': '73', '11': '73', '10': '83', '09': '54' },
-                'DELHI BAZAR': { '12': '50', '11': '50', '10': '71', '09': '87' },
-                'SHREE GANESH': { '12': '58', '11': '58', '10': '06', '09': '01' },
-                'FARIDABAD': { '12': '96', '11': '96', '10': '08', '09': '99' },
-                'AMBALA KING': { '12': '21', '11': '21', '10': '15', '09': '77' },
-                'GAZIYABAD': { '12': '46', '11': '46', '10': '71', '09': '89' },
-                'HIMACHAL NIGHT': { '12': '19', '11': '19', '10': '92', '09': '35' },
-                'GALI': { '12': '40', '11': '40', '10': '12', '09': '83' }
+                'DISAWAR': { '14': '27', '13': '27', '12': '27', '11': '27', '10': '22', '09': '26' },
+                'HARYANA KING': { '14': '19', '13': '19', '12': '19', '11': '19', '10': '02', '09': '96' },
+                'RAM BAZAR': { '14': '73', '13': '73', '12': '73', '11': '73', '10': '83', '09': '54' },
+                'DELHI BAZAR': { '14': '50', '13': '50', '12': '50', '11': '50', '10': '71', '09': '87' },
+                'SHREE GANESH': { '14': '58', '13': '58', '12': '58', '11': '58', '10': '06', '09': '01' },
+                'FARIDABAD': { '14': '96', '13': '96', '12': '96', '11': '96', '10': '08', '09': '99' },
+                'AMBALA KING': { '14': '21', '13': '21', '12': '21', '11': '21', '10': '15', '09': '77' },
+                'GAZIYABAD': { '14': '46', '13': '46', '12': '46', '11': '46', '10': '71', '09': '89' },
+                'HIMACHAL NIGHT': { '14': '19', '13': '19', '12': '19', '11': '19', '10': '92', '09': '35' },
+                'GALI': { '14': '40', '13': '40', '12': '40', '11': '40', '10': '12', '09': '83' }
             };
 
             const todayStr = new Date().toISOString().split('T')[0];
@@ -498,9 +530,14 @@ Fastest Satta Results on: https://fastsatta.online
                     const selectedMarket = marketSelect.value;
                     let selectedDateStr = resultDateInput ? resultDateInput.value : todayStr;
 
-                    const selDateObj = new Date(selectedDateStr);
-                    const yestDateObj = new Date(selDateObj.getTime() - 24 * 60 * 60 * 1000);
-                    const yestDayNum = String(yestDateObj.getDate()).padStart(2, '0');
+                    const dateComp = parseDateStringToComponents(selectedDateStr);
+                    let yestDayNum = "14";
+
+                    if (dateComp) {
+                        const selDateObj = new Date(parseInt(dateComp.year, 10), parseInt(dateComp.month, 10) - 1, parseInt(dateComp.day, 10));
+                        const yestDateObj = new Date(selDateObj.getTime() - 24 * 60 * 60 * 1000);
+                        yestDayNum = String(yestDateObj.getDate()).padStart(2, '0');
+                    }
 
                     let foundNum = "--";
 
@@ -509,26 +546,18 @@ Fastest Satta Results on: https://fastsatta.online
                     }
 
                     try {
-                        const saved = localStorage.getItem('fastsatta_live_results');
-                        if (saved) {
-                            const parsed = JSON.parse(saved);
-                            if (parsed[selectedMarket]) {
-                                if (parsed[selectedMarket].newNum && parsed[selectedMarket].newNum !== "--") {
-                                    foundNum = parsed[selectedMarket].newNum;
-                                } else if (parsed[selectedMarket].oldNum && parsed[selectedMarket].oldNum !== "--") {
-                                    foundNum = parsed[selectedMarket].oldNum;
-                                }
-                            }
-                        }
-                    } catch(e) {}
-
-                    try {
                         const overrides = localStorage.getItem('fastsatta_chart_overrides');
                         if (overrides) {
                             const parsedOvr = JSON.parse(overrides);
-                            const yKey = `${yestDayNum}_${selectedMarket}`;
-                            if (parsedOvr[yKey]) {
-                                foundNum = parsedOvr[yKey];
+                            // Check unique storage key format
+                            if (dateComp) {
+                                const yKey = `${dateComp.year}_${dateComp.month}_${yestDayNum}_${selectedMarket}`;
+                                const legacyKey = `${yestDayNum}_${selectedMarket}`;
+                                if (parsedOvr[yKey]) {
+                                    foundNum = parsedOvr[yKey];
+                                } else if (parsedOvr[legacyKey]) {
+                                    foundNum = parsedOvr[legacyKey];
+                                }
                             }
                         }
                     } catch(e) {}
@@ -568,12 +597,12 @@ Fastest Satta Results on: https://fastsatta.online
                 });
             }
 
-            // PERMANENT HISTORICAL ARCHIVE SAVE ENGINE
+            // PERMANENT NON-COLLIDING HISTORICAL ARCHIVE SAVE ENGINE
             async function saveResultToStorage(marketName, resultObj) {
-                const dayPart = resultObj.date.split('-')[2] || resultObj.date.split('-')[0];
-                const key = `${dayPart}_${marketName}`;
+                const dateComp = parseDateStringToComponents(resultObj.date);
+                const uniqueKey = dateComp ? `${dateComp.storageKey}_${marketName}` : `${resultObj.date}_${marketName}`;
 
-                // 1. Save to Live Active Pointers
+                // 1. Save to Live Active Pointer
                 let current = {};
                 try {
                     const saved = localStorage.getItem('fastsatta_live_results');
@@ -583,14 +612,14 @@ Fastest Satta Results on: https://fastsatta.online
                 current[marketName] = resultObj;
                 localStorage.setItem('fastsatta_live_results', JSON.stringify(current));
 
-                // 2. Save to Permanent Local Overrides Map (Never Purged)
+                // 2. Save to Permanent Local Chart Overrides Map (100% Unique Key per Date & Market)
                 let overrides = {};
                 try {
                     const savedOvr = localStorage.getItem('fastsatta_chart_overrides');
                     if (savedOvr) overrides = JSON.parse(savedOvr);
                 } catch(e) {}
 
-                overrides[key] = resultObj.newNum;
+                overrides[uniqueKey] = resultObj.newNum;
                 localStorage.setItem('fastsatta_chart_overrides', JSON.stringify(overrides));
 
                 // 3. Save to Firebase Realtime Database
@@ -598,8 +627,8 @@ Fastest Satta Results on: https://fastsatta.online
                     try {
                         // Write Live Pointer
                         await window.fbSet(window.fbRef(window.firebaseDb, 'results/' + marketName), resultObj);
-                        // Write Permanent Historical Archive
-                        await window.fbSet(window.fbRef(window.firebaseDb, 'chart_overrides/' + key), {
+                        // Write Permanent Unique Historical Archive
+                        await window.fbSet(window.fbRef(window.firebaseDb, 'chart_overrides/' + uniqueKey), {
                             date: resultObj.date,
                             market: marketName,
                             num: resultObj.newNum,
@@ -608,9 +637,9 @@ Fastest Satta Results on: https://fastsatta.online
                     } catch(err1) {}
                 }
 
-                // REST API Write
+                // REST API Write Fallback
                 const firebaseUrl1 = `https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app/results/${encodeURIComponent(marketName)}.json`;
-                const firebaseUrl2 = `https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app/chart_overrides/${key}.json`;
+                const firebaseUrl2 = `https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app/chart_overrides/${uniqueKey}.json`;
 
                 try {
                     await fetch(firebaseUrl1, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(resultObj) });
@@ -659,8 +688,8 @@ Fastest Satta Results on: https://fastsatta.online
                     const targetMarket = chartEditMarketSelect.value;
                     const targetNum = chartEditNumInput.value.trim();
 
-                    const dayPart = targetDateVal.split('-')[2] || targetDateVal.split('-')[0];
-                    const key = `${dayPart}_${targetMarket}`;
+                    const dateComp = parseDateStringToComponents(targetDateVal);
+                    const uniqueKey = dateComp ? `${dateComp.storageKey}_${targetMarket}` : `${targetDateVal}_${targetMarket}`;
 
                     let currentOverrides = {};
                     try {
@@ -668,12 +697,12 @@ Fastest Satta Results on: https://fastsatta.online
                         if (savedOvr) currentOverrides = JSON.parse(savedOvr);
                     } catch(err) {}
 
-                    currentOverrides[key] = targetNum;
+                    currentOverrides[uniqueKey] = targetNum;
                     localStorage.setItem('fastsatta_chart_overrides', JSON.stringify(currentOverrides));
 
                     if (window.fbSet && window.firebaseDb && window.fbRef) {
                         try {
-                            await window.fbSet(window.fbRef(window.firebaseDb, 'chart_overrides/' + key), {
+                            await window.fbSet(window.fbRef(window.firebaseDb, 'chart_overrides/' + uniqueKey), {
                                 date: targetDateVal,
                                 market: targetMarket,
                                 num: targetNum,
@@ -682,7 +711,7 @@ Fastest Satta Results on: https://fastsatta.online
                         } catch(err1) {}
                     }
 
-                    const firebaseUrl = `https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app/chart_overrides/${key}.json`;
+                    const firebaseUrl = `https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app/chart_overrides/${uniqueKey}.json`;
                     try {
                         await fetch(firebaseUrl, {
                             method: 'PUT',
