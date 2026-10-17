@@ -1,5 +1,5 @@
 /*
-   FASTSATTA.ONLINE - Production Engine: Black Color Chart Digits & Universal Non-Colliding Historical Engine
+   FASTSATTA.ONLINE - Dynamic Sequential Month Row Generator & Permanent History Protection
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -61,8 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const m = dateMap.month;
         const y = dateMap.year;
 
-        const formattedDash = `${d}-${m}-${y}`; // e.g. "15-10-2026"
-        const isoDash = `${y}-${m}-${d}`;       // e.g. "2026-10-15"
+        const formattedDash = `${d}-${m}-${y}`; // e.g. "17-10-2026"
+        const isoDash = `${y}-${m}-${d}`;       // e.g. "2026-10-17"
 
         const yesterdayDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
         const yParts = formatter.formatToParts(yesterdayDate);
@@ -463,35 +463,54 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Ensure ALL days of the month up to today exist in perfect chronological order!
     function ensureTodayRowExists() {
         const info = getKolkataDateInfo();
+        const targetDayInt = parseInt(info.todayDay, 10);
 
         const tables = document.querySelectorAll('.history-table tbody');
         tables.forEach(tbody => {
-            let rowFound = false;
             const rows = tbody.querySelectorAll('tr');
+            let existingDays = [];
 
             rows.forEach(row => {
                 const dateCell = row.cells[0];
-                if (dateCell && dateCell.textContent.startsWith(info.todayDay)) {
-                    rowFound = true;
-                    row.classList.add('today-row');
-                } else {
-                    row.classList.remove('today-row');
+                if (dateCell) {
+                    const dayNum = parseInt(dateCell.textContent.split('-')[0], 10);
+                    if (!isNaN(dayNum)) {
+                        existingDays.push(dayNum);
+                    }
                 }
             });
 
-            if (!rowFound) {
-                const newTr = document.createElement('tr');
-                newTr.classList.add('today-row');
+            const maxDay = existingDays.length > 0 ? Math.max(...existingDays) : 0;
 
-                let tdHTML = `<td class="date-cell">${info.formattedDash}</td>`;
+            for (let d = maxDay + 1; d <= targetDayInt; d++) {
+                const dStr = String(d).padStart(2, '0');
+                const newTr = document.createElement('tr');
+                if (d === targetDayInt) {
+                    newTr.classList.add('today-row');
+                }
+
+                const monthStr = info.formattedDash.split('-')[1];
+                const yearStr = info.formattedDash.split('-')[2];
+                let tdHTML = `<td class="date-cell">${dStr}-${monthStr}-${yearStr}</td>`;
                 for (let i = 0; i < 5; i++) {
                     tdHTML += `<td>--</td>`;
                 }
                 newTr.innerHTML = tdHTML;
                 tbody.appendChild(newTr);
             }
+
+            const updatedRows = tbody.querySelectorAll('tr');
+            updatedRows.forEach(row => {
+                const dateCell = row.cells[0];
+                if (dateCell && dateCell.textContent.startsWith(info.todayDay)) {
+                    row.classList.add('today-row');
+                } else {
+                    row.classList.remove('today-row');
+                }
+            });
         });
     }
 
