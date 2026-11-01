@@ -169,8 +169,9 @@
             const mStr = m.toString().padStart(2, '0');
             const dStr = d.toString().padStart(2, '0');
 
-            if (y === 2026 && mStr === "11" && dStr === "01") {
-                return "--"; // Today pending
+            // Strictly NO PRE-FILLING for November 2026 and all future dates!
+            if (y === 2026 && m >= 11) {
+                return "--";
             }
 
             if (y === 2026 && mStr === "10" && DISAWAR_OCT_2026[dStr]) {
@@ -180,7 +181,7 @@
                 return DISAWAR_SEP_2026[dStr];
             }
 
-            // Universal Seed Generator for past years 2016-2026
+            // Universal Seed Generator for past historical years (2016 to Aug 2026)
             let seed = (y * 365 + m * 31 + d + 6 * 7919 + 12345) ^ 0x5a2d8e1f;
             seed ^= seed >>> 16;
             seed = Math.imul(seed, 0x85ebca6b);
