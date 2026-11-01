@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delhi Nagar Publisher Panel | FastSatta.online</title>
+    <meta name="description" content="Dedicated Delhi Nagar Result Publisher Portal for FastSatta.online.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Official Firebase 13 Web SDK Module -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+      import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDpbzwtWE0eVvHLQgfjqfewwKM8VFgp9Fc",
+        authDomain: "fastsatta-online.firebaseapp.com",
+        databaseURL: "https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "fastsatta-online",
+        storageBucket: "fastsatta-online.firebasestorage.app",
+        messagingSenderId: "1005022608107",
+        appId: "1:1005022608107:web:30943555ceff104a321cae",
+        measurementId: "G-FQ3FPC2SXW"
+      };
+
+      try {
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        window.firebaseDb = db;
+        window.fbRef = ref;
+        window.fbSet = set;
+        window.fbOnValue = onValue;
+      } catch(e) {}
+    </script>
+</head>
+<body>
+
+    <!-- 1. Top Keywords Banner -->
+    <div class="top-keywords-bar">
+        FastSatta.online | Delhi Nagar Result Publisher Login Portal
+    </div>
+
+    <!-- 2. Navigation Bar -->
+    <nav class="main-nav">
+        <div class="container">
+            <div class="nav-grid">
+                <a href="index.html" class="nav-btn">HOME</a>
+                <a href="chart.html" class="nav-btn">CHART</a>
+                <a href="satta-king.html" class="nav-btn">SATTA</a>
+                <a href="delhi-nagar-admin.html" class="nav-btn active">DELHI NAGAR</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 3. Yellow Title Bar -->
+    <div class="yellow-title-bar">
+        DELHI NAGAR PUBLISHER LOGIN
+    </div>
+
+    <div class="container" style="max-width: 520px;">
+        <header class="domain-header-banner">
+            <div class="sub-header-label">BEST SITE SATTA RESULT</div>
+            <div class="main-domain-title">WWW.FASTSATTA.ONLINE</div>
+        </header>
+
+        <!-- DEDICATED PASSWORD-ONLY LOGIN FORM -->
+        <div id="loginFormSection" style="background: #ffffff; border: 2px solid #000; border-radius: 8px; padding: 20px; text-align: center; margin: 15px 0;">
+            <h2 style="color: #1877F2; font-size: 18px; font-weight: 900; margin-bottom: 15px;">
+                <i class="fa-solid fa-lock"></i> DELHI NAGAR SECRET ACCESS
+            </h2>
+
+            <form id="loginForm">
+                <div style="margin-bottom: 18px; text-align: left;">
+                    <label for="passwordInput" style="font-weight: 900; font-size: 12px; display: block; margin-bottom: 6px; color: #000;">Enter Secret Password (पासवर्ड दर्ज करें):</label>
+                    <input type="password" id="passwordInput" placeholder="Enter Password" required style="width: 100%; padding: 10px; border: 1.5px solid #000; border-radius: 4px; font-size: 14px; font-weight: bold;">
+                </div>
+
+                <button type="submit" style="width: 100%; background: #1877F2; color: #ffffff; font-weight: 900; font-size: 14px; padding: 10px; border-radius: 6px; border: 1.5px solid #16A34A; cursor: pointer;">
+                    <i class="fa-solid fa-right-to-bracket"></i> UNLOCK DELHI NAGAR PANEL
+                </button>
+            </form>
+
+            <div style="margin-top: 15px; font-size: 11.5px; color: #333;">
+                FastSatta.online Secret Publisher Portal <br>
+                <a href="index.html" style="color: #1877F2; font-weight: 900; text-decoration: underline;">Go to Main Website</a>
+            </div>
+        </div>
+
+        <!-- DEDICATED DELHI NAGAR DASHBOARD -->
+        <div id="dashboardSection" style="display: none; background: #ffffff; border: 2px solid #000; border-radius: 8px; padding: 16px; margin: 15px 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1877F2; padding-bottom: 8px; margin-bottom: 15px;">
+                <h2 style="color: #1877F2; font-size: 16px; font-weight: 900; margin: 0;">
+                    <i class="fa-solid fa-gauge"></i> DELHI NAGAR (04:10 PM) PANEL
+                </h2>
+                <button id="logoutBtn" style="background: #FF0000; color: #fff; border: none; font-size: 11px; font-weight: 900; padding: 4px 10px; border-radius: 4px; cursor: pointer;">
+                    <i class="fa-solid fa-power-off"></i> LOGOUT
+                </button>
+            </div>
+
+            <!-- Single Dedicated Market Form -->
+            <div style="background: #f8fafc; border: 1.5px solid #1877F2; border-radius: 6px; padding: 12px; margin-bottom: 15px;">
+                <h3 style="color: #16A34A; font-size: 14px; font-weight: 900; margin-bottom: 10px;">
+                    <i class="fa-solid fa-bolt"></i> Publish Delhi Nagar Result
+                </h3>
+                <form id="publishResultForm">
+                    <div style="margin-bottom: 8px;">
+                        <label for="resultDateInput" style="font-size: 11px; font-weight: 900; display: block; color: #000;">Select Result Date (तारिख चुनें):</label>
+                        <input type="date" id="resultDateInput" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; font-weight: 900; font-size: 13px;">
+                    </div>
+
+                    <div style="margin-bottom: 8px;">
+                        <label for="marketSelect" style="font-size: 11px; font-weight: 900; display: block; color: #000;">Target Market:</label>
+                        <input type="text" id="marketSelect" value="DELHI NAGAR (04:10 PM)" readonly style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; font-weight: 900; font-size: 13px; background: #e2e8f0; color: #1877F2;">
+                    </div>
+
+                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                        <div style="flex: 1;">
+                            <label for="yesterdayNumInput" style="font-size: 10.5px; font-weight: 900; display: block; color: #000;">Yesterday Result ({ XX })</label>
+                            <input type="text" id="yesterdayNumInput" value="27" placeholder="Auto-filled" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; text-align: center; font-weight: 900; background: #fffde7;">
+                        </div>
+                        <div style="flex: 1;">
+                            <label for="todayNumInput" style="font-size: 10.5px; font-weight: 900; display: block; color: #16A34A;">Today Result ([ YY ])</label>
+                            <input type="text" id="todayNumInput" placeholder="Enter Today Number" required style="width: 100%; padding: 6px; border: 1.5px solid #16A34A; border-radius: 4px; text-align: center; font-weight: 900; color: #16A34A; background: #f0fdf4;">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 10px;">
+                        <label for="statusSelect" style="font-size: 11px; font-weight: 900; display: block;">Publish Status:</label>
+                        <select id="statusSelect" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; font-weight: 900;">
+                            <option value="DECLARED">LIVE DECLARED (डिक्लेयर)</option>
+                            <option value="WAITING">WAITING (इंतजार)</option>
+                            <option value="REVISED">REVISED (संशोधित)</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; gap: 8px;">
+                        <button type="submit" style="flex: 2; background: #16A34A; color: #fff; font-weight: 900; font-size: 12px; padding: 8px; border-radius: 4px; border: none; cursor: pointer;">
+                            <i class="fa-solid fa-paper-plane"></i> PUBLISH DELHI NAGAR
+                        </button>
+                        <button type="button" id="deleteResultBtn" style="flex: 1; background: #FF0000; color: #fff; font-weight: 900; font-size: 12px; padding: 8px; border-radius: 4px; border: none; cursor: pointer;">
+                            <i class="fa-solid fa-trash"></i> DELETE / CLEAR
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Telegram Broadcast Post Generator -->
+            <div style="background: #e0f2fe; border: 1.5px solid #0288d1; border-radius: 6px; padding: 12px; margin-bottom: 15px;">
+                <h3 style="color: #0288d1; font-size: 14px; font-weight: 900; margin-bottom: 8px;">
+                    <i class="fa-brands fa-telegram"></i> Telegram Broadcast Generator
+                </h3>
+                <label for="broadcastText" style="font-size: 10px; font-weight: bold; display: block; margin-bottom: 2px;">Copy text for Telegram / WhatsApp sharing:</label>
+                <textarea id="broadcastText" rows="3" readonly style="width: 100%; padding: 6px; border: 1px solid #000; border-radius: 4px; font-size: 11px; font-weight: bold; background: #fff;">
+🔥 FASTSATTA.ONLINE LIVE RESULT 🔥
+Market: DELHI NAGAR (04:10 PM)
+Result: [ -- ]
+Fastest Satta Results on: https://fastsatta.online
+                </textarea>
+                <button onclick="navigator.clipboard.writeText(document.getElementById('broadcastText').value); alert('Broadcast message copied to clipboard!');" style="width: 100%; background: #0288d1; color: #fff; font-weight: 900; font-size: 11px; padding: 6px; border-radius: 4px; border: none; margin-top: 6px; cursor: pointer;">
+                    📋 COPY BROADCAST MSG FOR TELEGRAM
+                </button>
+            </div>
+
+            <!-- Recent Activity Log -->
+            <div style="background: #FFF000; border: 1.5px solid #FF0000; border-radius: 6px; padding: 10px; font-size: 11px; font-weight: bold;">
+                <div style="color: #000; font-weight: 900; margin-bottom: 4px;">📌 Recent Activity Log:</div>
+                <ul id="activityLog" style="margin-left: 15px; color: #000;">
+                    <li>DELHI NAGAR Secret Panel Ready</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-nav">
+                <a href="privacy-policy.html">PRIVACY POLICY</a> |
+                <a href="disclaimer.html">DISCLAIMER</a> |
+                <a href="sitemap.html">SITEMAP</a> |
+                <a href="about.html">About Us</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 FASTSATTA.ONLINE - All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('loginForm');
+            const loginSection = document.getElementById('loginFormSection');
+            const dashboardSection = document.getElementById('dashboardSection');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const publishResultForm = document.getElementById('publishResultForm');
+            const deleteResultBtn = document.getElementById('deleteResultBtn');
+            const resultDateInput = document.getElementById('resultDateInput');
+            const yesterdayNumInput = document.getElementById('yesterdayNumInput');
+            const todayNumInput = document.getElementById('todayNumInput');
+            const broadcastText = document.getElementById('broadcastText');
+            const activityLog = document.getElementById('activityLog');
+
+            const todayStr = new Date().toISOString().split('T')[0];
+            if (resultDateInput) resultDateInput.value = todayStr;
+
+            function checkSessionSecurity() {
+                const sessionActive = sessionStorage.getItem('fastsatta_delhi_nagar_session');
+                if (sessionActive === 'ACTIVE') {
+                    loginSection.style.display = 'none';
+                    dashboardSection.style.display = 'block';
+                } else {
+                    loginSection.style.display = 'block';
+                    dashboardSection.style.display = 'none';
+                }
+            }
+
+            if (loginForm) {
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const pass = document.getElementById('passwordInput').value.trim();
+
+                    // STRICT PASSWORD-ONLY VALIDATION
+                    if (pass === 'Delhi@459') {
+                        sessionStorage.setItem('fastsatta_delhi_nagar_session', 'ACTIVE');
+                        loginSection.style.display = 'none';
+                        dashboardSection.style.display = 'block';
+                        document.getElementById('passwordInput').value = '';
+                    } else {
+                        alert('Access Denied! Incorrect Password.');
+                    }
+                });
+            }
+
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    sessionStorage.removeItem('fastsatta_delhi_nagar_session');
+                    dashboardSection.style.display = 'none';
+                    loginSection.style.display = 'block';
+                });
+            }
+
+            async function saveResultToStorage(marketName, resultObj) {
+                let current = {};
+                try {
+                    const saved = localStorage.getItem('fastsatta_live_results');
+                    if (saved) current = JSON.parse(saved);
+                } catch(e) {}
+
+                current[marketName] = resultObj;
+                localStorage.setItem('fastsatta_live_results', JSON.stringify(current));
+
+                if (window.fbSet && window.firebaseDb && window.fbRef) {
+                    try {
+                        await window.fbSet(window.fbRef(window.firebaseDb, 'results/' + marketName), resultObj);
+                    } catch(err1) {}
+                }
+
+                const firebaseUrl = `https://fastsatta-online-default-rtdb.asia-southeast1.firebasedatabase.app/results/${encodeURIComponent(marketName)}.json`;
+                try {
+                    await fetch(firebaseUrl, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(resultObj)
+                    });
+                } catch(err2) {}
+            }
+
+            if (publishResultForm) {
+                publishResultForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const resultDate = document.getElementById('resultDateInput').value;
+                    const market = "DELHI NAGAR";
+                    const yesterdayNum = document.getElementById('yesterdayNumInput').value || '27';
+                    const todayNum = document.getElementById('todayNumInput').value;
+                    const status = document.getElementById('statusSelect').value;
+
+                    const resultData = {
+                        date: resultDate,
+                        market: market,
+                        oldNum: yesterdayNum,
+                        newNum: todayNum,
+                        status: status,
+                        timestamp: Date.now()
+                    };
+
+                    await saveResultToStorage(market, resultData);
+
+                    if (broadcastText) {
+                        broadcastText.value = `🔥 FASTSATTA.ONLINE LIVE RESULT 🔥\nMarket: DELHI NAGAR (04:10 PM)\nResult: [ ${todayNum} ]\nDate: ${resultDate}\nFastest Satta Results on: https://fastsatta.online`;
+                    }
+
+                    const logItem = document.createElement('li');
+                    logItem.textContent = `${resultDate} - DELHI NAGAR published [ ${todayNum} ] (${status})`;
+                    activityLog.insertBefore(logItem, activityLog.firstChild);
+
+                    alert(`Delhi Nagar Result Published & Live Updated!\nMarket: DELHI NAGAR\nYesterday: { ${yesterdayNum} } | Today: [ ${todayNum} ]\nStatus: ${status}`);
+                    document.getElementById('todayNumInput').value = '';
+                });
+            }
+
+            if (deleteResultBtn) {
+                deleteResultBtn.addEventListener('click', async () => {
+                    const market = "DELHI NAGAR";
+                    const resultDate = document.getElementById('resultDateInput').value;
+
+                    if (confirm(`Delete / Clear result for DELHI NAGAR?`)) {
+                        const resultData = {
+                            date: resultDate,
+                            market: market,
+                            oldNum: '27',
+                            newNum: '--',
+                            status: 'RESET',
+                            timestamp: Date.now()
+                        };
+
+                        await saveResultToStorage(market, resultData);
+
+                        const logItem = document.createElement('li');
+                        logItem.style.color = '#FF0000';
+                        logItem.textContent = `${resultDate} - DELHI NAGAR DELETED / RESET`;
+                        activityLog.insertBefore(logItem, activityLog.firstChild);
+
+                        alert(`Delhi Nagar result cleared! Updated on live site.`);
+                        document.getElementById('todayNumInput').value = '';
+                    }
+                });
+            }
+
+            checkSessionSecurity();
+        });
+    </script>
+</body>
+</html>
