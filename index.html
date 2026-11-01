@@ -8,8 +8,8 @@
     <title>Satta King Live Result Today – [Current Date] | FastSatta</title>
 
     <!-- 2. Dynamic Meta Description -->
-    <meta name="description" content="Check Satta King Live Results for [Current Date]. Get today's latest market results, daily updates and historical charts for Disawar, Haryana King, Delhi Bazar, Ram Bazar and more on FastSatta.online.">
-    <meta name="keywords" content="Satta King Fast, Satta King, Gali result, Satta result, FastSatta.online, Disawar chart, Haryana King, Delhi Bazar, Ram Bazar">
+    <meta name="description" content="Check Satta King Live Results for [Current Date]. Get today's latest market results, daily updates and historical charts for Disawar, Haryana King, Delhi Bazar, Delhi Nagar, Ram Bazar and more on FastSatta.online.">
+    <meta name="keywords" content="Satta King Fast, Satta King, Gali result, Satta result, FastSatta.online, Disawar chart, Haryana King, Delhi Bazar, Delhi Nagar, Ram Bazar">
 
     <!-- 3. Canonical URL -->
     <link rel="canonical" href="https://fastsatta.online/">
@@ -24,7 +24,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://fastsatta.online/">
     <meta property="og:title" content="Satta King Live Result Today – [Current Date] | FastSatta">
-    <meta property="og:description" content="Check Satta King Live Results for [Current Date]. Get today's latest market results, daily updates and historical charts for Disawar, Haryana King, Delhi Bazar, Ram Bazar and more on FastSatta.online.">
+    <meta property="og:description" content="Check Satta King Live Results for [Current Date]. Get today's latest market results, daily updates and historical charts for Disawar, Haryana King, Delhi Bazar, Delhi Nagar, Ram Bazar and more on FastSatta.online.">
     <meta property="og:image" content="https://fastsatta.online/images/sattanewlogo.png">
 
     <!-- 6. WebSite JSON-LD Structured Data Schema -->
@@ -75,6 +75,23 @@
             }
           }
         }, (err) => {});
+
+        const chartRef = ref(db, 'chart_overrides');
+        onValue(chartRef, (snapshot) => {
+          const chartData = snapshot.val();
+          if (chartData) {
+            let mapData = {};
+            for (const k in chartData) {
+              if (chartData[k] && chartData[k].num) {
+                mapData[k] = chartData[k].num;
+              }
+            }
+            localStorage.setItem('fastsatta_chart_overrides', JSON.stringify(mapData));
+            if (window.applyChartCustomOverrides) {
+              window.applyChartCustomOverrides();
+            }
+          }
+        }, (err) => {});
       } catch (e) {}
     </script>
 
@@ -116,7 +133,7 @@
         <div class="disclaimer-container">
             <div class="disclaimer-title">Satta King Official Announcement</div>
             <div class="disclaimer-text">
-                <a href="index.html">FASTSATTA.ONLINE</a> और हमारी नेटवर्क साइट <a href="https://thefastsatta.com/" target="_blank">THEFASTSATTA.COM</a> भारत की <strong>#1 ओरिजिनल और सबसे तेज़ लाइव रिजल्ट</strong> वेबसाइट्स हैं। यहाँ आपको दिसावर, हरियाणा किंग, राम बाज़ार, दिल्ली बाज़ार, श्री गणेश, फरीदाबाद, अंबाला किंग, गाज़ियाबाद, हिमाचल नाईट, और गली के सबसे सटीक और 100% सही रिजल्ट सबसे पहले देखने को मिलते हैं। सबसे तेज़ और गारंटेड रिजल्ट्स के लिए केवल FASTSATTA.ONLINE पर ही भरोसा करें। धन्यवाद!
+                <a href="index.html">FASTSATTA.ONLINE</a> और हमारी नेटवर्क साइट <a href="https://thefastsatta.com/" target="_blank">THEFASTSATTA.COM</a> भारत की <strong>#1 ओरिजिनल और सबसे तेज़ लाइव रिजल्ट</strong> वेबसाइट्स हैं। यहाँ आपको दिसावर, हरियाणा किंग, राम बाज़ार, दिल्ली बाज़ार, दिल्ली नगर, श्री गणेश, फरीदाबाद, अंबाला किंग, गाज़ियाबाद, हिमाचल नाईट, और गली के सबसे सटीक और 100% सही रिजल्ट सबसे पहले देखने को मिलते हैं। सबसे तेज़ और गारंटेड रिजल्ट्स के लिए केवल FASTSATTA.ONLINE पर ही भरोसा करें। धन्यवाद!
             </div>
         </div>
 
@@ -128,14 +145,14 @@
 
         <!-- Date Stamp & Live Header -->
         <div class="date-timestamp-text" id="liveTimeDisplay">
-            17 October 2026
+            01 November 2026
         </div>
 
         <div class="live-section-heading">
             Satta King Live Result Today
         </div>
 
-        <!-- Spot Results Highlight (Solid Non-Blinking Initial Markup) -->
+        <!-- Spot Results Highlight -->
         <div class="spot-results-container">
             <div class="pink-market-name">GALI</div>
             <div class="green-result-number">[ 40 ]</div>
@@ -199,7 +216,7 @@
                 </div>
             </div>
 
-            <!-- 4 & 5. DELHI BAZAR & SHREE GANESH -->
+            <!-- 4 & 5. DELHI BAZAR & DELHI NAGAR -->
             <div class="two-col-cards">
                 <div class="card-maroon">
                     <div class="card-market-title">DELHI BAZAR</div>
@@ -212,6 +229,19 @@
                 </div>
 
                 <div class="card-maroon">
+                    <div class="card-market-title">DELHI NAGAR</div>
+                    <div class="card-market-time">(04:10 PM)</div>
+                    <div class="card-result-row">
+                        <span class="old-val">{ 27 }</span>
+                        <span class="green-arrow">➔</span>
+                        <span class="new-val">[ -- ]</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6 & 7. SHREE GANESH & FARIDABAD -->
+            <div class="two-col-cards">
+                <div class="card-maroon">
                     <div class="card-market-title">SHREE GANESH</div>
                     <div class="card-market-time">(04:40 PM)</div>
                     <div class="card-result-row">
@@ -220,10 +250,7 @@
                         <span class="new-val">[ -- ]</span>
                     </div>
                 </div>
-            </div>
 
-            <!-- 6 & 7. FARIDABAD & AMBALA KING -->
-            <div class="two-col-cards">
                 <div class="card-maroon">
                     <div class="card-market-title">FARIDABAD</div>
                     <div class="card-market-time">(06:10 PM)</div>
@@ -233,7 +260,10 @@
                         <span class="new-val">[ -- ]</span>
                     </div>
                 </div>
+            </div>
 
+            <!-- 8 & 9. AMBALA KING & GAZIYABAD -->
+            <div class="two-col-cards">
                 <div class="card-maroon">
                     <div class="card-market-title">AMBALA KING</div>
                     <div class="card-market-time">(07:30 PM)</div>
@@ -243,10 +273,7 @@
                         <span class="new-val">[ -- ]</span>
                     </div>
                 </div>
-            </div>
 
-            <!-- 8 & 9. GAZIYABAD & HIMACHAL NIGHT -->
-            <div class="two-col-cards">
                 <div class="card-maroon">
                     <div class="card-market-title">GAZIYABAD</div>
                     <div class="card-market-time">(10:00 PM)</div>
@@ -256,7 +283,10 @@
                         <span class="new-val">[ -- ]</span>
                     </div>
                 </div>
+            </div>
 
+            <!-- 10 & 11. HIMACHAL NIGHT & GALI -->
+            <div class="two-col-cards">
                 <div class="card-maroon">
                     <div class="card-market-title">HIMACHAL NIGHT</div>
                     <div class="card-market-time">(10:40 PM)</div>
@@ -266,16 +296,15 @@
                         <span class="new-val">[ -- ]</span>
                     </div>
                 </div>
-            </div>
 
-            <!-- 10. GALI -->
-            <div class="card-navy">
-                <div class="card-market-title">GALI</div>
-                <div class="card-market-time">( 12:00 AM )</div>
-                <div class="card-result-row">
-                    <span class="old-val">{ 12 }</span>
-                    <span class="green-arrow">➔</span>
-                    <span class="new-val" style="color: #16A34A; font-weight: 900;">[ 40 ]</span>
+                <div class="card-maroon">
+                    <div class="card-market-title">GALI</div>
+                    <div class="card-market-time">(12:00 AM)</div>
+                    <div class="card-result-row">
+                        <span class="old-val">{ 12 }</span>
+                        <span class="green-arrow">➔</span>
+                        <span class="new-val" style="color: #16A34A; font-weight: 900;">[ 40 ]</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -289,6 +318,7 @@
                 <div class="timing-row"><span>🌀 हरियाणा किंग (HARYANA KING)...............</span><span>01:20 PM (दोपहर)</span></div>
                 <div class="timing-row"><span>🌀 राम बाज़ार (RAM BAZAR)...............</span><span>02:20 PM (दोपहर)</span></div>
                 <div class="timing-row"><span>🌀 दिल्ली बाज़ार (DELHI BAZAR)...............</span><span>02:55 PM (दोपहर)</span></div>
+                <div class="timing-row"><span>🌀 दिल्ली नगर (DELHI NAGAR)...............</span><span>04:00 PM (शाम)</span></div>
                 <div class="timing-row"><span>🌀 श्री गणेश (SHREE GANESH)...............</span><span>04:25 PM (शाम)</span></div>
                 <div class="timing-row"><span>🌀 फरीदाबाद (FARIDABAD)...............</span><span>05:45 PM (शाम)</span></div>
                 <div class="timing-row"><span>🌀 अंबाला किंग (AMBALA KING)...............</span><span>07:20 PM (शाम)</span></div>
@@ -311,10 +341,10 @@
             </div>
         </div>
 
-        <!-- ================= DAY MARKETS (FIRST 5 MARKETS) ================= -->
+        <!-- ================= DAY MARKETS (NOVEMBER 2026) ================= -->
         <div class="history-table-container">
             <div class="table-header-title">
-                OCTOBER 2026 - DAY MARKETS RECORD CHART
+                NOVEMBER 2026 - DAY MARKETS RECORD CHART
             </div>
             <table class="history-table">
                 <thead>
@@ -323,36 +353,21 @@
                         <th>HARYANA KING<br><span style="font-size: 8px;">(01:30 PM)</span></th>
                         <th>RAM BAZAR<br><span style="font-size: 8px;">(02:30 PM)</span></th>
                         <th>DELHI BAZAR<br><span style="font-size: 8px;">(03:10 PM)</span></th>
+                        <th>DELHI NAGAR<br><span style="font-size: 8px;">(04:10 PM)</span></th>
                         <th>SHREE GANESH<br><span style="font-size: 8px;">(04:40 PM)</span></th>
                         <th>FARIDABAD<br><span style="font-size: 8px;">(06:10 PM)</span></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td class="date-cell">01-10-2026</td><td>85</td><td>17</td><td>76</td><td>51</td><td>42</td></tr>
-                    <tr><td class="date-cell">02-10-2026</td><td>10</td><td>75</td><td>25</td><td>31</td><td>05</td></tr>
-                    <tr><td class="date-cell">03-10-2026</td><td>80</td><td>56</td><td>25</td><td>54</td><td>58</td></tr>
-                    <tr><td class="date-cell">04-10-2026</td><td>67</td><td>88</td><td>91</td><td>46</td><td>36</td></tr>
-                    <tr><td class="date-cell">05-10-2026</td><td>58</td><td>21</td><td>86</td><td>18</td><td>26</td></tr>
-                    <tr><td class="date-cell">06-10-2026</td><td>94</td><td>59</td><td>29</td><td>27</td><td>01</td></tr>
-                    <tr><td class="date-cell">07-10-2026</td><td>43</td><td>55</td><td>06</td><td>89</td><td>87</td></tr>
-                    <tr><td class="date-cell">08-10-2026</td><td>00</td><td>13</td><td>07</td><td>02</td><td>92</td></tr>
-                    <tr><td class="date-cell">09-10-2026</td><td>96</td><td>54</td><td>87</td><td>01</td><td>99</td></tr>
-                    <tr><td class="date-cell">10-10-2026</td><td>02</td><td>83</td><td>71</td><td>06</td><td>08</td></tr>
-                    <tr><td class="date-cell">11-10-2026</td><td>19</td><td>73</td><td>50</td><td>58</td><td>96</td></tr>
-                    <tr><td class="date-cell">12-10-2026</td><td>19</td><td>73</td><td>50</td><td>58</td><td>96</td></tr>
-                    <tr><td class="date-cell">13-10-2026</td><td>19</td><td>73</td><td>50</td><td>58</td><td>96</td></tr>
-                    <tr><td class="date-cell">14-10-2026</td><td>19</td><td>73</td><td>50</td><td>58</td><td>96</td></tr>
-                    <tr><td class="date-cell">15-10-2026</td><td>19</td><td>73</td><td>50</td><td>58</td><td>96</td></tr>
-                    <tr><td class="date-cell">16-10-2026</td><td>19</td><td>73</td><td>50</td><td>58</td><td>96</td></tr>
-                    <tr class="today-row"><td class="date-cell">17-10-2026</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td></tr>
+                    <tr class="today-row"><td class="date-cell">01-11-2026</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td></tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- ================= EVENING / NIGHT MARKETS (NEXT 5 MARKETS) ================= -->
+        <!-- ================= EVENING / NIGHT MARKETS (NOVEMBER 2026) ================= -->
         <div class="history-table-container">
             <div class="table-header-title" style="background-color: #000000; border-color: #16A34A;">
-                OCTOBER 2026 - EVENING & NIGHT MARKETS RECORD CHART
+                NOVEMBER 2026 - EVENING & NIGHT MARKETS RECORD CHART
             </div>
             <table class="history-table">
                 <thead>
@@ -366,28 +381,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td class="date-cell">01-10-2026</td><td>63</td><td>67</td><td>00</td><td>93</td><td>--</td></tr>
-                    <tr><td class="date-cell">02-10-2026</td><td>10</td><td>81</td><td>09</td><td>01</td><td>52</td></tr>
-                    <tr><td class="date-cell">03-10-2026</td><td>88</td><td>95</td><td>55</td><td>68</td><td>18</td></tr>
-                    <tr><td class="date-cell">04-10-2026</td><td>77</td><td>98</td><td>35</td><td>80</td><td>15</td></tr>
-                    <tr><td class="date-cell">05-10-2026</td><td>44</td><td>78</td><td>36</td><td>24</td><td>70</td></tr>
-                    <tr><td class="date-cell">06-10-2026</td><td>98</td><td>38</td><td>44</td><td>53</td><td>59</td></tr>
-                    <tr><td class="date-cell">07-10-2026</td><td>96</td><td>84</td><td>21</td><td>29</td><td>23</td></tr>
-                    <tr><td class="date-cell">08-10-2026</td><td>12</td><td>74</td><td>27</td><td>62</td><td>90</td></tr>
-                    <tr><td class="date-cell">09-10-2026</td><td>77</td><td>89</td><td>35</td><td>83</td><td>26</td></tr>
-                    <tr><td class="date-cell">10-10-2026</td><td>15</td><td>71</td><td>92</td><td>12</td><td>22</td></tr>
-                    <tr><td class="date-cell">11-10-2026</td><td>21</td><td>46</td><td>19</td><td>40</td><td>27</td></tr>
-                    <tr><td class="date-cell">12-10-2026</td><td>21</td><td>46</td><td>19</td><td>40</td><td>27</td></tr>
-                    <tr><td class="date-cell">13-10-2026</td><td>21</td><td>46</td><td>19</td><td>40</td><td>27</td></tr>
-                    <tr><td class="date-cell">14-10-2026</td><td>21</td><td>46</td><td>19</td><td>40</td><td>27</td></tr>
-                    <tr><td class="date-cell">15-10-2026</td><td>21</td><td>46</td><td>19</td><td>40</td><td>27</td></tr>
-                    <tr><td class="date-cell">16-10-2026</td><td>21</td><td>46</td><td>19</td><td>40</td><td>27</td></tr>
-                    <tr class="today-row"><td class="date-cell">17-10-2026</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td></tr>
+                    <tr class="today-row"><td class="date-cell">01-11-2026</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td></tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- Yearly Record Chart Link Grids for ALL 10 Markets -->
+        <!-- Yearly Record Chart Link Grids for ALL Markets -->
         <div class="archive-container">
             <div class="year-grid-title">
                 <i class="fa-solid fa-calendar-days"></i> SATTA KING RECORD CHART 2026
@@ -397,6 +396,7 @@
                 <a href="haryana-king-chart-2026.html" class="chart-grid-btn">HARYANA KING CHART 2026</a>
                 <a href="ram-bazar-chart-2026.html" class="chart-grid-btn">RAM BAZAR CHART 2026</a>
                 <a href="delhi-bazar-chart-2026.html" class="chart-grid-btn">DELHI BAZAR CHART 2026</a>
+                <a href="delhi-nagar-chart-2026.html" class="chart-grid-btn">DELHI NAGAR CHART 2026</a>
                 <a href="shree-ganesh-chart-2026.html" class="chart-grid-btn">SHREE GANESH CHART 2026</a>
                 <a href="faridabad-chart-2026.html" class="chart-grid-btn">FARIDABAD CHART 2026</a>
                 <a href="ambala-king-chart-2026.html" class="chart-grid-btn">AMBALA KING CHART 2026</a>
@@ -422,13 +422,13 @@
         <!-- About Article Section -->
         <div class="about-card">
             <h2>About WWW.FASTSATTA.ONLINE (SATTA KING FAST)</h2>
-            <p>FASTSATTA.ONLINE में आपका स्वागत है। हमारी वेबसाइट में आप 2016 से लेकर आज तक के दिसावर, हरियाणा किंग, राम बाज़ार, दिल्ली बाज़ार, श्री गणेश, फरीदाबाद, अंबाला किंग, गाज़ियाबाद, हिमाचल नाईट, और गली के सबसे तेज़ लाइव रिजल्ट्स और 10 साल के ऐतिहासिक रिकॉर्ड चार्ट्स (2016-2026) आसानी से देख सकते हैं।</p>
+            <p>FASTSATTA.ONLINE में आपका स्वागत है। हमारी वेबसाइट में आप 2016 से लेकर आज तक के दिसावर, हरियाणा किंग, राम बाज़ार, दिल्ली बाज़ार, दिल्ली नगर, श्री गणेश, फरीदाबाद, अंबाला किंग, गाज़ियाबाद, हिमाचल नाईट, और गली के सबसे तेज़ लाइव रिजल्ट्स और 10 साल के ऐतिहासिक रिकॉर्ड चार्ट्स (2016-2026) आसानी से देख सकते हैं।</p>
         </div>
 
         <!-- Service Banner -->
         <div class="app-promo-banner">
             <h3><i class="fa-solid fa-headset"></i> FASTSATTA LIVE RESULT & KHAIWAL SERVICE</h3>
-            <p style="font-size: 12px; font-weight: bold; margin-bottom: 6px;">दिसावर, हरियाणा किंग, राम बाज़ार, दिल्ली बाज़ार, श्री गणेश, फरीदाबाद, अंबाला किंग, गाज़ियाबाद, हिमाचल नाईट, गली गेम रिजल्ट और एंट्री के लिए सम्पर्क करें</p>
+            <p style="font-size: 12px; font-weight: bold; margin-bottom: 6px;">दिसावर, हरियाणा किंग, राम बाज़ार, दिल्ली बाज़ार, दिल्ली नगर, श्री गणेश, फरीदाबाद, अंबाला किंग, गाज़ियाबाद, हिमाचल नाईट, गली गेम रिजल्ट और एंट्री के लिए सम्पर्क करें</p>
             <p style="font-size: 11px; margin-bottom: 10px;">फ़ास्ट रिजल्ट अपडेट और खाईवाल सर्विस (Rate: 10 KA 960) के लिए एडमिन से सीधे व्हाट्सप्प या टेलीग्राम पर सम्पर्क करें।</p>
             <a href="add-game.html" class="app-promo-download-btn">
                 📲 अभी सम्पर्क करें
@@ -453,6 +453,7 @@
                 <span class="tag-badge">Haryana King</span> |
                 <span class="tag-badge">Ram Bazar</span> |
                 <span class="tag-badge">Delhi Bazar</span> |
+                <span class="tag-badge">Delhi Nagar</span> |
                 <span class="tag-badge">Shree Ganesh</span> |
                 <span class="tag-badge">Faridabad</span> |
                 <span class="tag-badge">Ambala King</span> |
@@ -479,6 +480,6 @@
     </button>
 
     <!-- Cache-Busting Version Query Parameter -->
-    <script src="js/main.js?v=3001"></script>
+    <script src="js/main.js?v=12001"></script>
 </body>
 </html>
