@@ -118,7 +118,7 @@
                     <div style="display: flex; gap: 8px; margin-bottom: 8px;">
                         <div style="flex: 1;">
                             <label for="yesterdayNumInput" style="font-size: 10.5px; font-weight: 900; display: block; color: #000;">Yesterday Result ({ XX })</label>
-                            <input type="text" id="yesterdayNumInput" value="27" placeholder="Auto-filled" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; text-align: center; font-weight: 900; background: #fffde7;">
+                            <input type="text" id="yesterdayNumInput" value="64" placeholder="Auto-filled" style="width: 100%; padding: 6px; border: 1.5px solid #000; border-radius: 4px; text-align: center; font-weight: 900; background: #fffde7;">
                         </div>
                         <div style="flex: 1;">
                             <label for="todayNumInput" style="font-size: 10.5px; font-weight: 900; display: block; color: #16A34A;">Today Result ([ YY ])</label>
@@ -179,8 +179,7 @@ Fastest Satta Results on: https://fastsatta.online
             <div class="footer-nav">
                 <a href="privacy-policy.html">PRIVACY POLICY</a> |
                 <a href="disclaimer.html">DISCLAIMER</a> |
-                <a href="sitemap.html">SITEMAP</a> |
-                <a href="about.html">About Us</a>
+                <a href="sitemap.html">SITEMAP</a>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2026 FASTSATTA.ONLINE - All Rights Reserved.</p>
@@ -203,6 +202,14 @@ Fastest Satta Results on: https://fastsatta.online
             const broadcastText = document.getElementById('broadcastText');
             const activityLog = document.getElementById('activityLog');
 
+            const masterHistoryMapDelhiNagar = {
+                '31': '64', '30': '18', '29': '50', '28': '72', '27': '34', '26': '61',
+                '25': '09', '24': '98', '23': '42', '22': '86', '21': '15', '20': '77',
+                '19': '31', '18': '58', '17': '24', '16': '90', '15': '63', '14': '81',
+                '13': '29', '12': '76', '11': '40', '10': '53', '09': '19', '08': '82',
+                '07': '35', '06': '94', '05': '67', '04': '12', '03': '88', '02': '45', '01': '01'
+            };
+
             const todayStr = new Date().toISOString().split('T')[0];
             if (resultDateInput) resultDateInput.value = todayStr;
 
@@ -211,22 +218,40 @@ Fastest Satta Results on: https://fastsatta.online
                 if (sessionActive === 'ACTIVE') {
                     loginSection.style.display = 'none';
                     dashboardSection.style.display = 'block';
+                    autoFillYesterdayNumber();
                 } else {
                     loginSection.style.display = 'block';
                     dashboardSection.style.display = 'none';
                 }
             }
 
+            function autoFillYesterdayNumber() {
+                if (yesterdayNumInput) {
+                    let selectedDateStr = resultDateInput ? resultDateInput.value : todayStr;
+                    const selDateObj = new Date(selectedDateStr);
+                    const yestDateObj = new Date(selDateObj.getTime() - 24 * 60 * 60 * 1000);
+                    const yestDayNum = String(yestDateObj.getDate()).padStart(2, '0');
+
+                    if (masterHistoryMapDelhiNagar[yestDayNum]) {
+                        yesterdayNumInput.value = masterHistoryMapDelhiNagar[yestDayNum];
+                    } else {
+                        yesterdayNumInput.value = "64";
+                    }
+                }
+            }
+
+            if (resultDateInput) resultDateInput.addEventListener('change', autoFillYesterdayNumber);
+
             if (loginForm) {
                 loginForm.addEventListener('submit', (e) => {
                     e.preventDefault();
                     const pass = document.getElementById('passwordInput').value.trim();
 
-                    // STRICT PASSWORD-ONLY VALIDATION
                     if (pass === 'Delhi@459') {
                         sessionStorage.setItem('fastsatta_delhi_nagar_session', 'ACTIVE');
                         loginSection.style.display = 'none';
                         dashboardSection.style.display = 'block';
+                        autoFillYesterdayNumber();
                         document.getElementById('passwordInput').value = '';
                     } else {
                         alert('Access Denied! Incorrect Password.');
@@ -273,7 +298,7 @@ Fastest Satta Results on: https://fastsatta.online
                     e.preventDefault();
                     const resultDate = document.getElementById('resultDateInput').value;
                     const market = "DELHI NAGAR";
-                    const yesterdayNum = document.getElementById('yesterdayNumInput').value || '27';
+                    const yesterdayNum = document.getElementById('yesterdayNumInput').value || '64';
                     const todayNum = document.getElementById('todayNumInput').value;
                     const status = document.getElementById('statusSelect').value;
 
@@ -310,7 +335,7 @@ Fastest Satta Results on: https://fastsatta.online
                         const resultData = {
                             date: resultDate,
                             market: market,
-                            oldNum: '27',
+                            oldNum: '64',
                             newNum: '--',
                             status: 'RESET',
                             timestamp: Date.now()
