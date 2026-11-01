@@ -1,5 +1,5 @@
 /*
-   FASTSATTA.ONLINE - Dynamic Sequential Month Row Generator & Permanent History Protection
+   FASTSATTA.ONLINE - Dynamic Month Transition & Realtime Sequential Row Generator
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -61,8 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const m = dateMap.month;
         const y = dateMap.year;
 
-        const formattedDash = `${d}-${m}-${y}`; // e.g. "17-10-2026"
-        const isoDash = `${y}-${m}-${d}`;       // e.g. "2026-10-17"
+        const formattedDash = `${d}-${m}-${y}`; // e.g. "01-11-2026"
+        const isoDash = `${y}-${m}-${d}`;       // e.g. "2026-11-01"
 
         const yesterdayDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
         const yParts = formatter.formatToParts(yesterdayDate);
@@ -70,6 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
         yParts.forEach(p => yMap[p.type] = p.value);
         const yesterdayFormattedDash = `${yMap.day}-${yMap.month}-${yMap.year}`;
         const yesterdayIsoDash = `${yMap.year}-${yMap.month}-${yMap.day}`;
+
+        const monthNameFormatter = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', month: 'long' });
+        const monthNameUpper = monthNameFormatter.format(now).toUpperCase();
 
         const fullFormatter = new Intl.DateTimeFormat('en-GB', {
             timeZone: 'Asia/Kolkata',
@@ -85,6 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return {
             todayDay: d,
+            todayMonth: m,
+            todayYear: y,
+            monthNameUpper: monthNameUpper,
             formattedDash: formattedDash,
             isoDash: isoDash,
             yesterdayFormattedDash: yesterdayFormattedDash,
@@ -116,6 +122,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const ogDesc = document.querySelector('meta[property="og:description"]');
     if (ogDesc && ogDesc.content.includes('[Current Date]')) {
         ogDesc.content = ogDesc.content.replace(/\[Current Date\]/g, dateInfo.fullDateStr);
+    }
+
+    // Dynamic Month Header Updater
+    const tableHeaderTitles = document.querySelectorAll('.table-header-title');
+    if (tableHeaderTitles.length >= 2) {
+        tableHeaderTitles[0].textContent = `${dateInfo.monthNameUpper} ${dateInfo.todayYear} - DAY MARKETS RECORD CHART`;
+        tableHeaderTitles[1].textContent = `${dateInfo.monthNameUpper} ${dateInfo.todayYear} - EVENING & NIGHT MARKETS RECORD CHART`;
     }
 
     // 2. Mobile Navigation Toggle
@@ -158,14 +171,17 @@ document.addEventListener('DOMContentLoaded', () => {
         applyChartCustomOverrides();
     }
 
-    // 4. Markets Master Config
+    // 4. Markets Master Config (Exact Column Index Alignment)
+    // Table 0 (Day Markets): 1: HK, 2: RB, 3: DB, 4: DN, 5: SG, 6: FB
+    // Table 1 (Night Markets): 1: AK, 2: GZ, 3: HN, 4: GL, 5: DS
     const defaultMarketsData = [
         { id: "DS", name: "DISAWAR", timeStr: "05:00 AM", hour: 5, minute: 0, oldNum: "27", tableIdx: 1, colIdx: 5 },
         { id: "HK", name: "HARYANA KING", timeStr: "01:30 PM", hour: 13, minute: 30, oldNum: "19", tableIdx: 0, colIdx: 1 },
         { id: "RB", name: "RAM BAZAR", timeStr: "02:30 PM", hour: 14, minute: 30, oldNum: "73", tableIdx: 0, colIdx: 2 },
         { id: "DB", name: "DELHI BAZAR", timeStr: "03:10 PM", hour: 15, minute: 10, oldNum: "50", tableIdx: 0, colIdx: 3 },
-        { id: "SG", name: "SHREE GANESH", timeStr: "04:40 PM", hour: 16, minute: 40, oldNum: "58", tableIdx: 0, colIdx: 4 },
-        { id: "FB", name: "FARIDABAD", timeStr: "06:10 PM", hour: 18, minute: 10, oldNum: "96", tableIdx: 0, colIdx: 5 },
+        { id: "DN", name: "DELHI NAGAR", timeStr: "04:10 PM", hour: 16, minute: 10, oldNum: "27", tableIdx: 0, colIdx: 4 },
+        { id: "SG", name: "SHREE GANESH", timeStr: "04:40 PM", hour: 16, minute: 40, oldNum: "58", tableIdx: 0, colIdx: 5 },
+        { id: "FB", name: "FARIDABAD", timeStr: "06:10 PM", hour: 18, minute: 10, oldNum: "96", tableIdx: 0, colIdx: 6 },
         { id: "AK", name: "AMBALA KING", timeStr: "07:30 PM", hour: 19, minute: 30, oldNum: "21", tableIdx: 1, colIdx: 1 },
         { id: "GZ", name: "GAZIYABAD", timeStr: "10:00 PM", hour: 22, minute: 0, oldNum: "46", tableIdx: 1, colIdx: 2 },
         { id: "HN", name: "HIMACHAL NIGHT", timeStr: "10:40 PM", hour: 22, minute: 40, oldNum: "19", tableIdx: 1, colIdx: 3 },
@@ -469,7 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const targetDayInt = parseInt(info.todayDay, 10);
 
         const tables = document.querySelectorAll('.history-table tbody');
-        tables.forEach(tbody => {
+        tables.forEach((tbody, tIdx) => {
             const rows = tbody.querySelectorAll('tr');
             let existingDays = [];
 
@@ -477,13 +493,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const dateCell = row.cells[0];
                 if (dateCell) {
                     const dayNum = parseInt(dateCell.textContent.split('-')[0], 10);
-                    if (!isNaN(dayNum)) {
+                    const monthNum = dateCell.textContent.split('-')[1];
+                    if (!isNaN(dayNum) && monthNum === info.todayMonth) {
                         existingDays.push(dayNum);
                     }
                 }
             });
 
             const maxDay = existingDays.length > 0 ? Math.max(...existingDays) : 0;
+            const colCount = tIdx === 0 ? 6 : 5; // Table 0: 6 markets, Table 1: 5 markets
 
             for (let d = maxDay + 1; d <= targetDayInt; d++) {
                 const dStr = String(d).padStart(2, '0');
@@ -492,10 +510,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     newTr.classList.add('today-row');
                 }
 
-                const monthStr = info.formattedDash.split('-')[1];
-                const yearStr = info.formattedDash.split('-')[2];
-                let tdHTML = `<td class="date-cell">${dStr}-${monthStr}-${yearStr}</td>`;
-                for (let i = 0; i < 5; i++) {
+                let tdHTML = `<td class="date-cell">${dStr}-${info.todayMonth}-${info.todayYear}</td>`;
+                for (let i = 0; i < colCount; i++) {
                     tdHTML += `<td>--</td>`;
                 }
                 newTr.innerHTML = tdHTML;
