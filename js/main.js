@@ -1,5 +1,5 @@
 /*
-   FASTSATTA.ONLINE - Dynamic Month Transition & Realtime Sequential Row Generator
+   FASTSATTA.ONLINE - Production Engine with Verified Delhi Nagar Historical Dataset (From delhi-nagar.html)
 */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -171,15 +171,13 @@ document.addEventListener('DOMContentLoaded', () => {
         applyChartCustomOverrides();
     }
 
-    // 4. Markets Master Config (Exact Column Index Alignment)
-    // Table 0 (Day Markets): 1: HK, 2: RB, 3: DB, 4: DN, 5: SG, 6: FB
-    // Table 1 (Night Markets): 1: AK, 2: GZ, 3: HN, 4: GL, 5: DS
+    // 4. Markets Master Config (Exact Delhi Nagar Verified October Dataset with oldNum: "64")
     const defaultMarketsData = [
         { id: "DS", name: "DISAWAR", timeStr: "05:00 AM", hour: 5, minute: 0, oldNum: "27", tableIdx: 1, colIdx: 5 },
         { id: "HK", name: "HARYANA KING", timeStr: "01:30 PM", hour: 13, minute: 30, oldNum: "19", tableIdx: 0, colIdx: 1 },
         { id: "RB", name: "RAM BAZAR", timeStr: "02:30 PM", hour: 14, minute: 30, oldNum: "73", tableIdx: 0, colIdx: 2 },
         { id: "DB", name: "DELHI BAZAR", timeStr: "03:10 PM", hour: 15, minute: 10, oldNum: "50", tableIdx: 0, colIdx: 3 },
-        { id: "DN", name: "DELHI NAGAR", timeStr: "04:10 PM", hour: 16, minute: 10, oldNum: "27", tableIdx: 0, colIdx: 4 },
+        { id: "DN", name: "DELHI NAGAR", timeStr: "04:10 PM", hour: 16, minute: 10, oldNum: "64", tableIdx: 0, colIdx: 4 },
         { id: "SG", name: "SHREE GANESH", timeStr: "04:40 PM", hour: 16, minute: 40, oldNum: "58", tableIdx: 0, colIdx: 5 },
         { id: "FB", name: "FARIDABAD", timeStr: "06:10 PM", hour: 18, minute: 10, oldNum: "96", tableIdx: 0, colIdx: 6 },
         { id: "AK", name: "AMBALA KING", timeStr: "07:30 PM", hour: 19, minute: 30, oldNum: "21", tableIdx: 1, colIdx: 1 },
